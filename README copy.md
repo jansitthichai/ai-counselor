@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # AI Companion Counselor
 
 An AI-powered mental health support system designed to provide companionship and resources for people dealing with depression or seeking emotional support.
@@ -80,7 +79,3 @@ vercel
 # 1. Push โค้ดไป GitHub
 # 2. เชื่อมต่อกับ Vercel
 # 3. Vercel จะ auto-deploy
-=======
-# ai-counselor
-AI เพื่อนที่ปรึกษา - AI-powered mental health support system
->>>>>>> 49cc475931c26105e8f2461ef4f1557af5522090
