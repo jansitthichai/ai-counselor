@@ -1,0 +1,226 @@
+// ระบบ AI ผู้เชี่ยวชาญ - รวม Rule-based และ Prompt Engineering
+
+export interface ExpertResponse {
+  answer: string
+  source: 'rule' | 'prompt' | 'gemini'
+  confidence: number
+  category: string
+}
+
+// Rule-based responses สำหรับคำถามที่พบบ่อย
+const commonQuestions: Record<string, string> = {
+  // คำถามเกี่ยวกับสุขภาพจิต
+  'วิธีลดความเครียด': '1. หายใจลึกๆ 5-10 ครั้ง\n2. ออกกำลังกายเบาๆ เช่น เดิน\n3. พูดคุยกับเพื่อนหรือครอบครัว\n4. ฟังเพลงที่ผ่อนคลาย\n5. ทำสมาธิหรือโยคะ\n\nหากความเครียดยังคงอยู่ แนะนำให้ปรึกษาผู้เชี่ยวชาญ',
+  
+  'นอนไม่หลับทำไง': '1. สร้างกิจวัตรก่อนนอนที่สม่ำเสมอ\n2. หลีกเลี่ยงกาแฟและเครื่องดื่มที่มีคาเฟอีน\n3. ปิดอุปกรณ์อิเล็กทรอนิกส์ 1 ชั่วโมงก่อนนอน\n4. อ่านหนังสือหรือฟังเพลงเบาๆ\n5. ใช้ห้องนอนสำหรับนอนเท่านั้น\n\nหากปัญหายังคงอยู่ แนะนำให้ปรึกษาแพทย์',
+  
+  'รู้สึกเศร้า': 'ความรู้สึกเศร้าเป็นเรื่องปกติ แต่หากรู้สึกเศร้าต่อเนื่องเกิน 2 สัปดาห์ อาจเป็นสัญญาณของโรคซึมเศร้า\n\nแนะนำให้:\n1. พูดคุยกับคนที่ไว้ใจ\n2. ออกกำลังกายเบาๆ\n3. ทำกิจกรรมที่ชอบ\n4. ปรึกษาผู้เชี่ยวชาญด้านสุขภาพจิต',
+  
+  'วิธีจัดการความโกรธ': '1. หยุดและหายใจลึกๆ\n2. นับ 1-10 ช้าๆ\n3. ออกจากสถานการณ์ชั่วคราว\n4. เขียนความรู้สึกลงกระดาษ\n5. ออกกำลังกายเพื่อปลดปล่อยพลังงาน\n\nหากควบคุมความโกรธไม่ได้ แนะนำให้ปรึกษาผู้เชี่ยวชาญ',
+  
+  // คำถามเกี่ยวกับการศึกษา
+  'เรียนต่ออะไรดี': 'การเลือกเรียนต่อขึ้นอยู่กับหลายปัจจัย:\n\n1. **ความสนใจและความถนัด** - เลือกสาขาที่ชอบและถนัด\n2. **ตลาดแรงงาน** - ดูความต้องการในตลาด\n3. **ความสามารถทางการเงิน** - ประเมินค่าใช้จ่าย\n4. **เป้าหมายในชีวิต** - อาชีพที่ต้องการในอนาคต\n\nแนะนำให้ปรึกษาอาจารย์แนะแนวหรือผู้เชี่ยวชาญเพื่อการวิเคราะห์ที่ละเอียด',
+  
+  'เรียนมหาวิทยาลัยไหนดี': 'การเลือกมหาวิทยาลัยควรพิจารณา:\n\n1. **คุณภาพการศึกษา** - มาตรฐานและชื่อเสียง\n2. **สาขาที่ต้องการ** - มีหลักสูตรที่สนใจ\n3. **ค่าใช้จ่าย** - ค่าเล่าเรียนและค่าครองชีพ\n4. **ทำเลที่ตั้ง** - ความสะดวกในการเดินทาง\n5. **โอกาสในการทำงาน** - การฝึกงานและหางาน\n\nแนะนำให้ไปดูงาน Open House และปรึกษารุ่นพี่',
+  
+  'เรียนสายไหนดี': 'การเลือกสายการเรียนขึ้นอยู่กับ:\n\n**สายวิทย์-คณิต**:\n- เหมาะสำหรับ: แพทย์, วิศวกร, นักวิทยาศาสตร์\n- เน้น: คณิตศาสตร์, ฟิสิกส์, เคมี, ชีววิทยา\n\n**สายศิลป์-คำนวณ**:\n- เหมาะสำหรับ: บัญชี, เศรษฐศาสตร์, การเงิน\n- เน้น: คณิตศาสตร์, สังคมศึกษา, ภาษา\n\n**สายศิลป์-ภาษา**:\n- เหมาะสำหรับ: ครู, นักแปล, นักการทูต\n- เน้น: ภาษาไทย, ภาษาอังกฤษ, สังคมศึกษา\n\nแนะนำให้เลือกตามความสนใจและอาชีพที่ต้องการ',
+  
+  'เรียนต่อต่างประเทศ': 'การเรียนต่อต่างประเทศมีข้อดีและข้อควรพิจารณา:\n\n**ข้อดี**:\n- ได้ประสบการณ์ใหม่\n- ภาษาและวัฒนธรรม\n- คุณภาพการศึกษา\n- โอกาสในการทำงาน\n\n**ข้อควรพิจารณา**:\n- ค่าใช้จ่ายสูง\n- การปรับตัว\n- ความห่างไกลจากครอบครัว\n- การเตรียมเอกสาร\n\nแนะนำให้ปรึกษาผู้ที่เคยเรียนต่อต่างประเทศ',
+  
+  'เรียนต่อป.โท': 'การเรียนต่อปริญญาโทควรพิจารณา:\n\n**เหตุผลที่ควรเรียน**:\n- ต้องการความรู้ลึกขึ้น\n- เปลี่ยนสายงาน\n- เพิ่มโอกาสในการทำงาน\n- เงินเดือนสูงขึ้น\n\n**ข้อควรพิจารณา**:\n- ค่าใช้จ่าย\n- เวลาที่ต้องใช้\n- ความพร้อมในการเรียน\n- เป้าหมายในชีวิต\n\nแนะนำให้ปรึกษาอาจารย์และผู้ที่ทำงานในสาขาที่สนใจ',
+  
+  // คำถามทั่วไป
+  'สวัสดี': 'สวัสดีครับ/ค่ะ ยินดีที่ได้พูดคุยกับคุณ มีอะไรให้ช่วยเหลือไหมครับ?',
+  
+  'ขอบคุณ': 'ยินดีครับ/ค่ะ หากมีคำถามหรือต้องการความช่วยเหลือเพิ่มเติม สามารถถามได้เลยนะครับ',
+  
+  // คำถามเกี่ยวกับแอป
+  'แอปนี้ทำอะไรได้บ้าง': 'แอปนี้มีฟีเจอร์ดังนี้:\n1. AI เพื่อนที่ปรึกษา - พูดคุยและรับคำแนะนำ\n2. ติดตามอารมณ์ - บันทึกและดูสถิติอารมณ์\n3. เกมคลายเครียด - เกมต่างๆ เพื่อผ่อนคลาย\n4. ทรัพยากรสุขภาพจิต - บทความและข้อมูลที่เป็นประโยชน์\n\nคุณสนใจฟีเจอร์ไหนเป็นพิเศษไหมครับ?'
+}
+
+// Prompt เฉพาะสำหรับแต่ละหมวดหมู่
+const expertPrompts: Record<string, string> = {
+  medical: `คุณเป็น AI ผู้เชี่ยวชาญด้านสุขภาพจิตที่พูดภาษาไทย
+
+คำแนะนำในการตอบ:
+- ให้คำแนะนำเบื้องต้นเท่านั้น
+- หากมีอาการรุนแรงหรือต่อเนื่อง แนะนำให้พบแพทย์หรือผู้เชี่ยวชาญ
+- ไม่วินิจฉัยโรค
+- ใช้ภาษาที่เข้าใจง่ายและเป็นมิตร
+- ให้กำลังใจและความหวัง
+- หากเป็นกรณีฉุกเฉิน แนะนำให้โทร 1323 (สายด่วนสุขภาพจิต)
+
+คำถามของผู้ใช้: `,
+
+  education: `คุณเป็น AI ผู้เชี่ยวชาญด้านแนะแนวการศึกษาและอาชีพที่พูดภาษาไทย
+
+คำแนะนำในการตอบ:
+- ให้คำแนะนำที่ครอบคลุมและเป็นประโยชน์
+- พิจารณาปัจจัยหลายด้าน (ความสนใจ, ความถนัด, ตลาดแรงงาน, ความสามารถทางการเงิน)
+- ให้ข้อมูลที่เป็นปัจจุบันและถูกต้อง
+- แนะนำให้ปรึกษาผู้เชี่ยวชาญเพิ่มเติมหากจำเป็น
+- ใช้ภาษาที่เข้าใจง่ายและเป็นมิตร
+- ให้กำลังใจและความหวัง
+- แนะนำแหล่งข้อมูลเพิ่มเติม
+
+คำถามของผู้ใช้: `,
+
+  general: `คุณเป็น AI เพื่อนที่ปรึกษาที่พูดภาษาไทย
+
+คำแนะนำในการตอบ:
+- เป็นมิตรและให้กำลังใจ
+- ให้คำแนะนำที่เป็นประโยชน์
+- ใช้ภาษาที่เข้าใจง่าย
+- หากไม่แน่ใจ ให้บอกว่าต้องการข้อมูลเพิ่มเติม
+
+คำถามของผู้ใช้: `,
+
+  technical: `คุณเป็น AI ผู้เชี่ยวชาญด้านเทคโนโลยีที่พูดภาษาไทย
+
+คำแนะนำในการตอบ:
+- อธิบายด้วยภาษาที่เข้าใจง่าย
+- ให้ตัวอย่างที่เป็นประโยชน์
+- หากเป็นปัญหาที่ซับซ้อน แนะนำให้ปรึกษาผู้เชี่ยวชาญ
+
+คำถามของผู้ใช้: `
+}
+
+// ฟังก์ชันตรวจสอบประเภทคำถาม
+export function classifyQuestion(question: string): string {
+  const lowerQuestion = question.toLowerCase()
+  
+  // คำถามเกี่ยวกับสุขภาพจิต
+  if (lowerQuestion.includes('เครียด') || 
+      lowerQuestion.includes('เศร้า') || 
+      lowerQuestion.includes('โกรธ') ||
+      lowerQuestion.includes('นอน') ||
+      lowerQuestion.includes('วิตก') ||
+      lowerQuestion.includes('กังวล') ||
+      lowerQuestion.includes('ซึมเศร้า') ||
+      lowerQuestion.includes('จิต') ||
+      lowerQuestion.includes('อารมณ์') ||
+      lowerQuestion.includes('ปวดหัว') ||
+      lowerQuestion.includes('เหนื่อย')) {
+    return 'medical'
+  }
+  
+  // คำถามเกี่ยวกับการศึกษา
+  if (lowerQuestion.includes('เรียน') ||
+      lowerQuestion.includes('มหาวิทยาลัย') ||
+      lowerQuestion.includes('วิทยาลัย') ||
+      lowerQuestion.includes('โรงเรียน') ||
+      lowerQuestion.includes('คณะ') ||
+      lowerQuestion.includes('สาขา') ||
+      lowerQuestion.includes('หลักสูตร') ||
+      lowerQuestion.includes('ป.ตรี') ||
+      lowerQuestion.includes('ป.โท') ||
+      lowerQuestion.includes('ป.เอก') ||
+      lowerQuestion.includes('ปริญญา') ||
+      lowerQuestion.includes('สายวิทย์') ||
+      lowerQuestion.includes('สายศิลป์') ||
+      lowerQuestion.includes('แนะแนว') ||
+      lowerQuestion.includes('อาชีพ') ||
+      lowerQuestion.includes('งาน') ||
+      lowerQuestion.includes('ต่างประเทศ') ||
+      lowerQuestion.includes('ทุนการศึกษา') ||
+      lowerQuestion.includes('สอบเข้า') ||
+      lowerQuestion.includes('แอดมิชชัน') ||
+      lowerQuestion.includes('โควตา')) {
+    return 'education'
+  }
+  
+  // คำถามเกี่ยวกับเทคโนโลยี
+  if (lowerQuestion.includes('คอมพิวเตอร์') ||
+      lowerQuestion.includes('มือถือ') ||
+      lowerQuestion.includes('อินเทอร์เน็ต') ||
+      lowerQuestion.includes('แอป') ||
+      lowerQuestion.includes('โปรแกรม') ||
+      lowerQuestion.includes('ไวรัส') ||
+      lowerQuestion.includes('ลบ') ||
+      lowerQuestion.includes('ติดตั้ง')) {
+    return 'technical'
+  }
+  
+  return 'general'
+}
+
+// ฟังก์ชันตรวจสอบ rule-based response
+export function checkRuleBasedResponse(question: string): string | null {
+  const lowerQuestion = question.toLowerCase()
+  
+  // ตรวจสอบคำถามที่ตรงกับ rule
+  for (const [key, value] of Object.entries(commonQuestions)) {
+    if (lowerQuestion.includes(key.toLowerCase())) {
+      return value
+    }
+  }
+  
+  // ตรวจสอบคำถามที่คล้ายกัน
+  if (lowerQuestion.includes('เครียด')) {
+    return commonQuestions['วิธีลดความเครียด']
+  }
+  
+  if (lowerQuestion.includes('นอนไม่หลับ') || lowerQuestion.includes('นอนยาก')) {
+    return commonQuestions['นอนไม่หลับทำไง']
+  }
+  
+  if (lowerQuestion.includes('เศร้า') || lowerQuestion.includes('หดหู่')) {
+    return commonQuestions['รู้สึกเศร้า']
+  }
+  
+  if (lowerQuestion.includes('โกรธ') || lowerQuestion.includes('โมโห')) {
+    return commonQuestions['วิธีจัดการความโกรธ']
+  }
+  
+  // ตรวจสอบคำถามเกี่ยวกับการศึกษา
+  if (lowerQuestion.includes('เรียนต่อ') || lowerQuestion.includes('เรียนอะไรดี')) {
+    return commonQuestions['เรียนต่ออะไรดี']
+  }
+  
+  if (lowerQuestion.includes('มหาวิทยาลัย') || lowerQuestion.includes('มหาลัย')) {
+    return commonQuestions['เรียนมหาวิทยาลัยไหนดี']
+  }
+  
+  if (lowerQuestion.includes('สายวิทย์') || lowerQuestion.includes('สายศิลป์')) {
+    return commonQuestions['เรียนสายไหนดี']
+  }
+  
+  if (lowerQuestion.includes('ต่างประเทศ') || lowerQuestion.includes('ต่างชาติ')) {
+    return commonQuestions['เรียนต่อต่างประเทศ']
+  }
+  
+  if (lowerQuestion.includes('ป.โท') || lowerQuestion.includes('ปริญญาโท')) {
+    return commonQuestions['เรียนต่อป.โท']
+  }
+  
+  return null
+}
+
+// ฟังก์ชันสร้าง prompt เฉพาะ
+export function getExpertPrompt(question: string): string {
+  const category = classifyQuestion(question)
+  const basePrompt = expertPrompts[category] || expertPrompts.general
+  return basePrompt + question
+}
+
+// ฟังก์ชันหลักสำหรับจัดการคำถาม
+export function processQuestion(question: string): ExpertResponse {
+  // ตรวจสอบ rule-based ก่อน
+  const ruleResponse = checkRuleBasedResponse(question)
+  if (ruleResponse) {
+    return {
+      answer: ruleResponse,
+      source: 'rule',
+      confidence: 0.9,
+      category: classifyQuestion(question)
+    }
+  }
+  
+  // ถ้าไม่มี rule ให้ใช้ prompt เฉพาะ
+  return {
+    answer: '', // จะถูกเติมโดย Gemini
+    source: 'prompt',
+    confidence: 0.7,
+    category: classifyQuestion(question)
+  }
+} 
