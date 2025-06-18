@@ -71,26 +71,24 @@ export async function generateResponse(prompt: string): Promise<string> {
     
     return text
   } catch (error) {
-    // แปลง error เป็น Error object ก่อนเข้าถึง property
-    const err = error instanceof Error ? error : new Error(String(error))
     console.error('Detailed error in generateResponse:', {
-      name: (err as any).name,
-      message: err.message,
-      stack: err.stack,
-      cause: (err as any).cause
+      name: error.name,
+      message: error.message,
+      stack: error.stack,
+      cause: error.cause
     })
     
     // จัดการข้อผิดพลาดที่เฉพาะเจาะจง
-    if (err.message?.includes('API key')) {
+    if (error.message?.includes('API key')) {
       throw new Error('API Key ไม่ถูกต้อง กรุณาตรวจสอบ API Key ของคุณ')
-    } else if (err.message?.includes('quota')) {
+    } else if (error.message?.includes('quota')) {
       throw new Error('เกินโควต้าการใช้งาน API กรุณาลองใหม่ในภายหลัง')
-    } else if (err.message?.includes('network')) {
+    } else if (error.message?.includes('network')) {
       throw new Error('มีปัญหาในการเชื่อมต่ออินเทอร์เน็ต กรุณาตรวจสอบการเชื่อมต่อของคุณ')
-    } else if (err.message?.includes('timeout')) {
+    } else if (error.message?.includes('timeout')) {
       throw new Error('การเชื่อมต่อใช้เวลานานเกินไป กรุณาลองใหม่อีกครั้ง')
     } else {
-      throw new Error(`เกิดข้อผิดพลาดในการเชื่อมต่อ: ${err.message || 'ไม่ทราบสาเหตุ'}`)
+      throw new Error(`เกิดข้อผิดพลาดในการเชื่อมต่อ: ${error.message || 'ไม่ทราบสาเหตุ'}`)
     }
   }
 }

@@ -159,4 +159,9 @@ body {
   .container-custom {
     @apply px-8;
   }
+}
+
+/* Sarabun font class */
+.font-sarabun {
+  font-family: var(--font-sarabun), sans-serif;
 } 

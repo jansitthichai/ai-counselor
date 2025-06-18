@@ -170,7 +170,7 @@ export default function ResourcesPage() {
         className="space-y-8"
       >
         <div className="text-center">
-          <h1 className="text-3xl font-bold text-gray-900 mb-4">แหล่งข้อมูลสุขภาพจิต</h1>
+          <h1 className="text-3xl font-bold text-gray-900 mb-4 font-sarabun">แหล่งข้อมูลสุขภาพจิต</h1>
           <p className="text-lg text-gray-600">
             บทความและข้อมูลที่เป็นประโยชน์สำหรับการดูแลสุขภาพจิต
           </p>

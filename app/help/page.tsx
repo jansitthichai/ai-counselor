@@ -30,9 +30,10 @@ const contactData: ContactInfo[] = [
   {
     id: '2',
     title: 'ศูนย์แนะแนวการศึกษา',
-    description: 'ศูนย์แนะแนวการศึกษาของมหาวิทยาลัยต่างๆ ให้บริการปรึกษาเรื่องการศึกษาและอาชีพ',
-    phone: '02-xxx-xxxx',
-    website: 'https://www.guidance-center.ac.th',
+    description: 'ศูนย์การพัฒนาระบบการแนะแนวการศึกษาของ สพฐ, ให้บริการปรึกษาเรื่องการศึกษาและอาชีพ',
+    phone: '02-2885753',
+    website: 'http://www.guidestudent.obec.go.th',
+    email: 'obeccareer@gmail.com',
     hours: 'จันทร์-ศุกร์ 9:00-17:00 น.',
     icon: <FaUserGraduate className="text-2xl" />,
     category: 'guidance'
@@ -43,18 +44,20 @@ const contactData: ContactInfo[] = [
     id: '3',
     title: 'สมาคมนักจิตวิทยาแห่งประเทศไทย',
     description: 'ให้บริการปรึกษาปัญหาสุขภาพจิตและแนะนำนักจิตวิทยาที่เหมาะสม',
-    phone: '02-xxx-xxxx',
-    email: 'info@psychology.or.th',
-    website: 'https://www.psychology.or.th',
+    phone: '094 4400 494',
+    email: 'tpa.thailand@hotmail.com',
+    website: 'https://thaipsychological.com',
     hours: 'จันทร์-ศุกร์ 9:00-17:00 น.',
     icon: <FaUserMd className="text-2xl" />,
     category: 'psychologist'
   },
   {
     id: '4',
-    title: 'คลินิกจิตวิทยาเอกชน',
-    description: 'คลินิกจิตวิทยาเอกชนที่ให้บริการปรึกษาปัญหาสุขภาพจิต',
-    phone: '02-xxx-xxxx',
+    title: 'สมาคมจิตวิทยาการปรึกษาแห่งประเทศไทย',
+    description: 'ให้บริการปรึกษาปัญหาสุขภาพจิตและแนะนำนักจิตวิทยาที่เหมาะสม',
+    phone: '091 730 3297',
+    email: 'thaicounseling@gmail.com',
+    website: 'https://www.thaicounseling.org',
     hours: 'จันทร์-อาทิตย์ 9:00-20:00 น.',
     icon: <FaUserMd className="text-2xl" />,
     category: 'psychologist'
@@ -94,8 +97,9 @@ const contactData: ContactInfo[] = [
     id: '8',
     title: 'โรงพยาบาลศรีธัญญา',
     description: 'โรงพยาบาลจิตเวชของรัฐ ให้บริการรักษาผู้ป่วยจิตเวช',
-    phone: '02-xxx-xxxx',
+    phone: '02 528 7800',
     address: 'ถนนติวานนท์ อำเภอเมือง จังหวัดนนทบุรี',
+    email: 'srithany@srithanya.go.th',
     website: 'https://www.srithanya.go.th',
     hours: 'จันทร์-ศุกร์ 8:00-16:00 น.',
     icon: <FaHospital className="text-2xl" />,
@@ -105,9 +109,10 @@ const contactData: ContactInfo[] = [
     id: '9',
     title: 'โรงพยาบาลสมเด็จเจ้าพระยา',
     description: 'โรงพยาบาลจิตเวชของรัฐ ให้บริการรักษาผู้ป่วยจิตเวช',
-    phone: '02-xxx-xxxx',
+    phone: '02-442-2500',
     address: 'ถนนสมเด็จเจ้าพระยา เขตคลองสาน กรุงเทพฯ',
     website: 'https://www.somdet.go.th',
+    email: 'somdet_chaopraya@somdet.go.th',
     hours: 'จันทร์-ศุกร์ 8:00-16:00 น.',
     icon: <FaHospital className="text-2xl" />,
     category: 'hospital'
@@ -116,8 +121,20 @@ const contactData: ContactInfo[] = [
     id: '10',
     title: 'โรงพยาบาลจิตเวชขอนแก่นราชนครินทร์',
     description: 'โรงพยาบาลจิตเวชในภาคอีสาน ให้บริการรักษาผู้ป่วยจิตเวช',
-    phone: '043-xxx-xxx',
+    phone: '043 209 999',
     address: 'อำเภอเมือง จังหวัดขอนแก่น',
+    hours: 'จันทร์-ศุกร์ 8:00-16:00 น.',
+    icon: <FaHospital className="text-2xl" />,
+    category: 'hospital'
+  },
+  {
+    id: '11',
+    title: 'โรงพยาบาลศรีมหาโพธิ์',
+    description: 'โรงพยาบาลจิตเวชในจังหวัดอุบลราชธานี ให้บริการรักษาผู้ป่วยจิตเวช',
+    phone: '037-279203, 037-279204',
+    address: 'อำเภอเมือง จังหวัดอุบลราชธานี',
+    website: 'https://smphospital.go.th',
+    email: 'director.smph@gmail.com',
     hours: 'จันทร์-ศุกร์ 8:00-16:00 น.',
     icon: <FaHospital className="text-2xl" />,
     category: 'hospital'
@@ -158,7 +175,7 @@ export default function HelpPage() {
           transition={{ duration: 0.5 }}
           className="text-center mb-12"
         >
-          <h1 className="text-4xl font-bold text-gray-800 mb-4">ต้องการความช่วยเหลือ</h1>
+          <h1 className="text-4xl font-bold text-gray-800 mb-4 font-sarabun">ต้องการความช่วยเหลือ</h1>
           <p className="text-lg text-gray-600">ติดต่อผู้เชี่ยวชาญและหน่วยงานที่พร้อมให้ความช่วยเหลือคุณ</p>
         </motion.div>
 

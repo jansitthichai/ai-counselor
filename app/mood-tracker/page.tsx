@@ -151,7 +151,7 @@ export default function MoodTrackerPage() {
         animate={{ opacity: 1, y: 0 }}
         className="bg-white rounded-xl shadow-md p-6"
       >
-        <h1 className="text-2xl font-bold text-gray-800 mb-6">บันทึกอารมณ์ของคุณ</h1>
+        <h1 className="text-2xl font-bold text-gray-800 mb-6 font-sarabun">บันทึกอารมณ์ของคุณ</h1>
         <form onSubmit={handleSubmit} className="space-y-6">
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-3">

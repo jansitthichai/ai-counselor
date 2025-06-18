@@ -1,11 +1,16 @@
 import type { Metadata } from 'next'
-import { Inter } from 'next/font/google'
+import { Inter, Sarabun } from 'next/font/google'
 import './globals.css'
 import { FaHome, FaComments, FaChartLine, FaBook, FaGamepad, FaHandHoldingHeart } from 'react-icons/fa'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 
 const inter = Inter({ subsets: ['latin'] })
+const sarabun = Sarabun({ 
+  subsets: ['thai', 'latin'],
+  weight: ['100', '200', '300', '400', '500', '600', '700', '800'],
+  variable: '--font-sarabun'
+})
 
 export const metadata: Metadata = {
   title: 'AI เพื่อนที่ปรึกษา',
@@ -19,7 +24,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="th">
-      <body className={inter.className}>
+      <body className={`${inter.className} ${sarabun.variable}`}>
         <div className="min-h-screen bg-gradient-to-b from-lavender-50 to-white pb-16 md:pb-0">
           {/* Desktop Navigation */}
           <nav className="hidden md:block bg-white shadow-sm sticky top-0 z-50">
@@ -45,7 +50,7 @@ export default function RootLayout({
                   </a>
                   <a href="/resources" className="flex items-center text-gray-600 hover:text-lavender-600 transition-colors">
                     <FaBook className="mr-2" />
-                    <span>แหล่งข้อมูล</span>
+                    <span>บทความ</span>
                   </a>
                   <a href="/games" className="flex items-center text-gray-600 hover:text-lavender-600 transition-colors">
                     <FaGamepad className="mr-2" />
@@ -88,7 +93,7 @@ export default function RootLayout({
               </Link>
               <Link href="/resources" className="flex flex-col items-center justify-center text-gray-600 hover:text-lavender-600 transition-colors">
                 <FaBook className="text-xl" />
-                <span className="text-xs mt-1">ข้อมูล</span>
+                <span className="text-xs mt-1">บทความ</span>
               </Link>
               <Link href="/games" className="flex flex-col items-center justify-center text-gray-600 hover:text-lavender-600 transition-colors">
                 <FaGamepad className="text-xl" />
@@ -104,6 +109,7 @@ export default function RootLayout({
           <footer className="hidden md:block bg-white border-t">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
               <p className="text-center text-gray-500">© 2024-2025 AI เพื่อนที่ปรึกษา. All rights reserved.</p>
+              <p className="text-center text-gray-500 mt-2">โครงงานคอมพิวเตอร์ โรงเรียนสตรีศึกษา</p>
             </div>
           </footer>
         </div>
