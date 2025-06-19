@@ -26,18 +26,18 @@ export default function Home() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.1 }}
-          className="bg-white rounded-xl shadow-md p-4 md:p-6 hover:shadow-lg transition-all transform hover:-translate-y-1"
+          className="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-xl shadow-md p-4 md:p-6 hover:shadow-lg transition-all transform hover:-translate-y-1 border border-blue-100"
         >
           <div className="flex items-center mb-3 md:mb-4">
-            <div className="p-2 md:p-3 bg-lavender-100 rounded-lg">
-              <FaComments className="text-xl md:text-2xl text-lavender-600" />
+            <div className="p-2 md:p-3 bg-blue-100 rounded-lg">
+              <FaComments className="text-xl md:text-2xl text-blue-600" />
             </div>
-            <h2 className="text-lg md:text-2xl font-semibold text-lavender-600 ml-3 md:ml-4 font-sarabun">แชทกับ AI</h2>
+            <h2 className="text-lg md:text-2xl font-semibold text-blue-700 ml-3 md:ml-4 font-sarabun">แชทกับ AI</h2>
           </div>
-          <p className="text-sm md:text-base text-gray-600 mb-3 md:mb-4">
+          <p className="text-sm md:text-base text-gray-600 mb-4 md:mb-5">
             พูดคุยกับ AI เพื่อนที่ปรึกษาที่พร้อมรับฟังและให้คำแนะนำในทุกเรื่อง
           </p>
-          <Link href="/chat" className="inline-flex items-center text-lavender-600 hover:text-lavender-800 font-medium text-sm md:text-base">
+          <Link href="/chat" className="inline-flex items-center bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors text-sm md:text-base font-medium shadow-sm">
             เริ่มแชท
             <svg className="w-3 h-3 md:w-4 md:h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
@@ -49,18 +49,18 @@ export default function Home() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.2 }}
-          className="bg-white rounded-xl shadow-md p-4 md:p-6 hover:shadow-lg transition-all transform hover:-translate-y-1"
+          className="bg-gradient-to-br from-green-50 to-emerald-50 rounded-xl shadow-md p-4 md:p-6 hover:shadow-lg transition-all transform hover:-translate-y-1 border border-green-100"
         >
           <div className="flex items-center mb-3 md:mb-4">
-            <div className="p-2 md:p-3 bg-lavender-100 rounded-lg">
-              <FaChartLine className="text-xl md:text-2xl text-lavender-600" />
+            <div className="p-2 md:p-3 bg-green-100 rounded-lg">
+              <FaChartLine className="text-xl md:text-2xl text-green-600" />
             </div>
-            <h2 className="text-lg md:text-2xl font-semibold text-lavender-600 ml-3 md:ml-4 font-sarabun">ติดตามอารมณ์</h2>
+            <h2 className="text-lg md:text-2xl font-semibold text-green-700 ml-3 md:ml-4 font-sarabun">ติดตามอารมณ์</h2>
           </div>
-          <p className="text-sm md:text-base text-gray-600 mb-3 md:mb-4">
+          <p className="text-sm md:text-base text-gray-600 mb-4 md:mb-5">
             บันทึกและติดตามอารมณ์ของคุณ พร้อมวิเคราะห์แนวโน้มเพื่อการดูแลสุขภาพจิตที่ดีขึ้น
           </p>
-          <Link href="/mood-tracker" className="inline-flex items-center text-lavender-600 hover:text-lavender-800 font-medium text-sm md:text-base">
+          <Link href="/mood-tracker" className="inline-flex items-center bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition-colors text-sm md:text-base font-medium shadow-sm">
             เริ่มติดตาม
             <svg className="w-3 h-3 md:w-4 md:h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
@@ -72,18 +72,18 @@ export default function Home() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.3 }}
-          className="bg-white rounded-xl shadow-md p-4 md:p-6 hover:shadow-lg transition-all transform hover:-translate-y-1"
+          className="bg-gradient-to-br from-orange-50 to-amber-50 rounded-xl shadow-md p-4 md:p-6 hover:shadow-lg transition-all transform hover:-translate-y-1 border border-orange-100"
         >
           <div className="flex items-center mb-3 md:mb-4">
-            <div className="p-2 md:p-3 bg-lavender-100 rounded-lg">
-              <FaBook className="text-xl md:text-2xl text-lavender-600" />
+            <div className="p-2 md:p-3 bg-orange-100 rounded-lg">
+              <FaBook className="text-xl md:text-2xl text-orange-600" />
             </div>
-            <h2 className="text-lg md:text-2xl font-semibold text-lavender-600 ml-3 md:ml-4 font-sarabun">บทความ</h2>
+            <h2 className="text-lg md:text-2xl font-semibold text-orange-700 ml-3 md:ml-4 font-sarabun">บทความ</h2>
           </div>
-          <p className="text-sm md:text-base text-gray-600 mb-3 md:mb-4">
+          <p className="text-sm md:text-base text-gray-600 mb-4 md:mb-5">
             ค้นพบบทความและคำแนะนำที่เป็นประโยชน์สำหรับการดูแลสุขภาพจิต
           </p>
-          <Link href="/resources" className="inline-flex items-center text-lavender-600 hover:text-lavender-800 font-medium text-sm md:text-base">
+          <Link href="/resources" className="inline-flex items-center bg-orange-600 text-white px-4 py-2 rounded-lg hover:bg-orange-700 transition-colors text-sm md:text-base font-medium shadow-sm">
             ดูบทความ
             <svg className="w-3 h-3 md:w-4 md:h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
@@ -95,18 +95,18 @@ export default function Home() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.4 }}
-          className="bg-white rounded-xl shadow-md p-4 md:p-6 hover:shadow-lg transition-all transform hover:-translate-y-1"
+          className="bg-gradient-to-br from-purple-50 to-violet-50 rounded-xl shadow-md p-4 md:p-6 hover:shadow-lg transition-all transform hover:-translate-y-1 border border-purple-100"
         >
           <div className="flex items-center mb-3 md:mb-4">
-            <div className="p-2 md:p-3 bg-lavender-100 rounded-lg">
-              <FaGamepad className="text-xl md:text-2xl text-lavender-600" />
+            <div className="p-2 md:p-3 bg-purple-100 rounded-lg">
+              <FaGamepad className="text-xl md:text-2xl text-purple-600" />
             </div>
-            <h2 className="text-lg md:text-2xl font-semibold text-lavender-600 ml-3 md:ml-4 font-sarabun">เกมคลายเครียด</h2>
+            <h2 className="text-lg md:text-2xl font-semibold text-purple-700 ml-3 md:ml-4 font-sarabun">เกมคลายเครียด</h2>
           </div>
-          <p className="text-sm md:text-base text-gray-600 mb-3 md:mb-4">
+          <p className="text-sm md:text-base text-gray-600 mb-4 md:mb-5">
             เล่นเกมที่ออกแบบมาเพื่อผ่อนคลายและพัฒนาสุขภาพจิต
           </p>
-          <Link href="/games" className="inline-flex items-center text-lavender-600 hover:text-lavender-800 font-medium text-sm md:text-base">
+          <Link href="/games" className="inline-flex items-center bg-purple-600 text-white px-4 py-2 rounded-lg hover:bg-purple-700 transition-colors text-sm md:text-base font-medium shadow-sm">
             เล่นเกม
             <svg className="w-3 h-3 md:w-4 md:h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
@@ -118,18 +118,18 @@ export default function Home() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.5 }}
-          className="bg-white rounded-xl shadow-md p-4 md:p-6 hover:shadow-lg transition-all transform hover:-translate-y-1"
+          className="bg-gradient-to-br from-red-50 to-pink-50 rounded-xl shadow-md p-4 md:p-6 hover:shadow-lg transition-all transform hover:-translate-y-1 border border-red-100"
         >
           <div className="flex items-center mb-3 md:mb-4">
-            <div className="p-2 md:p-3 bg-lavender-100 rounded-lg">
-              <FaHandHoldingHeart className="text-xl md:text-2xl text-lavender-600" />
+            <div className="p-2 md:p-3 bg-red-100 rounded-lg">
+              <FaHandHoldingHeart className="text-xl md:text-2xl text-red-600" />
             </div>
-            <h2 className="text-lg md:text-2xl font-semibold text-lavender-600 ml-3 md:ml-4 font-sarabun">ต้องการความช่วยเหลือ</h2>
+            <h2 className="text-lg md:text-2xl font-semibold text-red-700 ml-3 md:ml-4 font-sarabun">ต้องการความช่วยเหลือ</h2>
           </div>
-          <p className="text-sm md:text-base text-gray-600 mb-3 md:mb-4">
+          <p className="text-sm md:text-base text-gray-600 mb-4 md:mb-5">
             ติดต่อครูแนะแนว นักจิตวิทยา สายด่วนสุขภาพจิต และโรงพยาบาลจิตเวช
           </p>
-          <Link href="/help" className="inline-flex items-center text-lavender-600 hover:text-lavender-800 font-medium text-sm md:text-base">
+          <Link href="/help" className="inline-flex items-center bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 transition-colors text-sm md:text-base font-medium shadow-sm">
             ดูข้อมูลติดต่อ
             <svg className="w-3 h-3 md:w-4 md:h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
@@ -142,14 +142,14 @@ export default function Home() {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, delay: 0.6 }}
-        className="bg-lavender-50 rounded-xl p-6 md:p-8 text-center mx-4"
+        className="bg-gradient-to-br from-lavender-50 to-purple-50 rounded-xl p-6 md:p-8 text-center mx-4 border border-lavender-100"
       >
         <div className="flex items-center justify-center mb-4 md:mb-6">
           <div className="p-3 md:p-4 bg-lavender-100 rounded-full">
             <FaComments className="text-2xl md:text-3xl text-lavender-600" />
           </div>
         </div>
-        <h2 className="text-xl md:text-2xl font-semibold text-lavender-600 mb-3 md:mb-4 font-sarabun">
+        <h2 className="text-xl md:text-2xl font-semibold text-lavender-700 mb-3 md:mb-4 font-sarabun">
           เริ่มต้นการเดินทางสู่สุขภาพจิตที่ดี
         </h2>
         <p className="text-sm md:text-base text-gray-600 mb-4 md:mb-6">
@@ -157,7 +157,7 @@ export default function Home() {
         </p>
         <Link
           href="/chat"
-          className="inline-flex items-center bg-lavender-600 text-white px-4 md:px-6 py-2 md:py-3 rounded-lg hover:bg-lavender-700 transition-colors text-sm md:text-base"
+          className="inline-flex items-center bg-gradient-to-r from-lavender-600 to-purple-600 text-white px-6 md:px-8 py-3 md:py-4 rounded-lg hover:from-lavender-700 hover:to-purple-700 transition-all text-sm md:text-base font-medium shadow-lg hover:shadow-xl transform hover:-translate-y-1"
         >
           เริ่มต้นตอนนี้
           <svg className="w-3 h-3 md:w-4 md:h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">

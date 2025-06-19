@@ -3,23 +3,26 @@
 @tailwind utilities;
 
 :root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
+  --foreground-rgb: 40, 40, 60;
+  --background-start-rgb: 230, 225, 255;
+  --background-end-rgb: 245, 240, 255;
+  --lavender: #e6e6fa;
+  --lavender-light: #f6f4fa;
+  --accent: #a78bfa;
+  --calm-blue: #b3c7f7;
+  --calm-pink: #f7c7e3;
 }
 
 body {
   color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-    to bottom,
-    rgb(var(--background-start-rgb)),
-    rgb(var(--background-end-rgb))
-  );
+  background: linear-gradient(135deg, var(--lavender), var(--lavender-light), #fff 80%);
+  /* ใช้ฟอนต์แบบเดิมของระบบ */
 }
 
 /* Custom scrollbar */
 ::-webkit-scrollbar {
-  width: 8px;
+  width: 10px;
+  background: var(--lavender-light);
 }
 
 ::-webkit-scrollbar-track {
@@ -28,12 +31,13 @@ body {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #888;
-  border-radius: 4px;
+  background: var(--accent);
+  border-radius: 6px;
+  border: 2px solid var(--lavender-light);
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #555;
+  background: #b39ddb;
 }
 
 /* Smooth transitions */
@@ -164,4 +168,63 @@ body {
 /* Sarabun font class */
 .font-sarabun {
   font-family: var(--font-sarabun), sans-serif;
+}
+
+/* Calm theme card */
+.calm-card {
+  @apply bg-white/80 rounded-2xl shadow-lg p-6 border border-violet-100;
+  backdrop-filter: blur(2px);
+}
+
+/* Modern scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+  background: var(--lavender-light);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--accent);
+  border-radius: 6px;
+  border: 2px solid var(--lavender-light);
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #b39ddb;
+}
+
+.text-calm {
+  color: #7c3aed;
+}
+.bg-calm {
+  background: linear-gradient(135deg, #e6e6fa 0%, #f6f4fa 100%);
+}
+
+/* ปรับปุ่มให้ดูนุ่มนวล */
+.btn-calm {
+  @apply bg-violet-200 text-violet-900 px-6 py-2 rounded-full shadow hover:bg-violet-300 hover:shadow-lg transition-all font-semibold;
+}
+
+.btn-calm-danger {
+  @apply bg-red-100 text-red-700 px-4 py-2 rounded-full shadow hover:bg-red-200 hover:text-red-900 transition-all font-semibold;
+}
+
+.input-calm {
+  @apply w-full p-3 border border-violet-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-violet-400 bg-white/80 shadow-sm;
+}
+
+/* ปรับ card bubble ให้ดูนุ่มนวล */
+.bubble-user {
+  @apply bg-gradient-to-br from-blue-200 to-violet-100 text-gray-900 rounded-2xl px-5 py-3 shadow-md;
+}
+.bubble-ai {
+  @apply bg-white/90 border border-violet-100 text-gray-800 rounded-2xl px-5 py-3 shadow-md;
+}
+
+/* AI message แบบเต็มหน้าจอ */
+.bubble-ai-full {
+  @apply bg-white/95 border border-violet-100 text-gray-800 rounded-2xl px-6 py-4 shadow-lg;
+  backdrop-filter: blur(4px);
+}
+
+/* User message แบบเล็ก */
+.bubble-user-small {
+  @apply bg-gradient-to-br from-blue-200 to-violet-100 text-gray-900 rounded-xl px-4 py-2 shadow-md text-sm;
 } 

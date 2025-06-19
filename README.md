@@ -1,86 +1,107 @@
-<<<<<<< HEAD
-# AI Companion Counselor
+# AI เพื่อนที่ปรึกษา (AI Companion Counselor)
 
-An AI-powered mental health support system designed to provide companionship and resources for people dealing with depression or seeking emotional support.
+แอปพลิเคชัน AI เพื่อนที่ปรึกษาที่พัฒนาด้วย Next.js, TypeScript, และ Tailwind CSS โดยใช้ Google Gemini AI สำหรับการสนทนาและให้คำแนะนำ
 
-## Features
+## ✨ ฟีเจอร์หลัก
 
-- **AI Chat Companion**: Engage in meaningful conversations with an AI friend who's here to listen and support you
-- **Mood Tracking**: Monitor your emotional well-being over time with an intuitive mood tracking system
-- **Mental Health Resources**: Access articles, exercises, and professional support resources
-- **Relaxation Exercises**: Practice guided breathing exercises and other stress-reduction techniques
-- **Professional Support**: Connect with mental health professionals when needed
+### 🤖 AI Chat System
+- **การสนทนาต่อเนื่อง**: AI สามารถจำบริบทการสนทนาและตอบสนองต่อเนื่องได้
+- **ไม่ทักทายซ้ำ**: AI ตอบคำถามโดยตรงโดยไม่ต้องทักทายทุกครั้ง
+- **Expert System**: ระบบผู้เชี่ยวชาญที่จำแนกประเภทคำถามและให้คำตอบที่เหมาะสม
+- **Conversation History**: เก็บประวัติการสนทนาเพื่อให้ AI ตอบสนองได้ต่อเนื่อง
 
-## Technology Stack
+### 📊 Mood Tracker
+- บันทึกอารมณ์ประจำวัน
+- ดูสถิติอารมณ์รายสัปดาห์
+- ใช้ localStorage สำหรับเก็บข้อมูล
+- แสดงกราฟสถิติ
 
-- Next.js 14
-- TypeScript
-- Tailwind CSS
-- Framer Motion
-- Chart.js
-- Google's Generative AI (Gemini)
+### 🎮 Relaxation Games
+- เกมคลายเครียดหลากหลาย
+- เกมฝึกสมอง
+- เกมผ่อนคลาย
 
-## Getting Started
+### 📚 Resources
+- บทความสุขภาพจิต
+- แหล่งข้อมูลที่เป็นประโยชน์
 
-1. Clone the repository:
+## 🛠️ เทคโนโลยีที่ใช้
+
+- **Frontend**: Next.js 14, TypeScript, Tailwind CSS
+- **AI**: Google Gemini 2.0 Flash
+- **Animation**: Framer Motion
+- **Styling**: Tailwind CSS
+- **Database**: Local Storage (สำหรับ Mood Tracker)
+
+## 🚀 การติดตั้ง
+
+1. Clone repository:
 ```bash
-git clone [repository-url]
+git clone <repository-url>
+cd myproject
 ```
 
-2. Install dependencies:
+2. ติดตั้ง dependencies:
 ```bash
 npm install
 ```
 
-3. Create a `.env.local` file in the root directory and add your API keys:
-```
-GOOGLE_AI_API_KEY=your_api_key_here
+3. ตั้งค่า Environment Variables:
+สร้างไฟล์ `.env.local` และเพิ่ม:
+```env
+GOOGLE_AI_API_KEY=your_gemini_api_key_here
 ```
 
-4. Run the development server:
+4. รันแอปพลิเคชัน:
 ```bash
 npm run dev
 ```
 
-5. Open [http://localhost:3000](http://localhost:3000) in your browser.
+## 🔧 การปรับปรุงล่าสุด
 
-## Project Structure
+### AI Chat System
+- ✅ **Conversation History**: เพิ่มการส่งประวัติการสนทนาไปให้ Gemini
+- ✅ **Context Awareness**: AI สามารถจำบริบทและตอบสนองต่อเนื่องได้
+- ✅ **No Repetitive Greetings**: AI ตอบคำถามโดยตรงโดยไม่ทักทายซ้ำ
+- ✅ **Expert Prompting**: ปรับปรุง prompt ให้ AI ตอบสนองได้เป็นธรรมชาติมากขึ้น
+- ✅ **Clear Chat Feature**: เพิ่มปุ่มล้างการสนทนาเพื่อเริ่มใหม่
 
-```
-├── app/
-│   ├── chat/           # AI chat interface
-│   ├── mood-tracker/   # Mood tracking feature
-│   ├── resources/      # Mental health resources
-│   ├── games/          # Relaxation exercises
-│   └── layout.tsx      # Main layout component
-├── components/         # Reusable components
-├── lib/               # Utility functions and API clients
-└── public/            # Static assets
-```
+### Prompt Engineering
+- ✅ **Direct Responses**: AI ตอบคำถามโดยตรง
+- ✅ **Context Continuity**: รักษาบริบทการสนทนาต่อเนื่อง
+- ✅ **Natural Language**: ใช้ภาษาที่เป็นมิตรและเข้าใจง่าย
+- ✅ **Efficient History**: จำกัดประวัติการสนทนาเพื่อประสิทธิภาพ
 
-## Contributing
+## 📱 การใช้งาน
 
-Contributions are welcome! Please feel free to submit a Pull Request.
+### AI Chat
+1. ไปที่หน้า Chat
+2. พิมพ์คำถามหรือข้อความ
+3. AI จะตอบสนองโดยคำนึงถึงบริบทการสนทนาก่อนหน้า
+4. ใช้ปุ่ม "ล้างการสนทนา" เพื่อเริ่มใหม่
 
-## License
+### Mood Tracker
+1. ไปที่หน้า Mood Tracker
+2. เลือกอารมณ์ประจำวัน
+3. ดูสถิติรายสัปดาห์
 
-This project is licensed under the MIT License - see the LICENSE file for details.
+## 🎯 ประเภทคำถามที่รองรับ
 
-## Disclaimer
+- **สุขภาพจิต**: ความเครียด, การนอน, อารมณ์
+- **การศึกษา**: การเรียนต่อ, แนะแนวอาชีพ
+- **เทคโนโลยี**: ปัญหาคอมพิวเตอร์, แอปพลิเคชัน
+- **ทั่วไป**: คำปรึกษาทั่วไป
 
-This application is not a substitute for professional medical advice, diagnosis, or treatment. Always seek the advice of your physician or other qualified health provider with any questions you may have regarding a medical condition.
+## 🔒 ความปลอดภัย
 
-# ติดตั้ง Vercel CLI
-npm i -g vercel
+- API Key ถูกเก็บใน Environment Variables
+- ไม่มีการเก็บข้อมูลส่วนตัวในเซิร์ฟเวอร์
+- ข้อมูล Mood Tracker เก็บใน localStorage ของผู้ใช้
 
-# Deploy
-vercel
+## 📄 License
 
-# หรือใช้ GitHub Integration
-# 1. Push โค้ดไป GitHub
-# 2. เชื่อมต่อกับ Vercel
-# 3. Vercel จะ auto-deploy
-=======
-# ai-counselor
-AI เพื่อนที่ปรึกษา - AI-powered mental health support system
->>>>>>> 49cc475931c26105e8f2461ef4f1557af5522090
+MIT License
+
+## 🤝 การสนับสนุน
+
+หากพบปัญหา ข้อเสนอแนะ กรุณาสร้าง Issue ใน GitHub repository

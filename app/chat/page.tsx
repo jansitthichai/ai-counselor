@@ -2,7 +2,9 @@
 
 import { useState, useRef, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { generateResponse, getExpertAnalysis } from '../../lib/gemini'
+import { generateResponse, getExpertAnalysis, testConversationHistory } from '../../lib/gemini'
+import { HiOutlineUser, HiOutlineSparkles } from 'react-icons/hi2'
+import { MdOutlineDeleteSweep } from 'react-icons/md'
 
 interface Message {
   role: 'user' | 'assistant'
@@ -12,13 +14,14 @@ interface Message {
     category: string
     confidence: number
   }
+  isTyping?: boolean // เพิ่มสำหรับ typewriter effect
 }
 
 export default function ChatPage() {
   const [messages, setMessages] = useState<Message[]>([
     {
       role: 'assistant',
-      content: 'สวัสดีครับ/ค่ะ ผมเป็น AI เพื่อนที่ปรึกษา ยินดีที่จะพูดคุยและให้คำแนะนำกับคุณ\nคุณสามารถถามคำถามเกี่ยวกับสุขภาพจิต เทคโนโลยี การศึกษาต่อหรือเรื่องทั่วไปได้เลยครับ',
+      content: 'สวัสดีครับ/ค่ะ ผมเป็น AI เพื่อนที่ปรึกษา ยินดีที่จะพูดคุยและให้คำแนะนำกับคุณ\n\nมีอะไรให้ช่วยเหลือไหมครับ?',
       expertInfo: {
         source: 'rule',
         category: 'general',
@@ -41,25 +44,63 @@ export default function ChatPage() {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' })
   }
 
-  useEffect(() => {
-    scrollToBottom()
-  }, [messages])
+  // Typewriter effect function
+  const typewriterEffect = (text: string, messageIndex: number) => {
+    const lines = text.split('\n')
+    let currentLineIndex = 0
+    let currentCharIndex = 0
+    let displayText = ''
 
-  useEffect(() => {
-    if (!isLoading && inputRef.current) {
-      inputRef.current.focus()
+    const typeNextChar = () => {
+      if (currentLineIndex < lines.length) {
+        if (currentCharIndex < lines[currentLineIndex].length) {
+          displayText += lines[currentLineIndex][currentCharIndex]
+          currentCharIndex++
+        } else {
+          displayText += '\n'
+          currentLineIndex++
+          currentCharIndex = 0
+        }
+
+        setMessages(prev => prev.map((msg, idx) => 
+          idx === messageIndex && msg.role === 'assistant'
+            ? { ...msg, content: displayText, isTyping: currentLineIndex < lines.length || currentCharIndex > 0 }
+            : msg
+        ))
+
+        if (currentLineIndex < lines.length || currentCharIndex > 0) {
+          setTimeout(typeNextChar, 30) // ความเร็วในการพิมพ์
+        } else {
+          setMessages(prev => prev.map((msg, idx) => 
+            idx === messageIndex && msg.role === 'assistant'
+              ? { ...msg, isTyping: false }
+              : msg
+          ))
+        }
+      }
     }
-  }, [isLoading])
+
+    typeNextChar()
+  }
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     if (!input.trim()) return
 
-    const userMessage: Message = { role: 'user', content: input }
+    const userMessage: Message = { 
+      role: 'user', 
+      content: input,
+      isTyping: false // User message ไม่ต้องผ่าน typewriter
+    }
     setMessages(prev => [...prev, userMessage])
     setInput('')
     setIsLoading(true)
     setError(null)
+
+    // Scroll ไปที่ข้อความล่าสุด
+    setTimeout(() => {
+      scrollToBottom()
+    }, 100)
 
     try {
       console.log('Sending message:', input)
@@ -67,7 +108,21 @@ export default function ChatPage() {
       const expertAnalysis = getExpertAnalysis(input)
       console.log('Expert analysis:', expertAnalysis)
       
-      const response = await generateResponse(input)
+      // สร้าง conversation history จากข้อความก่อนหน้า (ไม่รวมข้อความเริ่มต้น)
+      const conversationHistory = messages
+        .slice(1) // ข้ามข้อความเริ่มต้น
+        .map(msg => ({
+          role: msg.role === 'assistant' ? 'model' : 'user' as 'user' | 'model',
+          content: msg.content
+        }))
+        .filter(msg => msg.content && msg.content.trim() !== '')
+      
+      console.log('Conversation history:', conversationHistory)
+      
+      // ทดสอบ conversation history (สำหรับ debug)
+      testConversationHistory(conversationHistory)
+      
+      const response = await generateResponse(input, conversationHistory)
       console.log('Received response:', response)
       
       const aiResponse: Message = {
@@ -77,10 +132,22 @@ export default function ChatPage() {
           source: expertAnalysis.source,
           category: expertAnalysis.category,
           confidence: expertAnalysis.confidence
-        }
+        },
+        isTyping: true
       }
       
       setMessages(prev => [...prev, aiResponse])
+      
+      // Scroll ไปที่ข้อความล่าสุด
+      setTimeout(() => {
+        scrollToBottom()
+      }, 100)
+      
+      // เริ่ม typewriter effect สำหรับ AI message เท่านั้น
+      setTimeout(() => {
+        typewriterEffect(response, messages.length)
+      }, 100)
+      
     } catch (error) {
       console.error('Error in handleSubmit:', error)
       const errorMessage = error instanceof Error ? error.message : 'เกิดข้อผิดพลาดที่ไม่ทราบสาเหตุ'
@@ -88,7 +155,7 @@ export default function ChatPage() {
       
       const errorResponse: Message = {
         role: 'assistant',
-        content: errorMessage,
+        content: `ขออภัยครับ/ค่ะ ${errorMessage}`,
         expertInfo: {
           source: 'gemini',
           category: 'error',
@@ -99,6 +166,21 @@ export default function ChatPage() {
     } finally {
       setIsLoading(false)
     }
+  }
+
+  const clearChat = () => {
+    setMessages([
+      {
+        role: 'assistant',
+        content: 'สวัสดีครับ/ค่ะ ผมเป็น AI เพื่อนที่ปรึกษา ยินดีที่จะพูดคุยและให้คำแนะนำกับคุณ\n\nมีอะไรให้ช่วยเหลือไหมครับ?',
+        expertInfo: {
+          source: 'rule',
+          category: 'general',
+          confidence: 1.0
+        }
+      }
+    ])
+    setError(null)
   }
 
   if (error) {
@@ -124,11 +206,101 @@ export default function ChatPage() {
     }
   }
 
+  // ฟังก์ชันแปลงข้อความให้ลิงค์และเบอร์โทรศัพท์คลิกได้
+  const renderMessageContent = (content: string) => {
+    if (!content) return ''
+    
+    // แปลง URL ให้เป็นลิงค์ (รองรับ http, https, www)
+    const urlRegex = /(https?:\/\/[^\s]+|www\.[^\s]+)/g
+    // แปลงเบอร์โทรศัพท์ไทย (รองรับรูปแบบต่างๆ รวมถึงเบอร์ฉุกเฉิน)
+    const phoneRegex = /(\d{2,4}[-\s]?\d{3,4}[-\s]?\d{3,4}|\d{10,11}|\d{3,4}|\d{2}[-\s]?\d{3,4}[-\s]?\d{3,4})/g
+    // แปลงอีเมล
+    const emailRegex = /([a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})/g
+    
+    let processedContent = content
+    
+    // แปลงเบอร์โทรศัพท์ให้เป็นลิงค์โทร
+    processedContent = processedContent.replace(phoneRegex, (match) => {
+      const cleanPhone = match.replace(/[-\s]/g, '')
+      // ตรวจสอบว่าเป็นเบอร์โทรศัพท์ที่ถูกต้อง (3-11 หลัก)
+      if (cleanPhone.length >= 3 && cleanPhone.length <= 11) {
+        // เบอร์ฉุกเฉิน (1323, 1669, 191, 199)
+        const emergencyNumbers = ['1323', '1669', '191', '199']
+        const isEmergency = emergencyNumbers.includes(cleanPhone)
+        
+        // เบอร์มือถือไทย (08, 09)
+        const isMobile = cleanPhone.startsWith('08') || cleanPhone.startsWith('09')
+        
+        // เบอร์บ้าน (02)
+        const isLandline = cleanPhone.startsWith('02')
+        
+        // เบอร์ต่างจังหวัด (03, 04, 05, 06, 07)
+        const isProvince = /^0[3-7]/.test(cleanPhone)
+        
+        let linkClass = 'text-blue-600 hover:text-blue-800 font-medium underline'
+        let title = `โทรหา ${match}`
+        
+        if (isEmergency) {
+          linkClass = 'text-red-600 hover:text-red-800 font-bold underline'
+          title = `โทรฉุกเฉิน ${match}`
+        } else if (isMobile) {
+          linkClass = 'text-green-600 hover:text-green-800 font-medium underline'
+          title = `โทรมือถือ ${match}`
+        } else if (isLandline) {
+          linkClass = 'text-purple-600 hover:text-purple-800 font-medium underline'
+          title = `โทรบ้าน ${match}`
+        } else if (isProvince) {
+          linkClass = 'text-orange-600 hover:text-orange-800 font-medium underline'
+          title = `โทรต่างจังหวัด ${match}`
+        }
+        
+        return `<a href="tel:${cleanPhone}" class="${linkClass}" title="${title}">${match}</a>`
+      }
+      return match
+    })
+    
+    // แปลงอีเมลให้เป็นลิงค์
+    processedContent = processedContent.replace(emailRegex, (match) => {
+      return `<a href="mailto:${match}" class="text-green-600 hover:text-green-800 underline" title="ส่งอีเมลถึง ${match}">${match}</a>`
+    })
+    
+    // แปลง URL ให้เป็นลิงค์
+    processedContent = processedContent.replace(urlRegex, (match) => {
+      let url = match
+      // เพิ่ม https:// ถ้าไม่มี protocol
+      if (match.startsWith('www.')) {
+        url = 'https://' + match
+      }
+      return `<a href="${url}" target="_blank" rel="noopener noreferrer" class="text-blue-600 hover:text-blue-800 underline break-all" title="เปิดลิงค์ ${match}">${match}</a>`
+    })
+    
+    return processedContent
+  }
+
   return (
-    <div className="max-w-4xl mx-auto h-[calc(100vh-12rem)] flex flex-col">
-      <div className="flex-1 overflow-y-auto p-4 space-y-4">
+    <div className="h-screen bg-calm flex flex-col">
+      {/* Header with clear chat button */}
+      <div className="flex justify-between items-center p-4 border-b bg-white/80 shadow-sm sticky top-0 z-10">
+        <div className="flex items-center gap-2">
+          <span className="text-2xl text-calm"><HiOutlineSparkles /></span>
+          <h1 className="text-xl font-bold text-calm tracking-tight">AI เพื่อนที่ปรึกษา</h1>
+        </div>
+        <motion.button
+          whileHover={{ scale: 1.1 }}
+          whileTap={{ scale: 0.95 }}
+          onClick={clearChat}
+          className="btn-calm-danger flex items-center gap-1"
+        >
+          <MdOutlineDeleteSweep className="text-lg" />
+          <span className="hidden sm:inline">ล้างการสนทนา</span>
+        </motion.button>
+      </div>
+      
+      <div className="flex-1 overflow-y-auto p-2 sm:p-4 space-y-4">
         <AnimatePresence>
-          {messages.map((message, index) => (
+          {messages.map((message, index) => {
+            console.log(`Message ${index}:`, message.role, message.content.substring(0, 50))
+            return (
             <motion.div
               key={index}
               initial={{ opacity: 0, y: 20, scale: 0.95 }}
@@ -140,52 +312,90 @@ export default function ChatPage() {
                 damping: 15,
                 duration: 0.8
               }}
-              className={`flex ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}
             >
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 0.3, duration: 0.5 }}
-                className={`max-w-[70%] rounded-lg p-4 shadow-md ${
-                  message.role === 'user'
-                    ? 'bg-blue-600 text-white'
-                    : 'bg-gray-100 text-gray-900'
-                }`}
-              >
-                {message.content.split('\n').map((line, lineIndex) => (
-                  <motion.div
-                    key={lineIndex}
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{
-                      delay: lineIndex * 0.15,
-                      duration: 0.5,
-                      ease: "easeOut"
-                    }}
-                    className="mb-2 last:mb-0"
-                  >
-                    {line || <br />}
-                  </motion.div>
-                ))}
-                
-                {message.role === 'assistant' && message.expertInfo && (
+              {message.role === 'user' ? (
+                // User message - แสดงผลเล็กๆ ด้านขวา
+                <div className="flex justify-end">
                   <motion.div
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
-                    transition={{ delay: 0.5 }}
-                    className="mt-3 pt-3 border-t border-gray-200 text-xs text-gray-500"
+                    transition={{ delay: 0.3, duration: 0.5 }}
+                    className="max-w-[40%] sm:max-w-[30%] flex items-end gap-2 flex-row-reverse"
                   >
-                    <div className="flex items-center justify-between">
-                      <span>{getSourceLabel(message.expertInfo.source)}</span>
-                      <span className="bg-blue-100 text-blue-800 px-2 py-1 rounded-full text-xs">
-                        {getCategoryLabel(message.expertInfo.category)}
+                    <div className="bubble-user-small">
+                      {message.content.split('\n').map((line, lineIndex) => (
+                        <motion.div
+                          key={lineIndex}
+                          initial={{ opacity: 0, y: 10 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          transition={{
+                            delay: lineIndex * 0.15,
+                            duration: 0.5,
+                            ease: "easeOut"
+                          }}
+                          className="mb-2 last:mb-0"
+                          dangerouslySetInnerHTML={{ 
+                            __html: renderMessageContent(line) || '<br />' 
+                          }}
+                        />
+                      ))}
+                    </div>
+                    <div className="mb-1">
+                      <span className="inline-flex items-center justify-center w-8 h-8 rounded-full bg-gradient-to-br from-blue-300 to-violet-200 shadow">
+                        <HiOutlineUser className="text-xl text-blue-700" />
                       </span>
                     </div>
                   </motion.div>
-                )}
-              </motion.div>
+                </div>
+              ) : (
+                // AI message - แสดงผลเต็มหน้าจอ
+                <div className="flex justify-start">
+                  <motion.div
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ delay: 0.3, duration: 0.5 }}
+                    className="w-full flex items-start gap-3"
+                  >
+                    <div className="mb-1 mt-1">
+                      <span className="inline-flex items-center justify-center w-10 h-10 rounded-full bg-gradient-to-br from-violet-200 to-blue-100 shadow">
+                        <HiOutlineSparkles className="text-2xl text-violet-700" />
+                      </span>
+                    </div>
+                    <div className="bubble-ai-full flex-1">
+                      {message.content.split('\n').map((line, lineIndex) => (
+                        <motion.div
+                          key={lineIndex}
+                          initial={{ opacity: 0, y: 10 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          transition={{
+                            delay: lineIndex * 0.15,
+                            duration: 0.5,
+                            ease: "easeOut"
+                          }}
+                          className="mb-2 last:mb-0"
+                          dangerouslySetInnerHTML={{ 
+                            __html: renderMessageContent(line) || '<br />' 
+                          }}
+                        />
+                      ))}
+                      {message.role === 'assistant' && message.expertInfo && (
+                        <div className="mt-3 pt-3 border-t border-violet-100 text-xs text-gray-500 flex justify-between items-center gap-2">
+                          <span>{getSourceLabel(message.expertInfo.source)}</span>
+                          <span className="bg-violet-100 text-violet-800 px-2 py-1 rounded-full text-xs">
+                            {getCategoryLabel(message.expertInfo.category)}
+                          </span>
+                        </div>
+                      )}
+                      {/* Typewriter cursor - แสดงเฉพาะใน AI message */}
+                      {message.role === 'assistant' && message.isTyping && (
+                        <span className="inline-block w-2 h-5 bg-violet-500 animate-pulse ml-1" />
+                      )}
+                    </div>
+                  </motion.div>
+                </div>
+              )}
             </motion.div>
-          ))}
+          )})}
         </AnimatePresence>
         {isLoading && (
           <motion.div
@@ -194,23 +404,16 @@ export default function ChatPage() {
             exit={{ opacity: 0 }}
             className="flex justify-start"
           >
-            <div className="bg-gray-100 rounded-lg p-4 shadow-md">
-              <div className="flex space-x-2">
-                <motion.div
-                  animate={{ y: [0, -5, 0] }}
-                  transition={{ duration: 1.2, repeat: Infinity, ease: "easeInOut" }}
-                  className="w-2 h-2 bg-gray-400 rounded-full"
-                />
-                <motion.div
-                  animate={{ y: [0, -5, 0] }}
-                  transition={{ duration: 1.2, repeat: Infinity, delay: 0.4, ease: "easeInOut" }}
-                  className="w-2 h-2 bg-gray-400 rounded-full"
-                />
-                <motion.div
-                  animate={{ y: [0, -5, 0] }}
-                  transition={{ duration: 1.2, repeat: Infinity, delay: 0.8, ease: "easeInOut" }}
-                  className="w-2 h-2 bg-gray-400 rounded-full"
-                />
+            <div className="w-full flex items-start gap-3">
+              <div className="mb-1 mt-1">
+                <span className="inline-flex items-center justify-center w-10 h-10 rounded-full bg-gradient-to-br from-violet-200 to-blue-100 shadow">
+                  <HiOutlineSparkles className="text-2xl text-violet-700" />
+                </span>
+              </div>
+              <div className="bubble-ai-full flex-1 flex items-center gap-2">
+                <span className="w-2 h-2 bg-violet-400 rounded-full animate-bounce" />
+                <span className="w-2 h-2 bg-violet-300 rounded-full animate-bounce delay-100" />
+                <span className="w-2 h-2 bg-violet-200 rounded-full animate-bounce delay-200" />
               </div>
             </div>
           </motion.div>
@@ -233,9 +436,9 @@ export default function ChatPage() {
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.6, ease: "easeOut" }}
         onSubmit={handleSubmit}
-        className="p-4 border-t"
+        className="p-4 border-t bg-white/80 shadow-inner"
       >
-        <div className="flex space-x-4">
+        <div className="flex gap-2 items-center">
           <motion.input
             ref={inputRef}
             whileFocus={{ scale: 1.01 }}
@@ -243,20 +446,20 @@ export default function ChatPage() {
             value={input}
             onChange={(e) => setInput(e.target.value)}
             placeholder="พิมพ์ข้อความของคุณ..."
-            className="flex-1 p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-200"
+            className="input-calm flex-1"
             disabled={isLoading}
           />
           <motion.button
-            whileHover={{ scale: 1.02 }}
-            whileTap={{ scale: 0.98 }}
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.97 }}
             type="submit"
             disabled={isLoading}
-            className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition-colors disabled:opacity-50"
+            className="btn-calm"
           >
-            {isLoading ? 'กำลังส่ง...' : 'ส่ง'}
+            {isLoading ? '...' : 'ส่ง'}
           </motion.button>
         </div>
       </motion.form>
     </div>
   )
-} 
+}
