@@ -42,12 +42,6 @@ interface ChatMessage {
   content: string
 }
 
-// Interface สำหรับ conversation history ที่ส่งไปยัง Gemini
-interface GeminiMessage {
-  role: 'user' | 'model'
-  content: string
-}
-
 // ฟังก์ชันแปลง role จาก chat format เป็น Gemini format
 function convertRole(role: 'user' | 'assistant'): 'user' | 'model' {
   return role === 'assistant' ? 'model' : 'user'

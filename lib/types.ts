@@ -12,11 +12,6 @@ export interface Message {
   isTyping?: boolean
 }
 
-export interface ConversationHistory {
-  role: 'user' | 'model'
-  content: string
-}
-
 // Mood tracker types
 export interface MoodEntry {
   id: string
