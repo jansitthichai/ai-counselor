@@ -2,7 +2,7 @@
 
 import { motion } from 'framer-motion'
 import Link from 'next/link'
-import { FaComments, FaChartLine, FaBook, FaGamepad, FaHandHoldingHeart } from 'react-icons/fa'
+import { FaComments, FaChartLine, FaBook, FaGamepad, FaHandHoldingHeart, FaClipboardList } from 'react-icons/fa'
 
 export default function Home() {
   return (
@@ -72,6 +72,29 @@ export default function Home() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.3 }}
+          className="bg-gradient-to-br from-teal-50 to-cyan-50 rounded-xl shadow-md p-4 md:p-6 hover:shadow-lg transition-all transform hover:-translate-y-1 border border-teal-100"
+        >
+          <div className="flex items-center mb-3 md:mb-4">
+            <div className="p-2 md:p-3 bg-teal-100 rounded-lg">
+              <FaClipboardList className="text-xl md:text-2xl text-teal-600" />
+            </div>
+            <h2 className="text-lg md:text-2xl font-semibold text-teal-700 ml-3 md:ml-4 font-sarabun">ประเมินภาวะซึมเศร้า</h2>
+          </div>
+          <p className="text-sm md:text-base text-gray-600 mb-4 md:mb-5">
+            แบบประเมินภาวะซึมเศร้าเบื้องต้น 9 คำถาม (PHQ-9) เพื่อคัดกรองสุขภาพจิต
+          </p>
+          <Link href="/phq9" className="inline-flex items-center bg-teal-600 text-white px-4 py-2 rounded-lg hover:bg-teal-700 transition-colors text-sm md:text-base font-medium shadow-sm">
+            เริ่มประเมิน
+            <svg className="w-3 h-3 md:w-4 md:h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+            </svg>
+          </Link>
+        </motion.div>
+
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.4 }}
           className="bg-gradient-to-br from-orange-50 to-amber-50 rounded-xl shadow-md p-4 md:p-6 hover:shadow-lg transition-all transform hover:-translate-y-1 border border-orange-100"
         >
           <div className="flex items-center mb-3 md:mb-4">
@@ -94,7 +117,7 @@ export default function Home() {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.4 }}
+          transition={{ duration: 0.5, delay: 0.5 }}
           className="bg-gradient-to-br from-purple-50 to-violet-50 rounded-xl shadow-md p-4 md:p-6 hover:shadow-lg transition-all transform hover:-translate-y-1 border border-purple-100"
         >
           <div className="flex items-center mb-3 md:mb-4">
@@ -117,7 +140,7 @@ export default function Home() {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.5 }}
+          transition={{ duration: 0.5, delay: 0.6 }}
           className="bg-gradient-to-br from-red-50 to-pink-50 rounded-xl shadow-md p-4 md:p-6 hover:shadow-lg transition-all transform hover:-translate-y-1 border border-red-100"
         >
           <div className="flex items-center mb-3 md:mb-4">
@@ -141,7 +164,7 @@ export default function Home() {
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5, delay: 0.6 }}
+        transition={{ duration: 0.5, delay: 0.7 }}
         className="bg-gradient-to-br from-lavender-50 to-purple-50 rounded-xl p-6 md:p-8 text-center mx-4 border border-lavender-100"
       >
         <div className="flex items-center justify-center mb-4 md:mb-6">

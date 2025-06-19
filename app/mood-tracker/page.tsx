@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback, useMemo } from 'react'
 import { motion } from 'framer-motion'
 import { Line } from 'react-chartjs-2'
 import {
@@ -39,6 +39,7 @@ export default function MoodTrackerPage() {
   const [note, setNote] = useState('')
   const [isLoading, setIsLoading] = useState(true)
 
+  // Load mood entries from localStorage
   useEffect(() => {
     try {
       const savedEntries = localStorage.getItem('moodEntries')
@@ -55,6 +56,7 @@ export default function MoodTrackerPage() {
     }
   }, [])
 
+  // Save mood entries to localStorage
   useEffect(() => {
     if (!isLoading) {
       try {
@@ -65,7 +67,7 @@ export default function MoodTrackerPage() {
     }
   }, [moodEntries, isLoading])
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = useCallback((e: React.FormEvent) => {
     e.preventDefault()
     if (currentMood === null) return
 
@@ -79,62 +81,108 @@ export default function MoodTrackerPage() {
     setMoodEntries(prevEntries => [...prevEntries, newEntry])
     setCurrentMood(null)
     setNote('')
-  }
+  }, [currentMood, note])
 
-  const getWeeklyStats = () => {
+  const handleMoodSelect = useCallback((moodIndex: number) => {
+    setCurrentMood(moodIndex)
+  }, [])
+
+  const clearEntries = useCallback(() => {
+    setMoodEntries([])
+  }, [])
+
+  // Memoized weekly data
+  const weeklyData = useMemo(() => {
     const now = new Date()
-    const weekAgo = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000)
-    
-    const weeklyEntries = moodEntries.filter(entry => 
-      new Date(entry.timestamp) >= weekAgo
-    )
+    const weekStart = new Date(now.getFullYear(), now.getMonth(), now.getDate() - now.getDay())
+    const weekEnd = new Date(weekStart.getTime() + 6 * 24 * 60 * 60 * 1000)
 
-    const moodCounts = new Array(6).fill(0)
-    weeklyEntries.forEach(entry => {
-      moodCounts[entry.mood]++
+    const weekEntries = moodEntries.filter(entry => {
+      const entryDate = new Date(entry.timestamp)
+      return entryDate >= weekStart && entryDate <= weekEnd
     })
 
-    return moodCounts
-  }
+    const daysOfWeek = ['อา', 'จ', 'อ', 'พ', 'พฤ', 'ศ', 'ส']
+    const moodData = daysOfWeek.map((day, index) => {
+      const dayStart = new Date(weekStart.getTime() + index * 24 * 60 * 60 * 1000)
+      const dayEnd = new Date(dayStart.getTime() + 24 * 60 * 60 * 1000)
+      
+      const dayEntries = weekEntries.filter(entry => {
+        const entryDate = new Date(entry.timestamp)
+        return entryDate >= dayStart && entryDate < dayEnd
+      })
 
-  const weeklyStats = getWeeklyStats()
+      if (dayEntries.length === 0) return null
 
-  const chartData = {
-    labels: moodLabels.map(mood => mood.label),
+      const averageMood = dayEntries.reduce((sum, entry) => sum + entry.mood, 0) / dayEntries.length
+      return {
+        day,
+        mood: averageMood,
+        count: dayEntries.length
+      }
+    })
+
+    return moodData.filter(day => day !== null)
+  }, [moodEntries])
+
+  // Memoized chart data
+  const chartData = useMemo(() => ({
+    labels: weeklyData.map(day => day?.day || ''),
     datasets: [
       {
-        label: 'จำนวนครั้ง',
-        data: weeklyStats,
-        borderColor: 'rgb(139, 92, 246)',
-        backgroundColor: 'rgba(139, 92, 246, 0.5)',
+        label: 'อารมณ์เฉลี่ย',
+        data: weeklyData.map(day => day?.mood || 0),
+        borderColor: 'rgb(147, 51, 234)',
+        backgroundColor: 'rgba(147, 51, 234, 0.1)',
         tension: 0.4,
+        fill: true,
       },
     ],
-  }
+  }), [weeklyData])
 
-  const chartOptions = {
+  const chartOptions = useMemo(() => ({
     responsive: true,
     plugins: {
       legend: {
-        display: false,
+        position: 'top' as const,
       },
       title: {
         display: true,
-        text: 'สถิติอารมณ์รายสัปดาห์',
-        font: {
-          size: 16,
-        },
+        text: 'อารมณ์ประจำสัปดาห์',
       },
     },
     scales: {
       y: {
-        beginAtZero: true,
+        min: 0,
+        max: 5,
         ticks: {
           stepSize: 1,
-        },
-      },
-    },
-  }
+          callback: function(value: any) {
+            const labels = ['', 'มีความสุขมาก', 'พอใจ', 'เฉยๆ', 'เหนื่อย', 'หงุดหงิด', 'กังวล']
+            return labels[value] || ''
+          }
+        }
+      }
+    }
+  }), [])
+
+  // Memoized recent entries
+  const recentEntries = useMemo(() => {
+    return moodEntries
+      .sort((a, b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime())
+      .slice(0, 5)
+  }, [moodEntries])
+
+  const formatDate = useCallback((timestamp: string) => {
+    const date = new Date(timestamp)
+    return date.toLocaleDateString('th-TH', {
+      year: 'numeric',
+      month: 'short',
+      day: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit'
+    })
+  }, [])
 
   if (isLoading) {
     return (
@@ -145,155 +193,142 @@ export default function MoodTrackerPage() {
   }
 
   return (
-    <div className="max-w-4xl mx-auto space-y-8">
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        className="bg-white rounded-xl shadow-md p-6"
-      >
-        <h1 className="text-2xl font-bold text-gray-800 mb-6 font-sarabun">บันทึกอารมณ์ของคุณ</h1>
-        <form onSubmit={handleSubmit} className="space-y-6">
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-3">
-              คุณรู้สึกอย่างไรในตอนนี้?
-            </label>
-            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-3">
-              {moodLabels.map((mood, index) => {
-                const Icon = mood.icon
-                return (
-                  <motion.button
-                    key={index}
-                    type="button"
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                    onClick={() => setCurrentMood(index)}
-                    className={`flex flex-col items-center p-3 rounded-lg border-2 transition-colors ${
-                      currentMood === index
-                        ? 'border-lavender-600 bg-lavender-50'
-                        : 'border-gray-200 hover:border-lavender-300'
-                    }`}
-                  >
-                    <Icon
-                      className={`text-2xl mb-2 ${
-                        currentMood === index ? 'text-lavender-600' : 'text-gray-400'
-                      }`}
-                      style={{ color: mood.color }}
-                    />
-                    <span className={`text-sm ${
-                      currentMood === index ? 'text-lavender-600' : 'text-gray-600'
-                    }`}>
-                      {mood.label}
-                    </span>
-                  </motion.button>
-                )
-              })}
-            </div>
-          </div>
+    <div className="min-h-screen bg-gradient-to-b from-lavender-50 to-white py-8">
+      <div className="max-w-6xl mx-auto px-4">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="text-center mb-12"
+        >
+          <h1 className="text-4xl font-bold text-gray-800 mb-4 font-sarabun">ติดตามอารมณ์</h1>
+          <p className="text-lg text-gray-600">บันทึกและติดตามอารมณ์ของคุณเพื่อการดูแลสุขภาพจิตที่ดีขึ้น</p>
+        </motion.div>
 
-          <div>
-            <label htmlFor="note" className="block text-sm font-medium text-gray-700 mb-2">
-              บันทึกเพิ่มเติม (ถ้ามี)
-            </label>
-            <textarea
-              id="note"
-              value={note}
-              onChange={(e) => setNote(e.target.value)}
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-lavender-500 focus:border-lavender-500"
-              rows={3}
-              placeholder="เขียนความรู้สึกหรือเหตุการณ์ที่เกิดขึ้น..."
-            />
-          </div>
-
-          <motion.button
-            type="submit"
-            whileHover={{ scale: 1.02 }}
-            whileTap={{ scale: 0.98 }}
-            disabled={currentMood === null}
-            className={`w-full py-3 px-4 rounded-lg text-white font-medium ${
-              currentMood === null
-                ? 'bg-gray-300 cursor-not-allowed'
-                : 'bg-lavender-600 hover:bg-lavender-700'
-            }`}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          {/* Mood Input Section */}
+          <motion.div
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            className="bg-white rounded-2xl shadow-lg p-6"
           >
-            บันทึกอารมณ์
-          </motion.button>
-        </form>
-      </motion.div>
-
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.2 }}
-        className="bg-white rounded-xl shadow-md p-6"
-      >
-        <h2 className="text-xl font-semibold text-gray-800 mb-4">สถิติอารมณ์รายสัปดาห์</h2>
-        <div className="h-64">
-          <Line data={chartData} options={chartOptions} />
-        </div>
-        <div className="mt-4 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-3">
-          {moodLabels.map((mood, index) => {
-            const Icon = mood.icon
-            return (
-              <div key={index} className="flex items-center space-x-2 p-2 rounded-lg bg-gray-50">
-                <Icon className="text-xl" style={{ color: mood.color }} />
-                <div>
-                  <div className="text-sm font-medium text-gray-700">{mood.label}</div>
-                  <div className="text-lg font-semibold" style={{ color: mood.color }}>
-                    {weeklyStats[index]}
-                  </div>
+            <h2 className="text-2xl font-semibold text-gray-800 mb-6">บันทึกอารมณ์วันนี้</h2>
+            
+            <form onSubmit={handleSubmit} className="space-y-6">
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-3">
+                  คุณรู้สึกอย่างไรวันนี้?
+                </label>
+                <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+                  {moodLabels.map((mood, index) => (
+                    <motion.button
+                      key={index}
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.95 }}
+                      type="button"
+                      onClick={() => handleMoodSelect(index)}
+                      className={`p-4 rounded-xl border-2 transition-all ${
+                        currentMood === index
+                          ? 'border-lavender-500 bg-lavender-50'
+                          : 'border-gray-200 hover:border-lavender-300'
+                      }`}
+                    >
+                      <div className="flex flex-col items-center space-y-2">
+                        <mood.icon 
+                          className="text-2xl" 
+                          style={{ color: mood.color }}
+                        />
+                        <span className="text-sm font-medium text-gray-700">
+                          {mood.label}
+                        </span>
+                      </div>
+                    </motion.button>
+                  ))}
                 </div>
               </div>
-            )
-          })}
-        </div>
-      </motion.div>
 
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.3 }}
-        className="bg-white rounded-xl shadow-md p-6"
-      >
-        <h2 className="text-xl font-semibold text-gray-800 mb-4">ประวัติการบันทึกอารมณ์</h2>
-        <div className="space-y-4">
-          {moodEntries.length === 0 ? (
-            <div className="text-center py-8 text-gray-500">
-              ยังไม่มีประวัติการบันทึกอารมณ์
+              <div>
+                <label htmlFor="note" className="block text-sm font-medium text-gray-700 mb-2">
+                  บันทึกเพิ่มเติม (ไม่บังคับ)
+                </label>
+                <textarea
+                  id="note"
+                  value={note}
+                  onChange={(e) => setNote(e.target.value)}
+                  placeholder="เขียนความรู้สึกหรือเหตุการณ์ที่เกิดขึ้น..."
+                  className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-lavender-500 focus:border-transparent resize-none"
+                  rows={3}
+                />
+              </div>
+
+              <motion.button
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+                type="submit"
+                disabled={currentMood === null}
+                className={`w-full py-3 px-6 rounded-lg font-medium transition-colors ${
+                  currentMood === null
+                    ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
+                    : 'bg-lavender-600 text-white hover:bg-lavender-700'
+                }`}
+              >
+                บันทึกอารมณ์
+              </motion.button>
+            </form>
+          </motion.div>
+
+          {/* Chart Section */}
+          <motion.div
+            initial={{ opacity: 0, x: 20 }}
+            animate={{ opacity: 1, x: 0 }}
+            className="bg-white rounded-2xl shadow-lg p-6"
+          >
+            <div className="flex justify-between items-center mb-6">
+              <h2 className="text-2xl font-semibold text-gray-800">สถิติอารมณ์</h2>
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                onClick={clearEntries}
+                className="text-red-600 hover:text-red-700 text-sm font-medium"
+              >
+                ล้างข้อมูล
+              </motion.button>
             </div>
-          ) : (
-            moodEntries.slice().reverse().map((entry) => {
-              const Icon = moodLabels[entry.mood].icon
-              return (
-                <div key={entry.id} className="flex items-start space-x-4 p-4 bg-gray-50 rounded-lg">
-                  <div className="flex-shrink-0">
-                    <Icon
-                      className="text-2xl"
-                      style={{ color: moodLabels[entry.mood].color }}
-                    />
-                  </div>
-                  <div className="flex-1">
-                    <div className="flex items-center justify-between">
-                      <span className="font-medium text-gray-900">{moodLabels[entry.mood].label}</span>
-                      <span className="text-sm text-gray-500">
-                        {new Date(entry.timestamp).toLocaleDateString('th-TH', {
-                          year: 'numeric',
-                          month: 'long',
-                          day: 'numeric',
-                          hour: '2-digit',
-                          minute: '2-digit',
-                        })}
-                      </span>
+
+            {weeklyData.length > 0 ? (
+              <div className="h-64">
+                <Line data={chartData} options={chartOptions} />
+              </div>
+            ) : (
+              <div className="h-64 flex items-center justify-center text-gray-500">
+                <p>ยังไม่มีข้อมูลอารมณ์</p>
+              </div>
+            )}
+
+            {/* Recent Entries */}
+            {recentEntries.length > 0 && (
+              <div className="mt-6">
+                <h3 className="text-lg font-semibold text-gray-800 mb-3">บันทึกล่าสุด</h3>
+                <div className="space-y-2">
+                  {recentEntries.map((entry) => (
+                    <div key={entry.id} className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                      <div className="flex items-center space-x-3">
+                        <div 
+                          className="w-4 h-4 rounded-full"
+                          style={{ backgroundColor: moodLabels[entry.mood].color }}
+                        />
+                        <span className="font-medium">{moodLabels[entry.mood].label}</span>
+                      </div>
+                      <div className="text-sm text-gray-500">
+                        {formatDate(entry.timestamp)}
+                      </div>
                     </div>
-                    {entry.note && (
-                      <p className="mt-1 text-gray-600">{entry.note}</p>
-                    )}
-                  </div>
+                  ))}
                 </div>
-              )
-            })
-          )}
+              </div>
+            )}
+          </motion.div>
         </div>
-      </motion.div>
+      </div>
     </div>
   )
 } 

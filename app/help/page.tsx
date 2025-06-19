@@ -1,8 +1,9 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useCallback } from 'react'
 import { motion } from 'framer-motion'
 import { FaPhone, FaEnvelope, FaMapMarkerAlt, FaGlobe, FaClock, FaUserGraduate, FaUserMd, FaHospital, FaPhoneAlt } from 'react-icons/fa'
+import { formatPhoneNumber, isValidPhoneNumber } from '../../lib/utils'
 
 interface ContactInfo {
   id: string
@@ -156,7 +157,7 @@ export default function HelpPage() {
     selectedCategory === 'all' || contact.category === selectedCategory
   )
 
-  const getCategoryName = (category: string) => {
+  const getCategoryName = useCallback((category: string) => {
     switch (category) {
       case 'guidance': return 'ครูแนะแนว'
       case 'psychologist': return 'นักจิตวิทยา'
@@ -164,7 +165,47 @@ export default function HelpPage() {
       case 'hospital': return 'โรงพยาบาล'
       default: return category
     }
-  }
+  }, [])
+
+  // Function to render phone numbers as clickable links
+  const renderPhoneNumber = useCallback((phone: string) => {
+    // Handle multiple phone numbers separated by commas
+    const phoneNumbers = phone.split(',').map(p => p.trim())
+    
+    return phoneNumbers.map((phoneNumber, index) => {
+      const cleanPhone = phoneNumber.replace(/[-\s]/g, '')
+      const isEmergency = ['1323', '1667', '1669', '191', '199'].includes(cleanPhone)
+      const isSuicideHotline = cleanPhone === '027136793'
+      
+      let linkClass = 'text-blue-600 hover:text-blue-800 font-medium underline cursor-pointer'
+      let title = `โทรหา ${phoneNumber}`
+      
+      if (isEmergency) {
+        linkClass = 'text-red-600 hover:text-red-800 font-bold underline cursor-pointer'
+        title = `โทรฉุกเฉิน ${phoneNumber}`
+      } else if (isSuicideHotline) {
+        linkClass = 'text-red-700 hover:text-red-900 font-bold underline cursor-pointer'
+        title = `สายด่วนป้องกันการฆ่าตัวตาย ${phoneNumber}`
+      }
+      
+      return (
+        <span key={index}>
+          {index > 0 && ', '}
+          <a
+            href={`tel:${cleanPhone}`}
+            className={linkClass}
+            title={title}
+            onClick={(e) => {
+              e.preventDefault()
+              window.location.href = `tel:${cleanPhone}`
+            }}
+          >
+            {phoneNumber}
+          </a>
+        </span>
+      )
+    })
+  }, [])
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-blue-50 to-white">
@@ -214,9 +255,36 @@ export default function HelpPage() {
             หากคุณหรือคนใกล้ตัวมีความคิดฆ่าตัวตาย หรือต้องการความช่วยเหลือเร่งด่วน:
           </p>
           <div className="space-y-2">
-            <p className="text-red-700 font-medium">สายด่วนป้องกันการฆ่าตัวตาย: <span className="text-lg">02-713-6793</span></p>
-            <p className="text-red-700 font-medium">สายด่วนสุขภาพจิต: <span className="text-lg">1323</span></p>
-            <p className="text-red-700 font-medium">โทร 1669 (รถพยาบาลฉุกเฉิน)</p>
+            <p className="text-red-700 font-medium">
+              สายด่วนป้องกันการฆ่าตัวตาย: 
+              <a 
+                href="tel:027136793" 
+                className="text-red-700 hover:text-red-900 font-bold underline cursor-pointer ml-2"
+                title="สายด่วนป้องกันการฆ่าตัวตาย"
+              >
+                02-713-6793
+              </a>
+            </p>
+            <p className="text-red-700 font-medium">
+              สายด่วนสุขภาพจิต: 
+              <a 
+                href="tel:1323" 
+                className="text-red-700 hover:text-red-900 font-bold underline cursor-pointer ml-2"
+                title="สายด่วนสุขภาพจิต"
+              >
+                1323
+              </a>
+            </p>
+            <p className="text-red-700 font-medium">
+              รถพยาบาลฉุกเฉิน: 
+              <a 
+                href="tel:1669" 
+                className="text-red-700 hover:text-red-900 font-bold underline cursor-pointer ml-2"
+                title="รถพยาบาลฉุกเฉิน"
+              >
+                1669
+              </a>
+            </p>
           </div>
         </motion.div>
 
@@ -240,20 +308,36 @@ export default function HelpPage() {
                 <div className="space-y-2">
                   {contact.phone && (
                     <div className="flex items-center text-sm text-gray-600">
-                      <FaPhone className="mr-2 text-blue-500" />
-                      <span className="font-medium">{contact.phone}</span>
+                      <FaPhone className="mr-2 text-blue-500 flex-shrink-0" />
+                      <span className="font-medium">
+                        {renderPhoneNumber(contact.phone)}
+                      </span>
                     </div>
                   )}
                   {contact.email && (
                     <div className="flex items-center text-sm text-gray-600">
-                      <FaEnvelope className="mr-2 text-blue-500" />
-                      <span>{contact.email}</span>
+                      <FaEnvelope className="mr-2 text-blue-500 flex-shrink-0" />
+                      <a 
+                        href={`mailto:${contact.email}`}
+                        className="text-blue-600 hover:text-blue-800 underline cursor-pointer"
+                        title={`ส่งอีเมลถึง ${contact.email}`}
+                      >
+                        {contact.email}
+                      </a>
                     </div>
                   )}
                   {contact.website && (
                     <div className="flex items-center text-sm text-gray-600">
-                      <FaGlobe className="mr-2 text-blue-500" />
-                      <span className="text-blue-600 hover:underline cursor-pointer">{contact.website}</span>
+                      <FaGlobe className="mr-2 text-blue-500 flex-shrink-0" />
+                      <a 
+                        href={contact.website}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-blue-600 hover:text-blue-800 underline cursor-pointer break-all"
+                        title={`เปิดเว็บไซต์ ${contact.website}`}
+                      >
+                        {contact.website}
+                      </a>
                     </div>
                   )}
                   {contact.address && (
@@ -264,7 +348,7 @@ export default function HelpPage() {
                   )}
                   {contact.hours && (
                     <div className="flex items-center text-sm text-gray-600">
-                      <FaClock className="mr-2 text-blue-500" />
+                      <FaClock className="mr-2 text-blue-500 flex-shrink-0" />
                       <span>{contact.hours}</span>
                     </div>
                   )}
@@ -296,6 +380,7 @@ export default function HelpPage() {
             <li>สำหรับปัญหาการศึกษา แนะนำให้ติดต่อครูแนะแนวในโรงเรียนก่อน</li>
             <li>หากต้องการปรึกษาปัญหาสุขภาพจิต แนะนำให้ติดต่อนักจิตวิทยาหรือจิตแพทย์</li>
             <li>ข้อมูลติดต่ออาจมีการเปลี่ยนแปลง กรุณาตรวจสอบกับหน่วยงานที่เกี่ยวข้อง</li>
+            <li className="font-medium text-blue-600">💡 เคล็ดลับ: คลิกที่เบอร์โทรศัพท์เพื่อโทรออกได้ทันที!</li>
           </ul>
         </motion.div>
       </div>

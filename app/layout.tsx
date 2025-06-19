@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 import { Inter, Sarabun } from 'next/font/google'
 import './globals.css'
-import { FaHome, FaComments, FaChartLine, FaBook, FaGamepad, FaHandHoldingHeart } from 'react-icons/fa'
+import { FaHome, FaComments, FaChartLine, FaBook, FaGamepad, FaHandHoldingHeart, FaClipboardList } from 'react-icons/fa'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 
@@ -48,6 +48,10 @@ export default function RootLayout({
                     <FaChartLine className="mr-2" />
                     <span>ติดตามอารมณ์</span>
                   </a>
+                  <a href="/phq9" className="flex items-center text-gray-600 hover:text-lavender-600 transition-colors">
+                    <FaClipboardList className="mr-2" />
+                    <span>ประเมินภาวะซึมเศร้า</span>
+                  </a>
                   <a href="/resources" className="flex items-center text-gray-600 hover:text-lavender-600 transition-colors">
                     <FaBook className="mr-2" />
                     <span>บทความ</span>
@@ -78,7 +82,7 @@ export default function RootLayout({
 
           {/* Mobile Bottom Navigation */}
           <nav className="md:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 z-50">
-            <div className="grid grid-cols-6 h-16">
+            <div className="grid grid-cols-7 h-16">
               <Link href="/" className="flex flex-col items-center justify-center text-gray-600 hover:text-lavender-600 transition-colors">
                 <FaHome className="text-xl" />
                 <span className="text-xs mt-1">หน้าแรก</span>
@@ -90,6 +94,10 @@ export default function RootLayout({
               <Link href="/mood-tracker" className="flex flex-col items-center justify-center text-gray-600 hover:text-lavender-600 transition-colors">
                 <FaChartLine className="text-xl" />
                 <span className="text-xs mt-1">อารมณ์</span>
+              </Link>
+              <Link href="/phq9" className="flex flex-col items-center justify-center text-gray-600 hover:text-lavender-600 transition-colors">
+                <FaClipboardList className="text-xl" />
+                <span className="text-xs mt-1">ประเมิน</span>
               </Link>
               <Link href="/resources" className="flex flex-col items-center justify-center text-gray-600 hover:text-lavender-600 transition-colors">
                 <FaBook className="text-xl" />
@@ -110,6 +118,7 @@ export default function RootLayout({
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
               <p className="text-center text-gray-500">© 2024-2025 AI เพื่อนที่ปรึกษา. All rights reserved.</p>
               <p className="text-center text-gray-500 mt-2">โครงงานคอมพิวเตอร์ โรงเรียนสตรีศึกษา</p>
+              <p className="text-center text-gray-400 text-sm mt-1">AI เพื่อนที่ปรึกษา อาจมีข้อผิดพลาดควรตรวจสอบข้อมูลสำคัญและอ่อนไหว</p>
             </div>
           </footer>
         </div>
