@@ -36,15 +36,26 @@ try {
   throw new Error('ไม่สามารถเชื่อมต่อกับ Google AI ได้ กรุณาตรวจสอบการตั้งค่า')
 }
 
-// Interface สำหรับ conversation history
-interface ConversationMessage {
+// Interface สำหรับ conversation history จาก chat component
+interface ChatMessage {
+  role: 'user' | 'assistant'
+  content: string
+}
+
+// Interface สำหรับ conversation history ที่ส่งไปยัง Gemini
+interface GeminiMessage {
   role: 'user' | 'model'
   content: string
 }
 
+// ฟังก์ชันแปลง role จาก chat format เป็น Gemini format
+function convertRole(role: 'user' | 'assistant'): 'user' | 'model' {
+  return role === 'assistant' ? 'model' : 'user'
+}
+
 // ฟังก์ชันตรวจสอบความถูกต้องของ conversation history
-function validateConversationHistory(history: ConversationMessage[]): boolean {
-  const validRoles = ['user', 'model']
+function validateConversationHistory(history: ChatMessage[]): boolean {
+  const validRoles = ['user', 'assistant']
   
   for (const msg of history) {
     if (!validRoles.includes(msg.role)) {
@@ -62,7 +73,7 @@ function validateConversationHistory(history: ConversationMessage[]): boolean {
 
 export async function generateResponse(
   prompt: string, 
-  conversationHistory: ConversationMessage[] = []
+  conversationHistory: ChatMessage[] = []
 ): Promise<string> {
   try {
     console.log('Processing question with expert system...')
@@ -107,7 +118,7 @@ export async function generateResponse(
     
     // สร้าง conversation history สำหรับ Gemini
     const chatHistory = limitedHistory.map(msg => ({
-      role: msg.role === 'assistant' ? 'model' : 'user',
+      role: convertRole(msg.role),
       parts: [{ text: msg.content }]
     }))
     
@@ -166,7 +177,7 @@ export function getExpertAnalysis(prompt: string): ExpertResponse {
 }
 
 // ฟังก์ชันทดสอบ conversation history (สำหรับ debug)
-export function testConversationHistory(history: ConversationMessage[]): void {
+export function testConversationHistory(history: ChatMessage[]): void {
   console.log('=== Testing Conversation History ===')
   console.log('Original history:', history)
   
@@ -178,7 +189,7 @@ export function testConversationHistory(history: ConversationMessage[]): void {
   
   if (isValid) {
     const chatHistory = limitedHistory.map(msg => ({
-      role: msg.role === 'assistant' ? 'model' : 'user',
+      role: convertRole(msg.role),
       parts: [{ text: msg.content }]
     }))
     console.log('Chat history for Gemini:', chatHistory)

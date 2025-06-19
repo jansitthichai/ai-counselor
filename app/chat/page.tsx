@@ -40,7 +40,7 @@ export default function ChatPage() {
     return messages
       .slice(1) // Skip initial message
       .map(msg => ({
-        role: msg.role === 'assistant' ? 'model' : 'user' as 'user' | 'model',
+        role: msg.role,
         content: msg.content
       }))
       .filter(msg => msg.content && msg.content.trim() !== '')
