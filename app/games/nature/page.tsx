@@ -209,7 +209,7 @@ export default function TicTacToeGame() {
 
       return () => clearTimeout(timer)
     }
-  }, [gameState.currentPlayer, gameState.gameStarted, handleAIMove])
+  }, [gameState.currentPlayer, gameState.gameStarted, handleAIMove, gameState.winner, gameState.isDraw])
 
   const getDifficultyText = (difficulty: Difficulty): string => {
     switch (difficulty) {

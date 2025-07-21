@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { FaSearch, FaBookmark, FaShare, FaHeart, FaClock, FaUser, FaExternalLinkAlt } from 'react-icons/fa'
 import { Article } from '@/lib/types'
+import Image from 'next/image'
 
 export default function ResourcesPage() {
   const [articles, setArticles] = useState<Article[]>([])
@@ -146,12 +147,13 @@ export default function ResourcesPage() {
               >
                 {/* Image */}
                 <div className="relative h-48 overflow-hidden">
-                  <img
+                  <Image
                     src={article.imageUrl}
                     alt={article.title}
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                    onError={(e) => {
-                      e.currentTarget.src = 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800'
+                    fill
+                    className="object-cover group-hover:scale-105 transition-transform duration-300"
+                    onError={() => {
+                      // Fallback handled by Next.js Image component
                     }}
                   />
                   <div className="absolute top-3 right-3 bg-lavender-600 text-white px-3 py-1 rounded-full text-sm font-medium shadow-lg">
