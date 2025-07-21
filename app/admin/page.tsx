@@ -85,7 +85,7 @@ export default function AdminPage() {
   })
 
   // Get unique categories
-  const categories = [...new Set(articles.map(article => article.category))]
+  const categories = Array.from(new Set(articles.map(article => article.category)))
 
   // Handle logout
   const handleLogout = () => {

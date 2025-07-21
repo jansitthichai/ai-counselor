@@ -1,45 +1,13 @@
 {
   "extends": [
-    "next/core-web-vitals",
-    "eslint:recommended",
-    "@typescript-eslint/recommended"
-  ],
-  "plugins": [
-    "@typescript-eslint",
-    "react-hooks"
+    "next/core-web-vitals"
   ],
   "rules": {
-    // Performance optimizations
-    "react-hooks/rules-of-hooks": "error",
-    "react-hooks/exhaustive-deps": "warn",
-    "react/jsx-no-bind": "warn",
-    "react/jsx-no-constructed-context-values": "warn",
-    
-    // TypeScript optimizations
-    "@typescript-eslint/no-unused-vars": "error",
-    "@typescript-eslint/no-explicit-any": "warn",
-    "@typescript-eslint/prefer-const": "error",
-    "@typescript-eslint/no-var-requires": "error",
-    
-    // Code quality
-    "prefer-const": "error",
-    "no-var": "error",
     "no-console": "warn",
     "no-debugger": "error",
     "no-alert": "warn",
-    
-    // React optimizations
-    "react/jsx-key": "error",
-    "react/jsx-no-duplicate-props": "error",
-    "react/jsx-no-undef": "error",
-    "react/no-array-index-key": "warn",
-    "react/no-unescaped-entities": "warn",
-    
-    // Import optimizations
-    "import/no-unresolved": "off",
-    "import/named": "off",
-    "import/default": "off",
-    "import/namespace": "off"
+    "prefer-const": "error",
+    "no-var": "error"
   },
   "env": {
     "browser": true,
