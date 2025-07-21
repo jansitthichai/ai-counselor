@@ -3,13 +3,10 @@
 import { motion } from 'framer-motion'
 import Link from 'next/link'
 import { FaComments, FaChartLine, FaBook, FaGamepad, FaHandHoldingHeart, FaClipboardList } from 'react-icons/fa'
-import ClientOnly from './components/ClientOnly'
-import LoadingSpinner from './components/LoadingSpinner'
 
 export default function Home() {
   return (
-    <ClientOnly fallback={<LoadingSpinner message="กำลังเตรียมระบบ..." />}>
-      <div className="space-y-6 md:space-y-12">
+    <div className="space-y-6 md:space-y-12">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -192,6 +189,5 @@ export default function Home() {
         </Link>
       </motion.div>
     </div>
-    </ClientOnly>
   )
 } 

@@ -97,79 +97,14 @@ export let articles: Article[] = [
     id: '1753111552372',
     title: 'รู้สึกเศร้า อยากร้องไห้บ่อย ๆ แก้ไขได้!',
     content: 'รู้สึกเศร้า อยากร้องไห้ ไม่มีสาเหตุ? อารมณ์ดิ่ง อยากร้องไห้บ่อยๆ จนรู้สึกไม่มีความสุข อาจเป็นสัญญาณเตือนของโรคซึมเศร้า มาทำความเข้าใจและเรียนรู้วิธีรับมือกับความรู้สึกเหล่านี้ไปด้วยกัน',
-    source: 'OOCA',
+    source: 'xx',
     url: 'https://ooca.co/blog/sad-for-no-reason/',
     imageUrl: 'https://ooca.co/blog/wp-content/uploads/2025/01/%E0%B8%A3%E0%B8%B9%E0%B9%89%E0%B8%AA%E0%B8%B6%E0%B8%81%E0%B9%80%E0%B8%A8%E0%B8%A3%E0%B9%89%E0%B8%B2-01-2048x2048.jpg',
     category: 'การจัดการอารมณ์',
     date: '2025-07-21',
     author: 'ทีม AI เพื่อนที่ปรึกษา',
-    tags: ['ความเศร้า', 'อารมณ์', 'การจัดการความรู้สึก'],
-    readTime: 8
-  },
-  {
-    id: '8',
-    title: 'การฝึกสติเบื้องต้น: วิธีง่ายๆ ที่ช่วยให้จิตใจสงบ',
-    content: 'การฝึกสติเป็นเครื่องมือที่ทรงพลังในการจัดการความเครียดและสร้างความสงบภายใน เรียนรู้เทคนิคง่ายๆ ที่สามารถทำได้ทุกวันเพื่อพัฒนาสุขภาพจิตที่ดี',
-    source: 'Mindful Living',
-    url: 'https://www.mindful.org/mindfulness-practice/',
-    imageUrl: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800',
-    category: 'การฝึกสติ',
-    date: '2024-04-15',
-    author: 'ทีม AI เพื่อนที่ปรึกษา',
-    tags: ['สติ', 'การผ่อนคลาย', 'สุขภาพจิต'],
-    readTime: 10
-  },
-  {
-    id: '9',
-    title: 'อาหารที่ช่วยบำรุงสมองและอารมณ์',
-    content: 'อาหารที่เรารับประทานมีผลต่อสุขภาพจิตและอารมณ์มากกว่าที่คิด มาทำความรู้จักกับอาหารที่ช่วยบำรุงสมองและสร้างความสุขให้กับจิตใจ',
-    source: 'Nutrition & Mental Health',
-    url: 'https://www.healthline.com/nutrition/foods-for-mental-health',
-    imageUrl: 'https://images.unsplash.com/photo-1490645935967-10de6ba17061?w=800',
-    category: 'อาหารเพื่อสุขภาพจิต',
-    date: '2024-04-20',
-    author: 'ทีม AI เพื่อนที่ปรึกษา',
-    tags: ['อาหาร', 'สมอง', 'อารมณ์'],
-    readTime: 7
-  },
-  {
-    id: '10',
-    title: 'การออกกำลังกายเพื่อสุขภาพจิต: มากกว่าแค่ร่างกายแข็งแรง',
-    content: 'การออกกำลังกายไม่เพียงแต่ช่วยให้ร่างกายแข็งแรง แต่ยังมีประโยชน์ต่อสุขภาพจิตมากมาย ตั้งแต่ลดความเครียดไปจนถึงเพิ่มความสุข',
-    source: 'Exercise & Mental Health',
-    url: 'https://www.psychologytoday.com/us/blog/the-athletes-way/201401/exercise-is-the-best-medicine',
-    imageUrl: 'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=800',
-    category: 'การออกกำลังกาย',
-    date: '2024-04-25',
-    author: 'ทีม AI เพื่อนที่ปรึกษา',
-    tags: ['ออกกำลังกาย', 'สุขภาพจิต', 'ความเครียด'],
-    readTime: 9
-  },
-  {
-    id: '11',
-    title: 'การสร้างความสัมพันธ์ที่ดี: กุญแจสู่ความสุข',
-    content: 'ความสัมพันธ์ที่ดีเป็นปัจจัยสำคัญที่ส่งผลต่อความสุขและสุขภาพจิต เรียนรู้วิธีสร้างและรักษาความสัมพันธ์ที่ดีกับคนรอบตัว',
-    source: 'Relationships & Happiness',
-    url: 'https://www.verywellmind.com/how-to-build-healthy-relationships-5201234',
-    imageUrl: 'https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=800',
-    category: 'ความสัมพันธ์',
-    date: '2024-05-01',
-    author: 'ทีม AI เพื่อนที่ปรึกษา',
-    tags: ['ความสัมพันธ์', 'ความสุข', 'การสื่อสาร'],
-    readTime: 8
-  },
-  {
-    id: '12',
-    title: 'การจัดการเวลาอย่างมีประสิทธิภาพเพื่อลดความเครียด',
-    content: 'การจัดการเวลาที่ดีช่วยลดความเครียดและเพิ่มประสิทธิภาพในการทำงาน เรียนรู้เทคนิคการจัดลำดับความสำคัญและการวางแผน',
-    source: 'Time Management',
-    url: 'https://www.mindtools.com/pages/main/newMN_HTE.htm',
-    imageUrl: 'https://images.unsplash.com/photo-1506784365847-bbad939e9335?w=800',
-    category: 'การจัดการความเครียด',
-    date: '2024-05-05',
-    author: 'ทีม AI เพื่อนที่ปรึกษา',
-    tags: ['การจัดการเวลา', 'ความเครียด', 'ประสิทธิภาพ'],
-    readTime: 6
+    tags: ['xx'],
+    readTime: 1
   }
 ]
 

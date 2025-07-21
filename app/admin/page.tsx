@@ -85,7 +85,7 @@ export default function AdminPage() {
   })
 
   // Get unique categories
-  const categories = Array.from(new Set(articles.map(article => article.category)))
+  const categories = [...new Set(articles.map(article => article.category))]
 
   // Handle logout
   const handleLogout = () => {
@@ -285,7 +285,7 @@ export default function AdminPage() {
           >
             <h3 className="text-lg font-semibold mb-4">ยืนยันการลบ</h3>
             <p className="text-gray-600 mb-6">
-              คุณต้องการลบบทความ &quot;{articleToDelete?.title}&quot; ใช่หรือไม่?
+              คุณต้องการลบบทความ "{articleToDelete?.title}" ใช่หรือไม่?
               การดำเนินการนี้ไม่สามารถยกเลิกได้
             </p>
             <div className="flex justify-end space-x-3">
