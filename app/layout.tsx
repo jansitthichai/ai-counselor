@@ -3,7 +3,6 @@ import { Inter, Sarabun } from 'next/font/google'
 import './globals.css'
 import { FaHome, FaComments, FaChartLine, FaBook, FaGamepad, FaHandHoldingHeart, FaClipboardList } from 'react-icons/fa'
 import Link from 'next/link'
-import { usePathname } from 'next/navigation'
 
 const inter = Inter({ subsets: ['latin'] })
 const sarabun = Sarabun({ 
@@ -25,7 +24,7 @@ export default function RootLayout({
   return (
     <html lang="th">
       <body className={`${inter.className} ${sarabun.variable}`}>
-        <div className="min-h-screen bg-gradient-to-b from-lavender-50 to-white pb-16 md:pb-0">
+        <div className="min-h-screen bg-gradient-to-b from-lavender-50 to-white pb-16 md:pb-0" suppressHydrationWarning>
           {/* Desktop Navigation */}
           <nav className="hidden md:block bg-white shadow-sm sticky top-0 z-50">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

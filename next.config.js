@@ -5,7 +5,7 @@ const nextConfig = {
   
   // Performance optimizations
   experimental: {
-    optimizeCss: false,
+    optimizeCss: true,
     optimizePackageImports: ['react-icons', 'framer-motion'],
   },
   
