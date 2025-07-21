@@ -4,24 +4,23 @@ import { processQuestion, getExpertPrompt, ExpertResponse } from './expert-syste
 // Debug: ตรวจสอบ environment variables
 console.log('=== Environment Variables Debug ===')
 console.log('NODE_ENV:', process.env.NODE_ENV)
-console.log('NEXT_PUBLIC_GOOGLE_AI_API_KEY:', process.env.NEXT_PUBLIC_GOOGLE_AI_API_KEY ? 'Found' : 'Not found')
-console.log('GOOGLE_AI_API_KEY:', process.env.GOOGLE_AI_API_KEY ? 'Found' : 'Not found')
+console.log('GOOGLE_GEMINI_API_KEY:', process.env.GOOGLE_GEMINI_API_KEY ? 'Found' : 'Not found')
 console.log('All env vars with GOOGLE:', Object.keys(process.env).filter(key => key.includes('GOOGLE')))
 console.log('=== End Debug ===')
 
 // ตรวจสอบ API Key
-const apiKey = process.env.NEXT_PUBLIC_GOOGLE_AI_API_KEY || process.env.GOOGLE_AI_API_KEY
+const apiKey = process.env.GOOGLE_GEMINI_API_KEY
 
 if (!apiKey) {
   console.error('Missing API Key')
   console.error('Available env vars:', Object.keys(process.env).filter(key => key.includes('GOOGLE')))
-  throw new Error('Missing GOOGLE_AI_API_KEY environment variable')
+  throw new Error('Missing GOOGLE_GEMINI_API_KEY environment variable')
 }
 
 // ตรวจสอบรูปแบบ API Key
 if (!apiKey.startsWith('AIza')) {
   console.error('Invalid API Key format')
-  throw new Error('Invalid GOOGLE_AI_API_KEY format. API Key should start with "AIza"')
+  throw new Error('Invalid GOOGLE_GEMINI_API_KEY format. API Key should start with "AIza"')
 }
 
 console.log('API Key found:', apiKey.substring(0, 8) + '...')

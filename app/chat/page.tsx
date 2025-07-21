@@ -48,7 +48,7 @@ export default function ChatPage() {
 
   useEffect(() => {
     console.log('Chat page loaded')
-    console.log('API Key exists:', !!process.env.GOOGLE_AI_API_KEY)
+    console.log('API Key exists:', !!process.env.GOOGLE_GEMINI_API_KEY)
     
     // Focus input after component mounts
     const timer = setTimeout(() => {
