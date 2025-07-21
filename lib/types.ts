@@ -98,6 +98,9 @@ export interface Article {
   imageUrl: string
   category: string
   date: string
+  author?: string
+  tags?: string[]
+  readTime?: number
 }
 
 // Help/Contact types
