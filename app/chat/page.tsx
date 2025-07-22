@@ -14,6 +14,7 @@ interface Message {
     category: string
     confidence: number
   }
+  isTyping?: boolean
 }
 
 const INITIAL_MESSAGE: Message = {
@@ -66,6 +67,74 @@ export default function ChatPage() {
   }, [])
 
   // Typewriter effect แบบ ChatGPT
+  const typewriterEffect = useCallback((text: string, messageIndex: number) => {
+    console.log('Typewriter effect started with text length:', text.length, 'messageIndex:', messageIndex)
+    
+    if (!text || text.length === 0) {
+      console.log('No text to type')
+      return
+    }
+
+    let currentIndex = 0
+    let displayText = ''
+    let isComplete = false
+
+    const typeNextChar = () => {
+      console.log('Typing character:', currentIndex, 'of', text.length, 'current char:', text[currentIndex])
+      
+      if (currentIndex < text.length) {
+        displayText += text[currentIndex]
+        currentIndex++
+
+        setMessages(prev => {
+          const newMessages = prev.map((msg, idx) => 
+            idx === messageIndex && msg.role === 'assistant'
+              ? { ...msg, content: displayText, isTyping: !isComplete }
+              : msg
+          )
+          console.log('Updated message content:', displayText)
+          return newMessages
+        })
+
+        // Scroll ไปที่ล่างสุดระหว่าง AI พิมพ์
+        if (!isComplete && currentIndex % 30 === 0) {
+          scrollToBottom()
+        }
+
+        // กำหนดความเร็วในการพิมพ์แบบ ChatGPT (ช้าลง)
+        let delay = 50 // ความเร็วปกติ (ช้าลงจาก 30ms)
+        
+        const currentChar = text[currentIndex - 1]
+        if (['.', '!', '?', ':', ';'].includes(currentChar)) {
+          delay = 300 // หยุดนานขึ้นเมื่อเจอเครื่องหมายวรรคตอน (ช้าลงจาก 200ms)
+        } else if (currentChar === ' ') {
+          delay = 25 // พิมพ์เร็วขึ้นเมื่อเจอช่องว่าง (ช้าลงจาก 15ms)
+        } else if (currentChar === '\n') {
+          delay = 150 // หยุดนานขึ้นเมื่อขึ้นบรรทัดใหม่ (ช้าลงจาก 100ms)
+        }
+        
+        setTimeout(typeNextChar, delay)
+      } else {
+        console.log('Typewriter effect completed')
+        isComplete = true
+        setMessages(prev => prev.map((msg, idx) => 
+          idx === messageIndex && msg.role === 'assistant'
+            ? { ...msg, isTyping: false }
+            : msg
+        ))
+        
+        // Scroll ไปที่ล่างสุดเมื่อ AI ตอบเสร็จ
+        setTimeout(() => {
+          scrollToBottom()
+        }, 100)
+      }
+    }
+
+    // เริ่มพิมพ์หลังจาก delay เล็กน้อย
+    setTimeout(() => {
+      typeNextChar()
+    }, 200) // เพิ่ม delay เริ่มต้น (จาก 100ms)
+  }, [scrollToBottom])
 
 
   const handleSubmit = useCallback(async (e: React.FormEvent) => {
@@ -101,20 +170,25 @@ export default function ChatPage() {
       
       const aiResponse: Message = {
         role: 'assistant',
-        content: response, // แสดงข้อความเต็มทันที
+        content: '', // เริ่มจากข้อความว่าง
         expertInfo: {
           source: expertAnalysis.source,
           category: expertAnalysis.category,
           confidence: expertAnalysis.confidence
-        }
+        },
+        isTyping: true
       }
       
+      const newMessageIndex = messages.length
       setMessages(prev => [...prev, aiResponse])
       
-      // Scroll ไปที่ล่างสุดเมื่อ AI ตอบเสร็จ
+      // Scroll ไปที่ล่างสุดเมื่อ AI เริ่มตอบ
       setTimeout(() => {
         scrollToBottom()
       }, 100)
+      
+      // Start typewriter effect for AI message
+      typewriterEffect(response, newMessageIndex)
       
     } catch (error) {
       console.error('Error in handleSubmit:', error)
@@ -134,7 +208,7 @@ export default function ChatPage() {
     } finally {
       setIsLoading(false)
     }
-  }, [input, isLoading, conversationHistory, scrollToBottom])
+  }, [input, isLoading, conversationHistory, scrollToBottom, typewriterEffect])
 
   // ฟังก์ชันสำหรับจัดการการกดปุ่มใน textarea
   const handleKeyDown = useCallback((e: React.KeyboardEvent<HTMLTextAreaElement>) => {
@@ -225,6 +299,9 @@ export default function ChatPage() {
                 <div className="bg-gray-50 px-4 py-3 rounded-2xl">
                   <div className="whitespace-pre-wrap break-words text-gray-900">
                     {message.content}
+                    {message.isTyping && (
+                      <span className="inline-block w-2 h-5 bg-gray-900 ml-1 animate-pulse"></span>
+                    )}
                   </div>
                 </div>
                 {message.role === 'assistant' && message.expertInfo && (
