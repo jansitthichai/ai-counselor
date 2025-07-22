@@ -299,13 +299,13 @@ export default function ChatPage() {
               onKeyDown={handleKeyDown}
               placeholder="ส่งข้อความ..."
               className="w-full border border-gray-300 rounded-2xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent chat-textarea"
-              style={{ accentColor: 'transparent' }}
-              disabled={isLoading}
-              rows={1}
               style={{ 
+                accentColor: 'transparent',
                 minHeight: '44px',
                 maxHeight: '120px'
               }}
+              disabled={isLoading}
+              rows={1}
             />
           </div>
           <button
