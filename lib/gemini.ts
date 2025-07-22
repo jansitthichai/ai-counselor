@@ -11,27 +11,27 @@ let isApiAvailable = false
 // ฟังก์ชันสำหรับตรวจสอบและตั้งค่า API
 function initializeAPI() {
   if (genAI) return // ถ้า initialize แล้วให้ return เลย
-  
-  if (!apiKey) {
+
+if (!apiKey) {
     console.warn('⚠️ GOOGLE_AI_API_KEY ไม่ได้ตั้งค่า กรุณาสร้างไฟล์ .env.local และเพิ่ม GOOGLE_AI_API_KEY=your_api_key_here')
     console.warn('📝 วิธีการตั้งค่า:')
     console.warn('1. สร้างไฟล์ .env.local ในโฟลเดอร์หลักของโปรเจค')
     console.warn('2. เพิ่มบรรทัด: GOOGLE_AI_API_KEY=your_gemini_api_key_here')
     console.warn('3. รีสตาร์ท development server')
     return
-  }
+}
 
-  // ตรวจสอบรูปแบบ API Key
-  if (!apiKey.startsWith('AIza')) {
+// ตรวจสอบรูปแบบ API Key
+if (!apiKey.startsWith('AIza')) {
     console.error('❌ รูปแบบ GOOGLE_AI_API_KEY ไม่ถูกต้อง API Key ควรขึ้นต้นด้วย "AIza"')
     return
-  }
+}
 
-  try {
-    genAI = new GoogleGenerativeAI(apiKey)
+try {
+  genAI = new GoogleGenerativeAI(apiKey)
     isApiAvailable = true
     console.log('✅ Google AI API เชื่อมต่อสำเร็จ')
-  } catch (error) {
+} catch (error) {
     console.error('❌ ไม่สามารถเชื่อมต่อกับ Google AI ได้:', error)
     isApiAvailable = false
   }
