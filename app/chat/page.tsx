@@ -14,7 +14,6 @@ interface Message {
     category: string
     confidence: number
   }
-  isTyping?: boolean
 }
 
 const INITIAL_MESSAGE: Message = {
@@ -48,7 +47,7 @@ export default function ChatPage() {
 
   useEffect(() => {
     console.log('Chat page loaded')
-    console.log('API Key exists:', !!process.env.GOOGLE_GEMINI_API_KEY)
+    console.log('API Key exists:', !!process.env.GOOGLE_AI_API_KEY)
     
     // Focus input after component mounts
     const timer = setTimeout(() => {
@@ -58,70 +57,16 @@ export default function ChatPage() {
     return () => clearTimeout(timer)
   }, [])
 
+  // ฟังก์ชันสำหรับ scroll ไปที่ล่างสุดแบบเรียบง่าย
   const scrollToBottom = useCallback(() => {
-    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' })
+    window.scrollTo({
+      top: document.documentElement.scrollHeight,
+      behavior: 'smooth'
+    })
   }, [])
 
-  // Optimized typewriter effect
-  const typewriterEffect = useCallback((text: string, messageIndex: number) => {
-    const lines = text.split('\n')
-    let currentLineIndex = 0
-    let currentCharIndex = 0
-    let displayText = ''
-    let isComplete = false
+  // Typewriter effect แบบ ChatGPT
 
-    const typeNextChar = () => {
-      if (currentLineIndex < lines.length) {
-        if (currentCharIndex < lines[currentLineIndex].length) {
-          displayText += lines[currentLineIndex][currentCharIndex]
-          currentCharIndex++
-        } else {
-          displayText += '\n'
-          currentLineIndex++
-          currentCharIndex = 0
-        }
-
-        setMessages(prev => prev.map((msg, idx) => 
-          idx === messageIndex && msg.role === 'assistant'
-            ? { ...msg, content: displayText, isTyping: !isComplete }
-            : msg
-        ))
-
-        if (currentLineIndex < lines.length || currentCharIndex > 0) {
-          let delay = 30
-          
-          if (lines[currentLineIndex] && lines[currentLineIndex][currentCharIndex - 1]) {
-            const char = lines[currentLineIndex][currentCharIndex - 1]
-            if (['.', '!', '?', ':', ';'].includes(char)) {
-              delay = 200
-            } else if ([' ', '\t'].includes(char)) {
-              delay = 15
-            } else if (['\n'].includes(char)) {
-              delay = 100
-            }
-          }
-          
-          setTimeout(typeNextChar, delay)
-        } else {
-          isComplete = true
-          setMessages(prev => prev.map((msg, idx) => 
-            idx === messageIndex && msg.role === 'assistant'
-              ? { ...msg, isTyping: false }
-              : msg
-          ))
-        }
-      } else {
-        isComplete = true
-        setMessages(prev => prev.map((msg, idx) => 
-          idx === messageIndex && msg.role === 'assistant'
-            ? { ...msg, isTyping: false }
-            : msg
-        ))
-      }
-    }
-
-    typeNextChar()
-  }, [])
 
   const handleSubmit = useCallback(async (e: React.FormEvent) => {
     e.preventDefault()
@@ -129,8 +74,7 @@ export default function ChatPage() {
 
     const userMessage: Message = { 
       role: 'user', 
-      content: input,
-      isTyping: false
+      content: input
     }
     
     setMessages(prev => [...prev, userMessage])
@@ -138,8 +82,10 @@ export default function ChatPage() {
     setIsLoading(true)
     setError(null)
 
-    // Scroll to bottom after adding user message
-    setTimeout(scrollToBottom, 100)
+    // Scroll ไปที่ล่างสุดเมื่อส่งข้อความใหม่
+    setTimeout(() => {
+      scrollToBottom()
+    }, 100)
 
     try {
       console.log('Sending message:', input)
@@ -155,22 +101,19 @@ export default function ChatPage() {
       
       const aiResponse: Message = {
         role: 'assistant',
-        content: response,
+        content: response, // แสดงข้อความเต็มทันที
         expertInfo: {
           source: expertAnalysis.source,
           category: expertAnalysis.category,
           confidence: expertAnalysis.confidence
-        },
-        isTyping: true
+        }
       }
       
       setMessages(prev => [...prev, aiResponse])
       
-      setTimeout(scrollToBottom, 100)
-      
-      // Start typewriter effect for AI message
+      // Scroll ไปที่ล่างสุดเมื่อ AI ตอบเสร็จ
       setTimeout(() => {
-        typewriterEffect(response, messages.length)
+        scrollToBottom()
       }, 100)
       
     } catch (error) {
@@ -191,7 +134,33 @@ export default function ChatPage() {
     } finally {
       setIsLoading(false)
     }
-  }, [input, isLoading, conversationHistory, scrollToBottom, typewriterEffect, messages.length])
+  }, [input, isLoading, conversationHistory, scrollToBottom])
+
+  // ฟังก์ชันสำหรับจัดการการกดปุ่มใน textarea
+  const handleKeyDown = useCallback((e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+    // ถ้ากด Enter โดยไม่กด Shift ให้ส่งข้อความ
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault()
+      if (!isLoading && input.trim()) {
+        handleSubmit(e as any)
+      }
+    }
+    // ถ้ากด Shift+Enter ให้ขึ้นบรรทัดใหม่
+    else if (e.key === 'Enter' && e.shiftKey) {
+      // ไม่ต้องทำอะไร ให้ขึ้นบรรทัดใหม่ตามปกติ
+    }
+  }, [input, isLoading, handleSubmit])
+
+  // ฟังก์ชันสำหรับปรับขนาด textarea อัตโนมัติ
+  const handleInputChange = useCallback((e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    const value = e.target.value
+    setInput(value)
+    
+    // ปรับขนาด textarea อัตโนมัติ
+    const textarea = e.target
+    textarea.style.height = 'auto'
+    textarea.style.height = Math.min(textarea.scrollHeight, 120) + 'px' // จำกัดความสูงสูงสุดที่ 120px
+  }, [])
 
   const clearChat = useCallback(() => {
     setMessages([INITIAL_MESSAGE])
@@ -223,12 +192,7 @@ export default function ChatPage() {
     }
   }, [])
 
-  const renderMessageContent = useCallback((content: string) => {
-    return content
-      .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
-      .replace(/\*(.*?)\*/g, '<em>$1</em>')
-      .replace(/`(.*?)`/g, '<code class="bg-gray-100 px-1 rounded">$1</code>')
-  }, [])
+
 
   // Memoized message components
   const messageComponents = useMemo(() => {
@@ -237,235 +201,124 @@ export default function ChatPage() {
       
       if (message.role === 'user') {
         return (
-          <motion.div
-            key={index}
-            initial={{ opacity: 0, y: 20, scale: 0.95 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, scale: 0.95 }}
-            transition={{
-              type: "spring",
-              stiffness: 100,
-              damping: 15,
-              duration: 0.8
-            }}
-          >
-            <div className="flex justify-end">
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 0.3, duration: 0.5 }}
-                className="max-w-[40%] sm:max-w-[30%] flex items-end gap-2 flex-row-reverse"
-              >
-                <div className="bubble-user-small">
-                  {message.content.split('\n').map((line, lineIndex) => (
-                    <motion.div
-                      key={lineIndex}
-                      initial={{ opacity: 0, y: 5 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{
-                        delay: lineIndex * 0.05,
-                        duration: 0.2,
-                        ease: "easeOut"
-                      }}
-                      className="mb-1 last:mb-0 leading-relaxed"
-                      dangerouslySetInnerHTML={{ 
-                        __html: renderMessageContent(line) || '<br />' 
-                      }}
-                    />
-                  ))}
+          <div key={index} data-message-index={index} className="flex justify-end">
+            <div className="max-w-[80%] flex items-end space-x-3">
+              <div className="bg-purple-600 text-white px-4 py-2 rounded-2xl max-w-full">
+                <div className="whitespace-pre-wrap break-words">
+                  {message.content}
                 </div>
-                <div className="mb-1">
-                  <span className="inline-flex items-center justify-center w-7 h-7 rounded-full bg-gradient-to-br from-blue-300 to-violet-200 shadow">
-                    <HiOutlineUser className="text-lg text-blue-700" />
-                  </span>
-                </div>
-              </motion.div>
+              </div>
+              <div className="w-8 h-8 rounded-full bg-gray-300 flex items-center justify-center flex-shrink-0">
+                <HiOutlineUser className="w-5 h-5 text-gray-600" />
+              </div>
             </div>
-          </motion.div>
+          </div>
         )
       } else {
         return (
-          <motion.div
-            key={index}
-            initial={{ opacity: 0, y: 20, scale: 0.95 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, scale: 0.95 }}
-            transition={{
-              type: "spring",
-              stiffness: 100,
-              damping: 15,
-              duration: 0.8
-            }}
-          >
-            <div className="flex justify-start">
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 0.3, duration: 0.5 }}
-                className="w-full flex items-start gap-3"
-              >
-                <div className="mb-1 mt-1">
-                  <span className="inline-flex items-center justify-center w-9 h-9 rounded-full bg-gradient-to-br from-violet-200 to-blue-100 shadow">
-                    <HiOutlineSparkles className="text-xl text-violet-700" />
-                  </span>
+          <div key={index} data-message-index={index} className="flex justify-start">
+            <div className="w-full flex items-start space-x-4">
+              <div className="w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center flex-shrink-0">
+                <HiOutlineSparkles className="w-5 h-5 text-gray-600" />
+              </div>
+              <div className="flex-1 max-w-[80%]">
+                <div className="bg-gray-50 px-4 py-3 rounded-2xl">
+                  <div className="whitespace-pre-wrap break-words text-gray-900">
+                    {message.content}
+                  </div>
                 </div>
-                <div className="bubble-ai-full flex-1">
-                  {message.content.split('\n').map((line, lineIndex) => (
-                    <motion.div
-                      key={lineIndex}
-                      initial={{ opacity: 0, y: 5 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{
-                        delay: lineIndex * 0.1,
-                        duration: 0.3,
-                        ease: "easeOut"
-                      }}
-                      className="mb-2 last:mb-0 leading-relaxed"
-                      dangerouslySetInnerHTML={{ 
-                        __html: renderMessageContent(line) || '<br />' 
-                      }}
-                    />
-                  ))}
-                  {message.role === 'assistant' && message.expertInfo && (
-                    <motion.div
-                      initial={{ opacity: 0, y: 10 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{
-                        delay: 0.5,
-                        duration: 0.4,
-                        ease: "easeOut"
-                      }}
-                      className="mt-2 pt-2 border-t border-violet-100 text-xs text-gray-500 flex justify-between items-center gap-2"
-                    >
-                      <span>{getSourceLabel(message.expertInfo.source)}</span>
-                      <span className="bg-violet-100 text-violet-800 px-2 py-1 rounded-full text-xs">
-                        {getCategoryLabel(message.expertInfo.category)}
-                      </span>
-                    </motion.div>
-                  )}
-                </div>
-              </motion.div>
+                {message.role === 'assistant' && message.expertInfo && (
+                  <div className="mt-2 text-xs text-gray-500 flex items-center space-x-2">
+                    <span>{getSourceLabel(message.expertInfo.source)}</span>
+                    <span className="bg-gray-200 text-gray-700 px-2 py-1 rounded">
+                      {getCategoryLabel(message.expertInfo.category)}
+                    </span>
+                  </div>
+                )}
+              </div>
             </div>
-          </motion.div>
+          </div>
         )
       }
     })
-  }, [messages, renderMessageContent, getSourceLabel, getCategoryLabel])
+  }, [messages, getSourceLabel, getCategoryLabel])
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-violet-50 via-blue-50 to-indigo-50 flex flex-col">
-      {/* Header */}
-      <div className="bg-white/80 backdrop-blur-sm border-b border-violet-100 p-3 shadow-sm">
+    <div className="min-h-screen bg-white flex flex-col">
+      {/* Header - เหมือน ChatGPT */}
+      <div className="bg-white border-b border-gray-200 p-4 sticky top-0 z-10">
         <div className="max-w-4xl mx-auto flex justify-between items-center">
-          <motion.h1 
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.6, ease: "easeOut" }}
-            className="text-lg sm:text-xl font-bold bg-gradient-to-r from-violet-600 to-blue-600 bg-clip-text text-transparent"
-          >
+          <h1 className="text-lg font-semibold text-gray-900">
             AI เพื่อนที่ปรึกษา
-          </motion.h1>
-          <motion.button
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
+          </h1>
+          <button
             onClick={clearChat}
-            className="btn-calm-danger flex items-center gap-1 text-xs px-2 py-1"
+            className="text-red-600 hover:text-red-700 text-sm px-3 py-2 rounded-lg hover:bg-red-50 border border-red-200 hover:border-red-300 transition-colors font-medium"
           >
-            <MdOutlineDeleteSweep className="text-sm" />
-            <span className="hidden sm:inline">ล้างการสนทนา</span>
-          </motion.button>
+            ล้างการสนทนา
+          </button>
         </div>
       </div>
       
-      {/* Messages area */}
-      <div className="flex-1 overflow-y-auto p-2 sm:p-3 space-y-3 pb-2 max-h-[calc(100vh-280px)]">
+      {/* Messages area - เหมือน ChatGPT */}
+      <div className="flex-1 max-w-4xl mx-auto w-full px-4 py-6 space-y-6 pb-32">
         <AnimatePresence>
           {messageComponents}
         </AnimatePresence>
         {isLoading && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="flex justify-start"
-          >
-            <div className="w-full flex items-start gap-3">
-              <div className="mb-1 mt-1">
-                <span className="inline-flex items-center justify-center w-9 h-9 rounded-full bg-gradient-to-br from-violet-200 to-blue-100 shadow">
-                  <HiOutlineSparkles className="text-xl text-violet-700" />
-                </span>
-              </div>
-              <div className="bubble-ai-full flex-1 flex items-center gap-1">
-                <motion.span
-                  initial={{ opacity: 0, scale: 0.5 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  transition={{ delay: 0.1, duration: 0.3 }}
-                  className="w-2 h-2 bg-violet-400 rounded-full animate-bounce"
-                />
-                <motion.span
-                  initial={{ opacity: 0, scale: 0.5 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  transition={{ delay: 0.2, duration: 0.3 }}
-                  className="w-2 h-2 bg-violet-300 rounded-full animate-bounce"
-                />
-                <motion.span
-                  initial={{ opacity: 0, scale: 0.5 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  transition={{ delay: 0.3, duration: 0.3 }}
-                  className="w-2 h-2 bg-violet-200 rounded-full animate-bounce"
-                />
-              </div>
+          <div className="flex items-start space-x-4">
+            <div className="w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center">
+              <HiOutlineSparkles className="w-5 h-5 text-gray-600" />
             </div>
-          </motion.div>
+            <div className="flex-1 flex items-center space-x-1">
+              <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce"></div>
+              <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '0.1s' }}></div>
+              <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '0.2s' }}></div>
+            </div>
+          </div>
         )}
         {error && (
-          <motion.div
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, ease: "easeOut" }}
-            className="text-red-500 text-center text-sm mt-2"
-          >
+          <div className="text-red-500 text-center text-sm">
             {error}
-          </motion.div>
+          </div>
         )}
         <div ref={messagesEndRef} />
       </div>
 
-      {/* Input form */}
-      <motion.form
-        initial={{ y: 20, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        transition={{ duration: 0.6, ease: "easeOut" }}
+      {/* Input form - เหมือน ChatGPT */}
+      <form
         onSubmit={handleSubmit}
-        className="p-3 bg-white/95 shadow-lg backdrop-blur-sm rounded-2xl mx-3 mb-4"
+        className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 p-4 z-10"
       >
-        <div className="flex gap-3 items-end max-w-4xl mx-auto">
-          <div className="relative flex-1">
-            <motion.textarea
+        <div className="max-w-4xl mx-auto flex items-center space-x-3">
+          <div className="flex-1">
+            <textarea
               ref={inputRef}
-              whileFocus={{ scale: 1.01 }}
               value={input}
-              onChange={(e) => setInput(e.target.value)}
-              placeholder="พิมพ์ข้อความของคุณ..."
-              className="input-calm w-full text-sm resize-none rounded-2xl border-2 border-violet-200 focus:border-violet-400 focus:ring-2 focus:ring-violet-200 px-4 py-3 h-12 leading-relaxed"
+              onChange={handleInputChange}
+              onKeyDown={handleKeyDown}
+              placeholder="ส่งข้อความ..."
+              className="w-full border border-gray-300 rounded-2xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent chat-textarea"
+              style={{ accentColor: 'transparent' }}
               disabled={isLoading}
               rows={1}
               style={{ 
-                height: '3rem'
+                minHeight: '44px',
+                maxHeight: '120px'
               }}
             />
           </div>
-          <motion.button
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.97 }}
+          <button
             type="submit"
-            disabled={isLoading}
-            className="btn-calm text-sm px-6 py-3 rounded-2xl h-12 flex items-center justify-center"
+            disabled={isLoading || !input.trim()}
+            className="bg-purple-600 text-white px-4 py-3 rounded-2xl hover:bg-purple-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors h-[52px] min-h-[52px] flex items-center justify-center flex-shrink-0"
           >
-            {isLoading ? '...' : 'ส่ง'}
-          </motion.button>
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
+            </svg>
+          </button>
         </div>
-      </motion.form>
+      </form>
     </div>
   )
 }

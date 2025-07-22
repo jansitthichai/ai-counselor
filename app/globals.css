@@ -253,4 +253,246 @@ body {
 /* User message แบบเล็ก */
 .bubble-user-small {
   @apply bg-gradient-to-br from-blue-200 to-violet-100 text-gray-900 rounded-xl px-4 py-2 shadow-md text-sm;
-} 
+}
+
+/* Auto-resize textarea */
+.auto-resize-textarea {
+  @apply transition-all duration-200 ease-in-out;
+  resize: none;
+  overflow-y: auto;
+}
+
+.auto-resize-textarea:focus {
+  @apply outline-none ring-2 ring-violet-400 border-violet-400;
+}
+
+/* Message content with line breaks */
+.message-content {
+  @apply whitespace-pre-wrap break-words;
+}
+
+/* ลบ resize handle ออกจาก textarea */
+textarea {
+  resize: none !important;
+}
+
+/* ลบ resize handle ใน WebKit browsers */
+textarea::-webkit-resizer {
+  display: none !important;
+}
+
+/* ลบ resize handle ใน Firefox */
+textarea {
+  -moz-resize: none;
+}
+
+/* ลบ resize handle ใน IE/Edge */
+textarea {
+  -ms-resize: none;
+}
+
+/* ลบ resize handle สำหรับ textarea ใน chat page โดยเฉพาะ */
+.chat-textarea {
+  resize: none !important;
+  -moz-resize: none !important;
+  -ms-resize: none !important;
+}
+
+.chat-textarea::-webkit-resizer {
+  display: none !important;
+  width: 0 !important;
+  height: 0 !important;
+}
+
+.chat-textarea::-moz-resizer {
+  display: none !important;
+  width: 0 !important;
+  height: 0 !important;
+}
+
+/* ลบ resize handle ทุกที่ */
+textarea::-webkit-resizer {
+  display: none !important;
+  width: 0 !important;
+  height: 0 !important;
+  background: transparent !important;
+  border: none !important;
+}
+
+/* ลบ accent ออกจากทุกที่ */
+* {
+  accent-color: transparent !important;
+}
+
+textarea {
+  accent-color: transparent !important;
+}
+
+.chat-textarea {
+  accent-color: transparent !important;
+}
+
+input {
+  accent-color: transparent !important;
+}
+
+button {
+  accent-color: transparent !important;
+}
+
+select {
+  accent-color: transparent !important;
+}
+
+/* ลบ accent จากทุก element */
+*::-webkit-accent-color {
+  accent-color: transparent !important;
+}
+
+/* ลบ accent ด้วยวิธีอื่น */
+* {
+  accent-color: transparent !important;
+  -webkit-accent-color: transparent !important;
+  -moz-accent-color: transparent !important;
+  -ms-accent-color: transparent !important;
+}
+
+/* ลบ accent ด้วย CSS custom property */
+:root {
+  --accent-color: transparent !important;
+}
+
+* {
+  accent-color: var(--accent-color) !important;
+}
+
+/* ลบ scrollbar ของ textarea */
+textarea::-webkit-scrollbar {
+  display: none !important;
+  width: 0 !important;
+  height: 0 !important;
+}
+
+textarea::-webkit-scrollbar-track {
+  display: none !important;
+}
+
+textarea::-webkit-scrollbar-thumb {
+  display: none !important;
+}
+
+textarea::-webkit-scrollbar-corner {
+  display: none !important;
+}
+
+/* ลบ scrollbar ของ textarea ใน Firefox */
+textarea {
+  scrollbar-width: none !important;
+  -ms-overflow-style: none !important;
+}
+
+/* ลบ scrollbar ของ chat textarea โดยเฉพาะ */
+.chat-textarea::-webkit-scrollbar {
+  display: none !important;
+  width: 0 !important;
+  height: 0 !important;
+}
+
+.chat-textarea {
+  scrollbar-width: none !important;
+  -ms-overflow-style: none !important;
+}
+
+/* ลบ accent เฉพาะเจาะจงมากขึ้น */
+textarea:focus {
+  accent-color: transparent !important;
+  outline: none !important;
+}
+
+textarea:active {
+  accent-color: transparent !important;
+}
+
+textarea:hover {
+  accent-color: transparent !important;
+}
+
+/* ลบ accent จาก textarea ในทุกสถานะ */
+textarea,
+textarea:focus,
+textarea:active,
+textarea:hover,
+textarea:visited {
+  accent-color: transparent !important;
+  -webkit-accent-color: transparent !important;
+  -moz-accent-color: transparent !important;
+  -ms-accent-color: transparent !important;
+}
+
+/* ลบ accent จาก chat textarea โดยเฉพาะ */
+.chat-textarea,
+.chat-textarea:focus,
+.chat-textarea:active,
+.chat-textarea:hover {
+  accent-color: transparent !important;
+  -webkit-accent-color: transparent !important;
+  -moz-accent-color: transparent !important;
+  -ms-accent-color: transparent !important;
+}
+
+/* ลบ accent ในขณะพิมพ์ */
+textarea:focus-within {
+  accent-color: transparent !important;
+}
+
+textarea:focus-visible {
+  accent-color: transparent !important;
+}
+
+/* ลบ accent จากทุก pseudo-class */
+textarea:any-link,
+textarea:autofill,
+textarea:checked,
+textarea:default,
+textarea:defined,
+textarea:disabled,
+textarea:empty,
+textarea:enabled,
+textarea:first,
+textarea:first-child,
+textarea:first-of-type,
+textarea:focus,
+textarea:focus-visible,
+textarea:focus-within,
+textarea:fullscreen,
+textarea:future,
+textarea:hover,
+textarea:indeterminate,
+textarea:in-range,
+textarea:invalid,
+textarea:last-child,
+textarea:last-of-type,
+textarea:left,
+textarea:link,
+textarea:local-link,
+textarea:only-child,
+textarea:only-of-type,
+textarea:optional,
+textarea:out-of-range,
+textarea:past,
+textarea:placeholder-shown,
+textarea:read-only,
+textarea:read-write,
+textarea:required,
+textarea:right,
+textarea:root,
+textarea:scope,
+textarea:target,
+textarea:target-within,
+textarea:user-invalid,
+textarea:valid,
+textarea:visited {
+  accent-color: transparent !important;
+}
+
+ 

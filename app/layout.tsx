@@ -114,18 +114,7 @@ export default function RootLayout({
             </div>
           </nav>
 
-          <footer className="hidden md:block bg-white border-t">
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-              <p className="text-center text-gray-500">© 2024-2025 AI เพื่อนที่ปรึกษา. All rights reserved.</p>
-              <p className="text-center text-gray-500 mt-2">โครงงานคอมพิวเตอร์ โรงเรียนสตรีศึกษา</p>
-              <p className="text-center text-gray-400 text-sm mt-1">AI เพื่อนที่ปรึกษา อาจมีข้อผิดพลาดควรตรวจสอบข้อมูลสำคัญและอ่อนไหว</p>
-              <div className="text-center mt-4">
-                <Link href="/privacy-policy" className="text-lavender-600 hover:text-lavender-700 transition-colors text-sm">
-                  นโยบายความเป็นส่วนตัว
-                </Link>
-              </div>
-            </div>
-          </footer>
+
         </div>
       </body>
     </html>

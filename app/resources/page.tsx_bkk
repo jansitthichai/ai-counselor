@@ -3,19 +3,9 @@
 import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { FaSearch, FaBookmark, FaShare, FaHeart } from 'react-icons/fa'
+import { Article } from '@/lib/types'
 
-interface Article {
-  id: string
-  title: string
-  content: string
-  source: string
-  url: string
-  imageUrl: string
-  category: string
-  date: string
-}
-
-// ข้อมูลบทความจริงจากแหล่งที่น่าเชื่อถือ
+// ข้อมูลบทความจริงจากแหล่งที่น่าเชื่อถือ (fallback)
 const sampleArticles: Article[] = [
   {
     id: '1',
@@ -125,12 +115,30 @@ export default function ResourcesPage() {
   const [selectedCategory, setSelectedCategory] = useState<string>('ทั้งหมด')
   const [isLoading, setIsLoading] = useState(true)
 
+  // Fetch articles from API
   useEffect(() => {
-    // จำลองการโหลดข้อมูล
-    setTimeout(() => {
-      setArticles(sampleArticles)
-      setIsLoading(false)
-    }, 1000)
+    const fetchArticles = async () => {
+      try {
+        setIsLoading(true)
+        const response = await fetch('/api/articles')
+        const result = await response.json()
+        
+        if (result.success) {
+          setArticles(result.data)
+        } else {
+          // Fallback to sample articles if API fails
+          setArticles(sampleArticles)
+        }
+      } catch (error) {
+        console.error('Error fetching articles:', error)
+        // Fallback to sample articles
+        setArticles(sampleArticles)
+      } finally {
+        setIsLoading(false)
+      }
+    }
+
+    fetchArticles()
   }, [])
 
   const categories = [
@@ -204,7 +212,8 @@ export default function ResourcesPage() {
               key={article.id}
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              className="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-shadow"
+              className="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-shadow cursor-pointer"
+              onClick={() => window.open(article.url, '_blank')}
             >
               <div className="relative h-48">
                 <img

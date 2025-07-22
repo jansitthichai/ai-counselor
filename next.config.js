@@ -16,11 +16,21 @@ const nextConfig = {
     minimumCacheTTL: 60,
   },
   
-
+  // Bundle analyzer
+  ...(process.env.ANALYZE === 'true' && {
+    webpack: (config) => {
+      config.plugins.push(
+        new (require('@next/bundle-analyzer')({
+          enabled: true,
+        }))()
+      )
+      return config
+    },
+  }),
   
   // Environment variables
   env: {
-    GOOGLE_GEMINI_API_KEY: process.env.GOOGLE_GEMINI_API_KEY,
+    GOOGLE_AI_API_KEY: process.env.GOOGLE_AI_API_KEY,
   },
   
   // Headers for caching and security

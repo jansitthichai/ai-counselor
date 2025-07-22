@@ -1,39 +1,44 @@
 import { GoogleGenerativeAI } from '@google/generative-ai'
 import { processQuestion, getExpertPrompt, ExpertResponse } from './expert-system'
 
-// Debug: ตรวจสอบ environment variables
-console.log('=== Environment Variables Debug ===')
-console.log('NODE_ENV:', process.env.NODE_ENV)
-console.log('GOOGLE_GEMINI_API_KEY:', process.env.GOOGLE_GEMINI_API_KEY ? 'Found' : 'Not found')
-console.log('All env vars with GOOGLE:', Object.keys(process.env).filter(key => key.includes('GOOGLE')))
-console.log('=== End Debug ===')
-
 // ตรวจสอบ API Key
-const apiKey = process.env.GOOGLE_GEMINI_API_KEY
+const apiKey = process.env.NEXT_PUBLIC_GOOGLE_AI_API_KEY || process.env.GOOGLE_AI_API_KEY
 
-if (!apiKey) {
-  console.error('Missing API Key')
-  console.error('Available env vars:', Object.keys(process.env).filter(key => key.includes('GOOGLE')))
-  throw new Error('Missing GOOGLE_GEMINI_API_KEY environment variable')
+// ตัวแปรสำหรับเก็บสถานะ API
+let genAI: GoogleGenerativeAI | null = null
+let isApiAvailable = false
+
+// ฟังก์ชันสำหรับตรวจสอบและตั้งค่า API
+function initializeAPI() {
+  if (genAI) return // ถ้า initialize แล้วให้ return เลย
+  
+  if (!apiKey) {
+    console.warn('⚠️ GOOGLE_AI_API_KEY ไม่ได้ตั้งค่า กรุณาสร้างไฟล์ .env.local และเพิ่ม GOOGLE_AI_API_KEY=your_api_key_here')
+    console.warn('📝 วิธีการตั้งค่า:')
+    console.warn('1. สร้างไฟล์ .env.local ในโฟลเดอร์หลักของโปรเจค')
+    console.warn('2. เพิ่มบรรทัด: GOOGLE_AI_API_KEY=your_gemini_api_key_here')
+    console.warn('3. รีสตาร์ท development server')
+    return
+  }
+
+  // ตรวจสอบรูปแบบ API Key
+  if (!apiKey.startsWith('AIza')) {
+    console.error('❌ รูปแบบ GOOGLE_AI_API_KEY ไม่ถูกต้อง API Key ควรขึ้นต้นด้วย "AIza"')
+    return
+  }
+
+  try {
+    genAI = new GoogleGenerativeAI(apiKey)
+    isApiAvailable = true
+    console.log('✅ Google AI API เชื่อมต่อสำเร็จ')
+  } catch (error) {
+    console.error('❌ ไม่สามารถเชื่อมต่อกับ Google AI ได้:', error)
+    isApiAvailable = false
+  }
 }
 
-// ตรวจสอบรูปแบบ API Key
-if (!apiKey.startsWith('AIza')) {
-  console.error('Invalid API Key format')
-  throw new Error('Invalid GOOGLE_GEMINI_API_KEY format. API Key should start with "AIza"')
-}
-
-console.log('API Key found:', apiKey.substring(0, 8) + '...')
-
-let genAI: GoogleGenerativeAI
-
-try {
-  genAI = new GoogleGenerativeAI(apiKey)
-  console.log('GoogleGenerativeAI instance created successfully')
-} catch (error) {
-  console.error('Error creating GoogleGenerativeAI instance:', error)
-  throw new Error('ไม่สามารถเชื่อมต่อกับ Google AI ได้ กรุณาตรวจสอบการตั้งค่า')
-}
+// เรียกใช้ฟังก์ชัน initialize
+initializeAPI()
 
 // Interface สำหรับ conversation history จาก chat component
 interface ChatMessage {
@@ -79,6 +84,12 @@ export async function generateResponse(
     if (expertResult.source === 'rule') {
       console.log('Using rule-based response')
       return expertResult.answer
+    }
+    
+    // ตรวจสอบว่า API พร้อมใช้งานหรือไม่
+    if (!genAI || !isApiAvailable) {
+      console.warn('⚠️ Google AI API ไม่พร้อมใช้งาน ใช้ fallback response')
+      return 'ขออภัยครับ/ค่ะ ขณะนี้ไม่สามารถเชื่อมต่อกับ AI ได้ กรุณาตรวจสอบการตั้งค่า API Key หรือลองใหม่อีกครั้งในภายหลัง'
     }
     
     // ถ้าไม่มี rule ให้ใช้ Gemini กับ prompt เฉพาะ
