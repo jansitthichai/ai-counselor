@@ -140,15 +140,15 @@ export default function ResourcesPage() {
             >
               <div className="relative h-48">
                 {article.imageUrl ? (
-                  <img
-                    src={article.imageUrl}
-                    alt={article.title}
-                    className="w-full h-full object-cover"
+                <img
+                  src={article.imageUrl}
+                  alt={article.title}
+                  className="w-full h-full object-cover"
                     onError={(e) => {
                       // ถ้ารูปภาพโหลดไม่ได้ ให้แสดงรูปภาพ default
                       e.currentTarget.src = 'https://via.placeholder.com/400x300/f3f4f6/9ca3af?text=ไม่มีรูปภาพ'
                     }}
-                  />
+                />
                 ) : (
                   <div className="w-full h-full bg-gray-200 flex items-center justify-center">
                     <span className="text-gray-500">ไม่มีรูปภาพ</span>
@@ -176,14 +176,14 @@ export default function ResourcesPage() {
                 </div>
                 <div className="mt-4 flex items-center justify-between">
                   {article.url ? (
-                    <a
-                      href={article.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-lavender-600 hover:text-lavender-700 font-medium"
-                    >
-                      อ่านเพิ่มเติม
-                    </a>
+                  <a
+                    href={article.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-lavender-600 hover:text-lavender-700 font-medium"
+                  >
+                    อ่านเพิ่มเติม
+                  </a>
                   ) : (
                     <span className="text-gray-400">ไม่มีลิงก์</span>
                   )}

@@ -74,6 +74,10 @@ export async function generateResponse(
   conversationHistory: ChatMessage[] = []
 ): Promise<string> {
   try {
+    console.log('=== generateResponse started ===')
+    console.log('Prompt:', prompt)
+    console.log('Conversation history length:', conversationHistory.length)
+    
     console.log('Processing question with expert system...')
     
     // ใช้ expert system ในการประมวลผลคำถาม
@@ -87,14 +91,23 @@ export async function generateResponse(
     }
     
     // ตรวจสอบว่า API พร้อมใช้งานหรือไม่
+    console.log('Checking API availability...')
+    console.log('genAI exists:', !!genAI)
+    console.log('isApiAvailable:', isApiAvailable)
+    console.log('API Key exists:', !!apiKey)
+    
     if (!genAI || !isApiAvailable) {
       console.warn('⚠️ Google AI API ไม่พร้อมใช้งาน ใช้ fallback response')
+      console.warn('API Key:', apiKey ? 'Exists' : 'Missing')
+      console.warn('genAI:', genAI ? 'Initialized' : 'Not initialized')
+      console.warn('isApiAvailable:', isApiAvailable)
       return 'ขออภัยครับ/ค่ะ ขณะนี้ไม่สามารถเชื่อมต่อกับ AI ได้ กรุณาตรวจสอบการตั้งค่า API Key หรือลองใหม่อีกครั้งในภายหลัง'
     }
     
     // ถ้าไม่มี rule ให้ใช้ Gemini กับ prompt เฉพาะ
     console.log('Using Gemini with expert prompt')
     const expertPrompt = getExpertPrompt(prompt)
+    console.log('Expert prompt:', expertPrompt.substring(0, 100) + '...')
     
     console.log('Initializing Gemini model...')
     // ใช้โมเดล Gemini Flash สำหรับการสนทนา
@@ -136,6 +149,7 @@ export async function generateResponse(
     console.log('History length:', limitedHistory.length)
     
     // ส่งข้อความและรับการตอบกลับ
+    console.log('Sending message to Gemini...')
     const result = await chat.sendMessage(expertPrompt)
     console.log('Message sent, waiting for response...')
     
@@ -144,15 +158,21 @@ export async function generateResponse(
     
     const text = response.text()
     console.log('Response text extracted:', text.substring(0, 50) + '...')
+    console.log('Response length:', text.length)
     
+    if (!text || text.trim() === '') {
+      throw new Error('AI ส่งคำตอบว่างเปล่ากลับมา')
+    }
+    
+    console.log('=== generateResponse completed successfully ===')
     return text
   } catch (error) {
-    console.error('Detailed error in generateResponse:', {
-      name: error instanceof Error ? error.name : 'Unknown',
-      message: error instanceof Error ? error.message : String(error),
-      stack: error instanceof Error ? error.stack : undefined,
-      cause: error instanceof Error ? error.cause : undefined
-    })
+    console.error('=== Detailed error in generateResponse ===')
+    console.error('Error object:', error)
+    console.error('Error name:', error instanceof Error ? error.name : 'Unknown')
+    console.error('Error message:', error instanceof Error ? error.message : String(error))
+    console.error('Error stack:', error instanceof Error ? error.stack : undefined)
+    console.error('Error cause:', error instanceof Error ? error.cause : undefined)
     
     // จัดการข้อผิดพลาดที่เฉพาะเจาะจง
     const errorMessage = error instanceof Error ? error.message : String(error)

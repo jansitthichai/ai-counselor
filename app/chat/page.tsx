@@ -14,7 +14,6 @@ interface Message {
     category: string
     confidence: number
   }
-  isTyping?: boolean
 }
 
 const INITIAL_MESSAGE: Message = {
@@ -66,80 +65,13 @@ export default function ChatPage() {
     })
   }, [])
 
-  // Typewriter effect แบบ ChatGPT
-  const typewriterEffect = useCallback((text: string, messageIndex: number) => {
-    console.log('Typewriter effect started with text length:', text.length, 'messageIndex:', messageIndex)
-    
-    if (!text || text.length === 0) {
-      console.log('No text to type')
-      return
-    }
-
-    let currentIndex = 0
-    let displayText = ''
-    let isComplete = false
-
-    const typeNextChar = () => {
-      console.log('Typing character:', currentIndex, 'of', text.length, 'current char:', text[currentIndex])
-      
-      if (currentIndex < text.length) {
-        displayText += text[currentIndex]
-        currentIndex++
-
-        setMessages(prev => {
-          const newMessages = prev.map((msg, idx) => 
-            idx === messageIndex && msg.role === 'assistant'
-              ? { ...msg, content: displayText, isTyping: !isComplete }
-              : msg
-          )
-          console.log('Updated message content:', displayText)
-          return newMessages
-        })
-
-        // Scroll ไปที่ล่างสุดระหว่าง AI พิมพ์
-        if (!isComplete && currentIndex % 30 === 0) {
-          scrollToBottom()
-        }
-
-        // กำหนดความเร็วในการพิมพ์แบบ ChatGPT (ช้าลง)
-        let delay = 50 // ความเร็วปกติ (ช้าลงจาก 30ms)
-        
-        const currentChar = text[currentIndex - 1]
-        if (['.', '!', '?', ':', ';'].includes(currentChar)) {
-          delay = 300 // หยุดนานขึ้นเมื่อเจอเครื่องหมายวรรคตอน (ช้าลงจาก 200ms)
-        } else if (currentChar === ' ') {
-          delay = 25 // พิมพ์เร็วขึ้นเมื่อเจอช่องว่าง (ช้าลงจาก 15ms)
-        } else if (currentChar === '\n') {
-          delay = 150 // หยุดนานขึ้นเมื่อขึ้นบรรทัดใหม่ (ช้าลงจาก 100ms)
-        }
-        
-        setTimeout(typeNextChar, delay)
-      } else {
-        console.log('Typewriter effect completed')
-        isComplete = true
-        setMessages(prev => prev.map((msg, idx) => 
-          idx === messageIndex && msg.role === 'assistant'
-            ? { ...msg, isTyping: false }
-            : msg
-        ))
-        
-        // Scroll ไปที่ล่างสุดเมื่อ AI ตอบเสร็จ
-        setTimeout(() => {
-          scrollToBottom()
-        }, 100)
-      }
-    }
-
-    // เริ่มพิมพ์หลังจาก delay เล็กน้อย
-    setTimeout(() => {
-      typeNextChar()
-    }, 200) // เพิ่ม delay เริ่มต้น (จาก 100ms)
-  }, [scrollToBottom])
-
-
   const handleSubmit = useCallback(async (e: React.FormEvent) => {
     e.preventDefault()
     if (!input.trim() || isLoading) return
+
+    console.log('=== Starting handleSubmit ===')
+    console.log('Input:', input)
+    console.log('IsLoading:', isLoading)
 
     const userMessage: Message = { 
       role: 'user', 
@@ -157,42 +89,47 @@ export default function ChatPage() {
     }, 100)
 
     try {
-      console.log('Sending message:', input)
+      console.log('=== Calling AI Services ===')
       
       const expertAnalysis = getExpertAnalysis(input)
-      console.log('Expert analysis:', expertAnalysis)
+      console.log('Expert analysis result:', expertAnalysis)
       
       console.log('Conversation history:', conversationHistory)
       testConversationHistory(conversationHistory)
       
+      console.log('Calling generateResponse...')
+      const startTime = Date.now()
       const response = await generateResponse(input, conversationHistory)
-      console.log('Received response:', response)
+      const endTime = Date.now()
+      console.log(`Response received in ${endTime - startTime}ms:`, response)
+      
+      if (!response || response.trim() === '') {
+        throw new Error('AI ไม่ส่งคำตอบกลับมา')
+      }
       
       const aiResponse: Message = {
         role: 'assistant',
-        content: '', // เริ่มจากข้อความว่าง
+        content: response, // ใช้ response เต็มเลย ไม่ต้องใช้ typewriter effect
         expertInfo: {
           source: expertAnalysis.source,
           category: expertAnalysis.category,
           confidence: expertAnalysis.confidence
-        },
-        isTyping: true
+        }
       }
       
-      const newMessageIndex = messages.length
+      console.log('Setting AI response:', aiResponse)
       setMessages(prev => [...prev, aiResponse])
       
-      // Scroll ไปที่ล่างสุดเมื่อ AI เริ่มตอบ
+      // Scroll ไปที่ล่างสุดเมื่อ AI ตอบเสร็จ
       setTimeout(() => {
         scrollToBottom()
       }, 100)
       
-      // Start typewriter effect for AI message
-      typewriterEffect(response, newMessageIndex)
-      
     } catch (error) {
-      console.error('Error in handleSubmit:', error)
+      console.error('=== Error in handleSubmit ===')
+      console.error('Error details:', error)
       const errorMessage = error instanceof Error ? error.message : 'เกิดข้อผิดพลาดที่ไม่ทราบสาเหตุ'
+      console.error('Error message:', errorMessage)
       setError(errorMessage)
       
       const errorResponse: Message = {
@@ -206,9 +143,10 @@ export default function ChatPage() {
       }
       setMessages(prev => [...prev, errorResponse])
     } finally {
+      console.log('=== handleSubmit completed ===')
       setIsLoading(false)
     }
-  }, [input, isLoading, conversationHistory, scrollToBottom, typewriterEffect])
+  }, [input, isLoading, conversationHistory, scrollToBottom])
 
   // ฟังก์ชันสำหรับจัดการการกดปุ่มใน textarea
   const handleKeyDown = useCallback((e: React.KeyboardEvent<HTMLTextAreaElement>) => {
@@ -284,7 +222,7 @@ export default function ChatPage() {
               </div>
               <div className="w-8 h-8 rounded-full bg-gray-300 flex items-center justify-center flex-shrink-0">
                 <HiOutlineUser className="w-5 h-5 text-gray-600" />
-              </div>
+                </div>
             </div>
           </div>
         )
@@ -299,20 +237,17 @@ export default function ChatPage() {
                 <div className="bg-gray-50 px-4 py-3 rounded-2xl">
                   <div className="whitespace-pre-wrap break-words text-gray-900">
                     {message.content}
-                    {message.isTyping && (
-                      <span className="inline-block w-2 h-5 bg-gray-900 ml-1 animate-pulse"></span>
-                    )}
                   </div>
                 </div>
-                {message.role === 'assistant' && message.expertInfo && (
+                  {message.role === 'assistant' && message.expertInfo && (
                   <div className="mt-2 text-xs text-gray-500 flex items-center space-x-2">
-                    <span>{getSourceLabel(message.expertInfo.source)}</span>
+                      <span>{getSourceLabel(message.expertInfo.source)}</span>
                     <span className="bg-gray-200 text-gray-700 px-2 py-1 rounded">
-                      {getCategoryLabel(message.expertInfo.category)}
-                    </span>
+                        {getCategoryLabel(message.expertInfo.category)}
+                      </span>
                   </div>
-                )}
-              </div>
+                  )}
+                </div>
             </div>
           </div>
         )
@@ -346,7 +281,7 @@ export default function ChatPage() {
           <div className="flex items-start space-x-4">
             <div className="w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center">
               <HiOutlineSparkles className="w-5 h-5 text-gray-600" />
-            </div>
+              </div>
             <div className="flex-1 flex items-center space-x-1">
               <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce"></div>
               <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '0.1s' }}></div>
