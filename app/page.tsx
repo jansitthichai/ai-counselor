@@ -3,14 +3,27 @@
 import { motion } from 'framer-motion'
 import Link from 'next/link'
 import { FaComments, FaChartLine, FaBook, FaGamepad, FaHandHoldingHeart, FaClipboardList, FaEye } from 'react-icons/fa'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 
 export default function Home() {
   const [visitCount, setVisitCount] = useState(359)
+  const hasIncremented = useRef(false)
 
   useEffect(() => {
+    // ป้องกันการเพิ่มซ้ำใน React Strict Mode
+    if (hasIncremented.current) return
+    hasIncremented.current = true
+
+    // ดึงข้อมูลสถิติจาก localStorage
+    const savedCount = localStorage.getItem('visitCount')
+    const initialCount = savedCount ? parseInt(savedCount) : 359
+    
     // เพิ่มจำนวนผู้เข้าชมทุกครั้งที่โหลดหน้า
-    setVisitCount(prev => prev + 1)
+    const newCount = initialCount + 1
+    setVisitCount(newCount)
+    
+    // บันทึกข้อมูลสถิติลง localStorage
+    localStorage.setItem('visitCount', newCount.toString())
   }, [])
 
   return (
