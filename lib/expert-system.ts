@@ -238,7 +238,7 @@ export function processQuestion(question: string): ExpertResponse {
   
   // ถ้าไม่มี rule ให้ใช้ prompt เฉพาะ
   return {
-    answer: '', // จะถูกเติมโดย Gemini
+    answer: '', // จะถูกเติมโดย OpenAI
     source: 'prompt',
     confidence: 0.7,
     category: classifyQuestion(question)

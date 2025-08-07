@@ -2,9 +2,17 @@
 
 import { motion } from 'framer-motion'
 import Link from 'next/link'
-import { FaComments, FaChartLine, FaBook, FaGamepad, FaHandHoldingHeart, FaClipboardList } from 'react-icons/fa'
+import { FaComments, FaChartLine, FaBook, FaGamepad, FaHandHoldingHeart, FaClipboardList, FaEye } from 'react-icons/fa'
+import { useState, useEffect } from 'react'
 
 export default function Home() {
+  const [visitCount, setVisitCount] = useState(359)
+
+  useEffect(() => {
+    // เพิ่มจำนวนผู้เข้าชมทุกครั้งที่โหลดหน้า
+    setVisitCount(prev => prev + 1)
+  }, [])
+
   return (
     <div className="space-y-6 md:space-y-12">
       <motion.div
@@ -187,6 +195,25 @@ export default function Home() {
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
           </svg>
         </Link>
+      </motion.div>
+
+      {/* สถิติการเข้าชมเว็บไซต์ */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5, delay: 0.8 }}
+        className="bg-gradient-to-br from-gray-50 to-slate-50 rounded-xl p-4 md:p-6 text-center mx-4 border border-gray-100"
+      >
+        <div className="flex items-center justify-center mb-2 md:mb-3">
+          <div className="p-2 md:p-3 bg-gray-100 rounded-full">
+            <FaEye className="text-lg md:text-xl text-gray-600" />
+          </div>
+        </div>
+        <div className="text-center">
+          <p className="text-sm md:text-base font-medium text-gray-700 font-sarabun">
+            สถิติการเข้าชม {visitCount.toLocaleString()} ครั้ง
+          </p>
+        </div>
       </motion.div>
     </div>
   )

@@ -10,6 +10,8 @@
     "lint:fix": "next lint --fix",
     "type-check": "tsc --noEmit",
     "analyze": "ANALYZE=true npm run build",
+    "analyze:server": "ANALYZE=true npm run build && npm run start",
+    "bundle-report": "npm run build && npx @next/bundle-analyzer .next/static/chunks",
     "optimize": "npm run lint:fix && npm run type-check && npm run build",
     "clean": "rm -rf .next out",
     "format": "prettier --write .",
@@ -34,6 +36,7 @@
     "tone": "^15.1.22"
   },
   "devDependencies": {
+    "@next/bundle-analyzer": "^15.4.5",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",

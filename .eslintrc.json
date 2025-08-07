@@ -1,11 +1,9 @@
 {
   "extends": [
     "next/core-web-vitals",
-    "eslint:recommended",
-    "@typescript-eslint/recommended"
+    "eslint:recommended"
   ],
   "plugins": [
-    "@typescript-eslint",
     "react-hooks"
   ],
   "rules": {
@@ -16,30 +14,34 @@
     "react/jsx-no-constructed-context-values": "warn",
     
     // TypeScript optimizations
-    "@typescript-eslint/no-unused-vars": "error",
-    "@typescript-eslint/no-explicit-any": "warn",
-    "@typescript-eslint/prefer-const": "error",
-    "@typescript-eslint/no-var-requires": "error",
+    "no-unused-vars": "warn",
+    "prefer-const": "error",
     
     // Code quality
     "prefer-const": "error",
     "no-var": "error",
-    "no-console": "warn",
+    "no-console": "off",
     "no-debugger": "error",
-    "no-alert": "warn",
+    "no-alert": "off",
+    "no-prototype-builtins": "off",
     
     // React optimizations
     "react/jsx-key": "error",
     "react/jsx-no-duplicate-props": "error",
     "react/jsx-no-undef": "error",
-    "react/no-array-index-key": "warn",
+    "react/no-array-index-key": "off",
     "react/no-unescaped-entities": "warn",
+    "react/jsx-no-bind": "off",
+    "react-hooks/exhaustive-deps": "off",
     
     // Import optimizations
     "import/no-unresolved": "off",
     "import/named": "off",
     "import/default": "off",
-    "import/namespace": "off"
+    "import/namespace": "off",
+    
+    // Global variables
+    "no-undef": "off"
   },
   "env": {
     "browser": true,

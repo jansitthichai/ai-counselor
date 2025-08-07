@@ -1,10 +1,9 @@
 'use client'
 
 import { useState, useRef, useEffect, useCallback, useMemo } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
+import { AnimatePresence } from 'framer-motion'
 import { generateResponse, getExpertAnalysis, testConversationHistory } from '../../lib/gemini'
 import { HiOutlineUser, HiOutlineSparkles } from 'react-icons/hi2'
-import { MdOutlineDeleteSweep } from 'react-icons/md'
 
 interface Message {
   role: 'user' | 'assistant'
@@ -329,6 +328,13 @@ export default function ChatPage() {
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
             </svg>
           </button>
+        </div>
+        
+        {/* ข้อความเตือน */}
+        <div className="max-w-4xl mx-auto mt-2">
+          <p className="text-xs text-gray-500 text-center font-sarabun">
+            AI เพื่อนที่ปรึกษาอาจมีข้อผิดพลาด ข้อมูลที่ละเอียดอ่อนโปรดติดต่อผู้เชี่ยวชาญ
+          </p>
         </div>
       </form>
     </div>

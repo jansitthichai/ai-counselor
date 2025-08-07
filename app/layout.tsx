@@ -3,18 +3,77 @@ import { Inter, Sarabun } from 'next/font/google'
 import './globals.css'
 import { FaHome, FaComments, FaChartLine, FaBook, FaGamepad, FaHandHoldingHeart, FaClipboardList } from 'react-icons/fa'
 import Link from 'next/link'
-import { usePathname } from 'next/navigation'
 
-const inter = Inter({ subsets: ['latin'] })
+
+const inter = Inter({ 
+  subsets: ['latin'],
+  display: 'swap',
+  preload: true
+})
+
 const sarabun = Sarabun({ 
   subsets: ['thai', 'latin'],
-  weight: ['100', '200', '300', '400', '500', '600', '700', '800'],
+  weight: ['400', '500', '600', '700'],
+  display: 'swap',
+  preload: true,
   variable: '--font-sarabun'
 })
 
 export const metadata: Metadata = {
-  title: 'AI เพื่อนที่ปรึกษา',
-  description: 'AI เพื่อนที่ปรึกษาสำหรับการสนับสนุนทางอารมณ์และการให้คำแนะนำ',
+  title: {
+    default: 'AI เพื่อนที่ปรึกษา - เพื่อนที่ปรึกษาด้านสุขภาพจิต',
+    template: '%s | AI เพื่อนที่ปรึกษา'
+  },
+  description: 'AI เพื่อนที่ปรึกษาสำหรับการสนับสนุนทางอารมณ์ การให้คำแนะนำ และการติดตามสุขภาพจิต พร้อมเกมคลายเครียดและบทความที่เป็นประโยชน์',
+  keywords: ['AI', 'เพื่อนที่ปรึกษา', 'สุขภาพจิต', 'ความเครียด', 'โรคซึมเศร้า', 'เกมคลายเครียด', 'บทความสุขภาพ'],
+  authors: [{ name: 'โรงเรียนสตรีศึกษา' }],
+  creator: 'โรงเรียนสตรีศึกษา',
+  publisher: 'โรงเรียนสตรีศึกษา',
+  formatDetection: {
+    email: false,
+    address: false,
+    telephone: false,
+  },
+  metadataBase: new URL('https://ai-companion.vercel.app'),
+  alternates: {
+    canonical: '/',
+  },
+  openGraph: {
+    title: 'AI เพื่อนที่ปรึกษา - เพื่อนที่ปรึกษาด้านสุขภาพจิต',
+    description: 'AI เพื่อนที่ปรึกษาสำหรับการสนับสนุนทางอารมณ์ การให้คำแนะนำ และการติดตามสุขภาพจิต',
+    url: 'https://ai-companion.vercel.app',
+    siteName: 'AI เพื่อนที่ปรึกษา',
+    images: [
+      {
+        url: '/og-image.jpg',
+        width: 1200,
+        height: 630,
+        alt: 'AI เพื่อนที่ปรึกษา',
+      },
+    ],
+    locale: 'th_TH',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'AI เพื่อนที่ปรึกษา - เพื่อนที่ปรึกษาด้านสุขภาพจิต',
+    description: 'AI เพื่อนที่ปรึกษาสำหรับการสนับสนุนทางอารมณ์ การให้คำแนะนำ และการติดตามสุขภาพจิต',
+    images: ['/og-image.jpg'],
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
+  },
+  verification: {
+    google: 'your-google-verification-code',
+  },
 }
 
 export default function RootLayout({
