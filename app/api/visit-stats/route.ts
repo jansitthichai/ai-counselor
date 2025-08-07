@@ -11,7 +11,7 @@ async function readStats() {
     return JSON.parse(data)
   } catch (error) {
     // หากไฟล์ไม่มี ให้สร้างใหม่
-    return { visitCount: 359, lastUpdated: new Date().toISOString() }
+    return { visitCount: 735, lastUpdated: new Date().toISOString() }
   }
 }
 

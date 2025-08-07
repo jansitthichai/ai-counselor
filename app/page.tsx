@@ -6,7 +6,7 @@ import { FaComments, FaChartLine, FaBook, FaGamepad, FaHandHoldingHeart, FaClipb
 import { useState, useEffect, useRef } from 'react'
 
 export default function Home() {
-  const [visitCount, setVisitCount] = useState(359)
+  const [visitCount, setVisitCount] = useState(735)
   const [isLoading, setIsLoading] = useState(true)
   const hasIncremented = useRef(false)
 
@@ -32,7 +32,7 @@ export default function Home() {
       } catch (error) {
         console.error('Failed to update visit count:', error)
         // หาก API ไม่ทำงาน ให้ใช้ค่าเริ่มต้น
-        setVisitCount(359)
+        setVisitCount(735)
       } finally {
         setIsLoading(false)
       }
