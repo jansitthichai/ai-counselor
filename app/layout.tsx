@@ -3,6 +3,7 @@ import { Inter, Sarabun } from 'next/font/google'
 import './globals.css'
 import { FaHome, FaComments, FaChartLine, FaBook, FaGamepad, FaHandHoldingHeart, FaClipboardList } from 'react-icons/fa'
 import Link from 'next/link'
+import Footer from './components/Footer'
 
 
 const inter = Inter({ 
@@ -138,6 +139,9 @@ export default function RootLayout({
           <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 md:py-8">
             {children}
           </main>
+
+          {/* Footer - ไม่แสดงในหน้าแชท */}
+          <Footer />
 
           {/* Mobile Bottom Navigation */}
           <nav className="md:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 z-50">
