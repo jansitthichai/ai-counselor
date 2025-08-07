@@ -7,6 +7,7 @@ import { useState, useEffect, useRef } from 'react'
 
 export default function Home() {
   const [visitCount, setVisitCount] = useState(359)
+  const [isLoading, setIsLoading] = useState(true)
   const hasIncremented = useRef(false)
 
   useEffect(() => {
@@ -14,16 +15,30 @@ export default function Home() {
     if (hasIncremented.current) return
     hasIncremented.current = true
 
-    // ดึงข้อมูลสถิติจาก localStorage
-    const savedCount = localStorage.getItem('visitCount')
-    const initialCount = savedCount ? parseInt(savedCount) : 359
-    
-    // เพิ่มจำนวนผู้เข้าชมทุกครั้งที่โหลดหน้า
-    const newCount = initialCount + 1
-    setVisitCount(newCount)
-    
-    // บันทึกข้อมูลสถิติลง localStorage
-    localStorage.setItem('visitCount', newCount.toString())
+    const updateVisitCount = async () => {
+      try {
+        // เพิ่มสถิติการเข้าชม
+        const response = await fetch('/api/visit-stats', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        })
+
+        if (response.ok) {
+          const data = await response.json()
+          setVisitCount(data.visitCount)
+        }
+      } catch (error) {
+        console.error('Failed to update visit count:', error)
+        // หาก API ไม่ทำงาน ให้ใช้ค่าเริ่มต้น
+        setVisitCount(359)
+      } finally {
+        setIsLoading(false)
+      }
+    }
+
+    updateVisitCount()
   }, [])
 
   return (
@@ -224,7 +239,7 @@ export default function Home() {
         </div>
         <div className="text-center">
           <p className="text-sm md:text-base font-medium text-gray-700 font-sarabun">
-            สถิติการเข้าชม {visitCount.toLocaleString()} ครั้ง
+            สถิติการเข้าชม {isLoading ? 'กำลังโหลด...' : visitCount.toLocaleString()} ครั้ง
           </p>
         </div>
       </motion.div>
