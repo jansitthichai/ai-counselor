@@ -24,6 +24,7 @@ const contactData: ContactInfo[] = [
     id: '1',
     title: 'ครูแนะแนวในโรงเรียน',
     description: 'ครูแนะแนวในโรงเรียนของคุณสามารถให้คำแนะนำเกี่ยวกับการศึกษาและปัญหาส่วนตัวได้',
+    phone: '0934662923, 0611611374',
     hours: 'จันทร์-ศุกร์ 8:00-16:00 น.',
     icon: <FaUserGraduate className="text-2xl" />,
     category: 'guidance'
@@ -305,15 +306,41 @@ export default function HelpPage() {
                 <h3 className="text-xl font-semibold text-gray-800 text-center mb-2">{contact.title}</h3>
                 <p className="text-gray-600 text-center mb-4">{contact.description}</p>
                 
-                <div className="space-y-2">
-                  {contact.phone && (
-                    <div className="flex items-center text-sm text-gray-600">
-                      <FaPhone className="mr-2 text-blue-500 flex-shrink-0" />
-                      <span className="font-medium">
-                        {renderPhoneNumber(contact.phone)}
-                      </span>
-                    </div>
-                  )}
+                                 <div className="space-y-2">
+                   {contact.phone && contact.id === '1' && (
+                     <div className="space-y-2">
+                                               <div className="flex items-center text-sm text-gray-600">
+                          <FaPhone className="mr-2 text-blue-500 flex-shrink-0" />
+                          <span className="font-medium">ครูสิริรัตน์ ฤทธิแสง: </span>
+                          <a
+                            href="tel:0934662923"
+                            className="text-blue-600 hover:text-blue-800 font-medium underline cursor-pointer ml-1"
+                            title="โทรหาครูสิริรัตน์"
+                          >
+                            0934662923
+                          </a>
+                        </div>
+                       <div className="flex items-center text-sm text-gray-600">
+                         <FaPhone className="mr-2 text-blue-500 flex-shrink-0" />
+                         <span className="font-medium">ครูจิดาภา โคตรุฉิน: </span>
+                         <a
+                           href="tel:0611611374"
+                           className="text-blue-600 hover:text-blue-800 font-medium underline cursor-pointer ml-1"
+                           title="โทรหาครูจิดาภา"
+                         >
+                           0611611374
+                         </a>
+                       </div>
+                     </div>
+                   )}
+                   {contact.phone && contact.id !== '1' && (
+                     <div className="flex items-center text-sm text-gray-600">
+                       <FaPhone className="mr-2 text-blue-500 flex-shrink-0" />
+                       <span className="font-medium">
+                         {renderPhoneNumber(contact.phone)}
+                       </span>
+                     </div>
+                   )}
                   {contact.email && (
                     <div className="flex items-center text-sm text-gray-600">
                       <FaEnvelope className="mr-2 text-blue-500 flex-shrink-0" />
