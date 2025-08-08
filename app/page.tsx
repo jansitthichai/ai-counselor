@@ -6,39 +6,44 @@ import { FaComments, FaChartLine, FaBook, FaGamepad, FaHandHoldingHeart, FaClipb
 import { useState, useEffect, useRef } from 'react'
 
 export default function Home() {
-  const [visitCount, setVisitCount] = useState(735)
+  const BASE_COUNT = 735
+  const COUNT_NAMESPACE = 'ai-counselor'
+  const COUNT_KEY = 'home-visits-v1'
+
+  const [visitCount, setVisitCount] = useState(BASE_COUNT)
   const [isLoading, setIsLoading] = useState(true)
   const hasIncremented = useRef(false)
 
   useEffect(() => {
-    // ป้องกันการเพิ่มซ้ำใน React Strict Mode
     if (hasIncremented.current) return
     hasIncremented.current = true
 
-    const updateVisitCount = async () => {
+    const incrementViaCountAPI = async () => {
       try {
-        // เพิ่มสถิติการเข้าชม
-        const response = await fetch('/api/visit-stats', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        })
+        // สร้างคีย์ครั้งแรกให้เริ่มที่ BASE_COUNT - 1 แล้วค่อย hit เพื่อให้เป็น BASE_COUNT ทันที
+        const createUrl = `https://api.countapi.xyz/create?namespace=${encodeURIComponent(COUNT_NAMESPACE)}&key=${encodeURIComponent(COUNT_KEY)}&value=${BASE_COUNT - 1}`
+        try { await fetch(createUrl, { cache: 'no-store' }) } catch {}
 
-        if (response.ok) {
-          const data = await response.json()
-          setVisitCount(data.visitCount)
+        // เพิ่มจำนวน 1 ครั้งและอ่านค่าล่าสุดกลับมา
+        const hitUrl = `https://api.countapi.xyz/hit/${encodeURIComponent(COUNT_NAMESPACE)}/${encodeURIComponent(COUNT_KEY)}`
+        const res = await fetch(hitUrl, { cache: 'no-store' })
+        if (!res.ok) throw new Error('CountAPI hit failed')
+        const data = await res.json()
+        if (typeof data?.value === 'number') {
+          setVisitCount(data.value)
+        } else {
+          setVisitCount(BASE_COUNT)
         }
-      } catch (error) {
-        console.error('Failed to update visit count:', error)
-        // หาก API ไม่ทำงาน ให้ใช้ค่าเริ่มต้น
-        setVisitCount(735)
+      } catch (err) {
+        console.error('CountAPI error:', err)
+        // หากบริการภายนอกมีปัญหา ให้คงค่าเริ่มต้นไว้
+        setVisitCount(BASE_COUNT)
       } finally {
         setIsLoading(false)
       }
     }
 
-    updateVisitCount()
+    incrementViaCountAPI()
   }, [])
 
   return (
