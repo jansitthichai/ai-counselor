@@ -1,0 +1,8 @@
+[33mcommit 0a3aaa3981fa4c881bbc85828a439a782688ad96[m[33m ([m[1;36mHEAD -> [m[1;32mmain[m[33m)[m
+Author: jansitthichai <sitthichai@strisuksa.ac.th>
+Date:   Fri Aug 8 10:28:24 2025 +0700
+
+    Set global visit counter base to 735 and update JSON; keep API fallback consistent
+
+M	app/api/visit-stats/route.ts
+M	data/visit-stats.json
