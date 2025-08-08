@@ -2,45 +2,9 @@
 
 import { motion } from 'framer-motion'
 import Link from 'next/link'
-import { FaComments, FaChartLine, FaBook, FaGamepad, FaHandHoldingHeart, FaClipboardList, FaEye } from 'react-icons/fa'
-import { useState, useEffect, useRef } from 'react'
+import { FaComments, FaChartLine, FaBook, FaGamepad, FaHandHoldingHeart, FaClipboardList } from 'react-icons/fa'
 
 export default function Home() {
-  const [visitCount, setVisitCount] = useState(735)
-  const [isLoading, setIsLoading] = useState(true)
-  const hasIncremented = useRef(false)
-
-  useEffect(() => {
-    // ป้องกันการเพิ่มซ้ำใน React Strict Mode
-    if (hasIncremented.current) return
-    hasIncremented.current = true
-
-    const updateVisitCount = async () => {
-      try {
-        // เพิ่มสถิติการเข้าชม
-        const response = await fetch('/api/visit-stats', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        })
-
-        if (response.ok) {
-          const data = await response.json()
-          setVisitCount(data.visitCount)
-        }
-      } catch (error) {
-        console.error('Failed to update visit count:', error)
-        // หาก API ไม่ทำงาน ให้ใช้ค่าเริ่มต้น
-        setVisitCount(735)
-      } finally {
-        setIsLoading(false)
-      }
-    }
-
-    updateVisitCount()
-  }, [])
-
   return (
     <div className="space-y-6 md:space-y-12">
       <motion.div
@@ -225,22 +189,19 @@ export default function Home() {
         </Link>
       </motion.div>
 
-      {/* สถิติการเข้าชมเว็บไซต์ */}
+      {/* สถิติการเข้าชมเว็บไซต์ (SmallCounter) */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, delay: 0.8 }}
         className="bg-gradient-to-br from-gray-50 to-slate-50 rounded-xl p-4 md:p-6 text-center mx-4 border border-gray-100"
       >
-        <div className="flex items-center justify-center mb-2 md:mb-3">
-          <div className="p-2 md:p-3 bg-gray-100 rounded-full">
-            <FaEye className="text-lg md:text-xl text-gray-600" />
-          </div>
-        </div>
-        <div className="text-center">
-          <p className="text-sm md:text-base font-medium text-gray-700 font-sarabun">
-            สถิติการเข้าชม {isLoading ? 'กำลังโหลด...' : visitCount.toLocaleString()} ครั้ง
-          </p>
+        <div className="flex items-center justify-center text-gray-700 font-sarabun text-sm md:text-base">
+          <span className="mr-2">สถิติการเข้าชม :</span>
+          <a href="https://smallcounter.com" target="_blank" rel="noopener noreferrer" className="inline-block">
+            <img src="https://smallcounter.com/count.php?c_style=26&id=1754627593" alt="สถิติการเข้าชม" className="align-middle" />
+          </a>
+          <span className="ml-2">ครั้ง</span>
         </div>
       </motion.div>
     </div>
