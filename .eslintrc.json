@@ -1,0 +1,63 @@
+{
+  "extends": [
+    "next/core-web-vitals",
+    "eslint:recommended"
+  ],
+  "plugins": [
+    "react-hooks"
+  ],
+  "rules": {
+    // Performance optimizations
+    "react-hooks/rules-of-hooks": "error",
+    "react-hooks/exhaustive-deps": "warn",
+    "react/jsx-no-bind": "warn",
+    "react/jsx-no-constructed-context-values": "warn",
+    
+    // TypeScript optimizations
+    "no-unused-vars": "warn",
+    "prefer-const": "error",
+    
+    // Code quality
+    "prefer-const": "error",
+    "no-var": "error",
+    "no-console": "off",
+    "no-debugger": "error",
+    "no-alert": "off",
+    "no-prototype-builtins": "off",
+    
+    // React optimizations
+    "react/jsx-key": "error",
+    "react/jsx-no-duplicate-props": "error",
+    "react/jsx-no-undef": "error",
+    "react/no-array-index-key": "off",
+    "react/no-unescaped-entities": "warn",
+    "react/jsx-no-bind": "off",
+    "react-hooks/exhaustive-deps": "off",
+    
+    // Import optimizations
+    "import/no-unresolved": "off",
+    "import/named": "off",
+    "import/default": "off",
+    "import/namespace": "off",
+    
+    // Global variables
+    "no-undef": "off"
+  },
+  "env": {
+    "browser": true,
+    "es2021": true,
+    "node": true
+  },
+  "parserOptions": {
+    "ecmaVersion": "latest",
+    "sourceType": "module",
+    "ecmaFeatures": {
+      "jsx": true
+    }
+  },
+  "settings": {
+    "react": {
+      "version": "detect"
+    }
+  }
+} 
