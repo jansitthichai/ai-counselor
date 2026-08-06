@@ -8,7 +8,7 @@ const VISIT_STATS_KEY = 'visit-stats'
 const articlesFilePath = path.join(process.cwd(), 'data', 'articles.json')
 const visitStatsFilePath = path.join(process.cwd(), 'data', 'visit-stats.json')
 
-function useKv(): boolean {
+function isKvConfigured(): boolean {
   return Boolean(process.env.KV_REST_API_URL && process.env.KV_REST_API_TOKEN)
 }
 
@@ -54,7 +54,7 @@ export type VisitStats = {
 }
 
 export async function getArticles(): Promise<ArticleRecord[]> {
-  if (useKv()) {
+  if (isKvConfigured()) {
     const kv = await getKv()
     const data = await kv.get<ArticleRecord[]>(ARTICLES_KEY)
     if (data) return data
@@ -69,7 +69,7 @@ export async function getArticles(): Promise<ArticleRecord[]> {
 }
 
 export async function saveArticles(articles: ArticleRecord[]): Promise<void> {
-  if (useKv()) {
+  if (isKvConfigured()) {
     const kv = await getKv()
     await kv.set(ARTICLES_KEY, articles)
     return
@@ -83,7 +83,7 @@ export async function getVisitStats(): Promise<VisitStats> {
     lastUpdated: new Date().toISOString(),
   }
 
-  if (useKv()) {
+  if (isKvConfigured()) {
     const kv = await getKv()
     const data = await kv.get<VisitStats>(VISIT_STATS_KEY)
     if (data) return data
@@ -96,7 +96,7 @@ export async function getVisitStats(): Promise<VisitStats> {
 }
 
 export async function saveVisitStats(stats: VisitStats): Promise<void> {
-  if (useKv()) {
+  if (isKvConfigured()) {
     const kv = await getKv()
     await kv.set(VISIT_STATS_KEY, stats)
     return
