@@ -13,9 +13,9 @@ let currentModelName = ''
 
 const availableModels = [
   'gemini-flash-latest',
+  'gemini-flash-lite-latest',
   'gemini-2.5-flash',
   'gemini-2.0-flash',
-  'gemini-flash-lite-latest',
 ]
 
 function initializeAPI() {
@@ -130,6 +130,27 @@ function getRandomFallbackResponse(): string {
   return fallbackResponses[Math.floor(Math.random() * fallbackResponses.length)]
 }
 
+function looksIncomplete(text: string): boolean {
+  const trimmed = text.trim()
+  if (trimmed.length < 40) return false
+  // Ends on a bare numbered heading without body, or unfinished markdown bold
+  if (/\*\*\d+\.\s*[^*]+\*\*\s*$/.test(trimmed)) return true
+  if (/\n\d+\.\s+[^\n]{0,40}$/.test(trimmed) && !/[.!?。ครับค่ะ]$/.test(trimmed))
+    return true
+  if (/\*\*[^*]+$/.test(trimmed)) return true
+  return false
+}
+
+function mergeContinuation(original: string, continuation: string): string {
+  const cont = continuation.trim()
+  if (!cont) return original
+  // If model rewrote the whole answer, prefer the longer complete version
+  if (cont.length > original.length * 0.8 && !cont.startsWith(original.slice(0, 40))) {
+    return cont
+  }
+  return `${original.trim()}\n${cont}`
+}
+
 export async function generateResponse(
   prompt: string,
   conversationHistory: ChatMessage[] = []
@@ -162,7 +183,8 @@ export async function generateResponse(
         parts: [{ text: msg.content }],
       })),
       generationConfig: {
-        maxOutputTokens: 1024,
+        // Thinking models use many tokens for reasoning; keep headroom for full answers
+        maxOutputTokens: 8192,
         temperature: 0.7,
         topP: 0.95,
         topK: 40,
@@ -170,7 +192,8 @@ export async function generateResponse(
     })
 
     const systemPrompt =
-      'คุณเป็น เพื่อนคู่ใจมายด์แคร์ (STRMindCare) ที่พูดภาษาไทย ให้คำแนะนำที่เป็นประโยชน์และเป็นมิตร\n\n'
+      'คุณเป็น เพื่อนคู่ใจมายด์แคร์ (STRMindCare) ที่พูดภาษาไทย ให้คำแนะนำที่เป็นประโยชน์และเป็นมิตร\n' +
+      'ตอบให้ครบทุกหัวข้อที่เริ่มไว้ อย่าตัดคำตอบค้างกลางทาง และสรุปให้จบประโยคอย่างสมบูรณ์\n\n'
     const fullPrompt = systemPrompt + expertPrompt
 
     const result = await retryApiCall(async () => {
@@ -178,10 +201,42 @@ export async function generateResponse(
     }, 3, 2000)
 
     const response = await result.response
+    const finishReason = response.candidates?.[0]?.finishReason
     const text = response.text()
 
     if (!text || text.trim() === '') {
       throw new Error('AI ส่งคำตอบว่างเปล่ากลับมา')
+    }
+
+    // If truncated by token limit, ask model to finish the answer once
+    if (finishReason === 'MAX_TOKENS' || looksIncomplete(text)) {
+      try {
+        const cont = await currentModel.generateContent({
+          contents: [
+            {
+              role: 'user',
+              parts: [
+                {
+                  text:
+                    'ต่อไปนี้คือคำตอบที่ถูกตัดกลางคัน กรุณาเขียนต่อให้จบอย่างสมบูรณ์เป็นภาษาไทย ' +
+                    'โดยไม่ต้องทักทายซ้ำ และไม่ต้องเริ่มหัวข้อใหม่จากต้น หากหัวข้อค้างไว้ให้เขียนเนื้อหาของหัวข้อนั้นให้จบ:\n\n' +
+                    text,
+                },
+              ],
+            },
+          ],
+          generationConfig: {
+            maxOutputTokens: 4096,
+            temperature: 0.6,
+          },
+        })
+        const contText = (await cont.response).text()?.trim()
+        if (contText) {
+          return mergeContinuation(text, contText)
+        }
+      } catch (contError) {
+        console.warn('ไม่สามารถต่อคำตอบที่ถูกตัดได้:', contError)
+      }
     }
 
     return text
