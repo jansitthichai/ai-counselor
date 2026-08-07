@@ -1,8 +1,8 @@
-# MindCare Version 2.0 — Concept & Research Alignment
+# STRMindCare Version 2.0 — Concept & Research Alignment
 
 ## ชื่อโครงงาน
 
-- **ชื่อระบบ:** MindCare : AI เพื่อส่งเสริมสุขภาวะทางอารมณ์และการดูแลสุขภาพจิตสำหรับนักเรียน
+- **ชื่อระบบ:** STRMindCare : AI เพื่อส่งเสริมสุขภาวะทางอารมณ์และการดูแลสุขภาพจิตสำหรับนักเรียน
 - **อังกฤษ:** Development of an AI-powered Student Wellbeing Platform for Emotional Wellness and Mental Health Support
 
 ## จาก Chatbot → Wellbeing Platform

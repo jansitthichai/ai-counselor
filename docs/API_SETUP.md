@@ -95,7 +95,7 @@ npm run dev
 GOOGLE_AI_API_KEY=AIzaSyB1234567890abcdefghijklmnopqrstuvwxyz
 
 # Next.js Configuration
-NEXT_PUBLIC_APP_NAME=MindCare
+NEXT_PUBLIC_APP_NAME=STRMindCare
 NEXT_PUBLIC_APP_VERSION=1.0.0
 
 # Development Configuration
