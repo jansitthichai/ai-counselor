@@ -32,7 +32,7 @@ interface Message {
 const INITIAL_MESSAGE: Message = {
   role: 'assistant',
   content:
-    'สวัสดีครับ/ค่ะ ผมคือ MindCare Companion — เพื่อนสุขภาวะทางอารมณ์ของคุณ\nเมื่อคุณเล่าอะไร ผมจะช่วยวิเคราะห์อารมณ์ แนะนำกิจกรรม และเชื่อมต่อความช่วยเหลือเมื่อเหมาะสม (ไม่ใช่การวินิจฉัยโรค)\nวันนี้รู้สึกอย่างไรครับ?',
+    'สวัสดีครับ/ค่ะ ผมคือ เพื่อนคู่ใจมายด์แคร์ — เพื่อนสุขภาวะทางอารมณ์ของคุณ\nเมื่อคุณเล่าอะไร ผมจะช่วยวิเคราะห์อารมณ์ แนะนำกิจกรรม และเชื่อมต่อความช่วยเหลือเมื่อเหมาะสม (ไม่ใช่การวินิจฉัยโรค)\nวันนี้รู้สึกอย่างไรครับ?',
   expertInfo: {
     source: 'rule',
     category: 'general',
@@ -186,7 +186,7 @@ export default function ChatPage() {
         <div className="max-w-4xl mx-auto flex justify-between items-center">
           <div>
             <h1 className="text-lg font-semibold text-slate-800">
-              MindCare Companion
+              เพื่อนคู่ใจมายด์แคร์
             </h1>
             <p className="text-xs text-brand-700">เพื่อนสุขภาวะทางอารมณ์ · Agentic chat</p>
           </div>
@@ -343,7 +343,7 @@ export default function ChatPage() {
           </button>
         </div>
         <p className="max-w-4xl mx-auto mt-2 text-xs text-slate-500 text-center">
-          MindCare อาจมีข้อผิดพลาด · ไม่ใช่การวินิจฉัยโรค · สายด่วน{' '}
+          STRMindCare อาจมีข้อผิดพลาด · ไม่ใช่การวินิจฉัยโรค · สายด่วน{' '}
           {APP_CONFIG.contact.hotline}
         </p>
       </form>

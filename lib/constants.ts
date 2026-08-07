@@ -1,11 +1,12 @@
-// Constants for MindCare
+// Constants for STRMindCare
 
 export const APP_CONFIG = {
-  shortName: 'MindCare',
-  name: 'MindCare : AI เพื่อส่งเสริมสุขภาวะทางอารมณ์และการดูแลสุขภาพจิตสำหรับนักเรียน',
+  shortName: 'STRMindCare',
+  name: 'STRMindCare : AI เพื่อส่งเสริมสุขภาวะทางอารมณ์และการดูแลสุขภาพจิตสำหรับนักเรียน',
   tagline: 'AI เพื่อส่งเสริมสุขภาวะทางอารมณ์และการดูแลสุขภาพจิตสำหรับนักเรียน',
   description:
-    'MindCare — แพลตฟอร์ม AI ส่งเสริมสุขภาวะทางอารมณ์และการดูแลสุขภาพจิตสำหรับนักเรียน (ไม่ใช่การวินิจฉัยโรค)',
+    'STRMindCare — แพลตฟอร์ม AI ส่งเสริมสุขภาวะทางอารมณ์และการดูแลสุขภาพจิตสำหรับนักเรียน (ไม่ใช่การวินิจฉัยโรค)',
+  companionName: 'เพื่อนคู่ใจมายด์แคร์',
   version: '2.0.0',
   author: 'โรงเรียนสตรีศึกษา',
   contact: {
@@ -173,14 +174,14 @@ export const EXPERT_SOURCES = {
 
 export const NAVIGATION_ITEMS = [
   { href: '/', label: 'หน้าแรก', icon: 'FaHome' },
-  { href: '/chat', label: 'เพื่อน AI', icon: 'FaComments' },
+  { href: '/chat', label: 'เพื่อนคู่ใจ', icon: 'FaComments' },
   { href: '/insight', label: 'ภาพรวมอารมณ์', icon: 'FaChartLine' },
   { href: '/wellness', label: 'ศูนย์สุขภาวะ', icon: 'FaHeart' },
   { href: '/emergency', label: 'ฉุกเฉิน', icon: 'FaHandHoldingHeart' },
 ] as const
 
 export const PLATFORM_MODULES = [
-  { href: '/chat', title: 'เพื่อน AI', desc: 'เพื่อน AI แบบ Agentic วิเคราะห์และแนะนำอัตโนมัติ', group: 'core' },
+  { href: '/chat', title: 'เพื่อนคู่ใจมายด์แคร์', desc: 'เพื่อน AI แบบ Agentic วิเคราะห์และแนะนำอัตโนมัติ', group: 'core' },
   { href: '/mood-tracker', title: 'บันทึกอารมณ์', desc: 'ติดตามอารมณ์รายวัน', group: 'core' },
   { href: '/emotion', title: 'วิเคราะห์อารมณ์', desc: 'วิเคราะห์อารมณ์จากข้อความ', group: 'ai' },
   { href: '/phq9', title: 'คัดกรองสุขภาพจิต', desc: 'คัดกรองเบื้องต้นด้วย PHQ-9', group: 'core' },

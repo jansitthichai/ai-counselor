@@ -170,7 +170,7 @@ export async function generateResponse(
     })
 
     const systemPrompt =
-      'คุณเป็น MindCare Companion ที่พูดภาษาไทย ให้คำแนะนำที่เป็นประโยชน์และเป็นมิตร\n\n'
+      'คุณเป็น เพื่อนคู่ใจมายด์แคร์ (STRMindCare) ที่พูดภาษาไทย ให้คำแนะนำที่เป็นประโยชน์และเป็นมิตร\n\n'
     const fullPrompt = systemPrompt + expertPrompt
 
     const result = await retryApiCall(async () => {

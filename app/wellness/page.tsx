@@ -35,7 +35,7 @@ export default function WellnessHubPage() {
           ศูนย์สุขภาวะ
         </h1>
         <p className="text-slate-600 mt-2">
-          รวมเครื่องมือส่งเสริมสุขภาวะทางอารมณ์ของ MindCare
+          รวมเครื่องมือส่งเสริมสุขภาวะทางอารมณ์ของ STRMindCare
         </p>
       </div>
 

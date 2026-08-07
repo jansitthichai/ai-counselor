@@ -55,7 +55,7 @@ export default function Home() {
               href="/chat"
               className="inline-flex items-center rounded-2xl bg-brand-600 px-5 py-3 text-white font-medium shadow-sm hover:bg-brand-700 transition-colors"
             >
-              เริ่มคุยกับเพื่อน AI
+              เริ่มคุยกับเพื่อนคู่ใจ
             </Link>
             <Link
               href="/wellness"
@@ -111,7 +111,7 @@ export default function Home() {
           href="/chat"
           className="inline-flex rounded-xl bg-coral-400 px-4 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-coral-500 transition-colors"
         >
-          ลองสนทนากับเพื่อน AI
+          ลองสนทนากับเพื่อนคู่ใจ
         </Link>
       </section>
     </div>

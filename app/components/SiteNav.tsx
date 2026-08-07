@@ -14,7 +14,7 @@ import { APP_CONFIG } from '../../lib/constants'
 
 const DESKTOP_LINKS = [
   { href: '/', label: 'หน้าแรก', icon: FaHome },
-  { href: '/chat', label: 'เพื่อน AI', icon: FaComments },
+  { href: '/chat', label: 'เพื่อนคู่ใจ', icon: FaComments },
   { href: '/insight', label: 'ภาพรวมอารมณ์', icon: FaChartLine },
   { href: '/wellness', label: 'ศูนย์สุขภาวะ', icon: FaHeart },
   { href: '/emergency', label: 'ฉุกเฉิน', icon: FaHandHoldingHeart },
@@ -23,7 +23,7 @@ const DESKTOP_LINKS = [
 
 const MOBILE_LINKS = [
   { href: '/', label: 'หน้าแรก', icon: FaHome },
-  { href: '/chat', label: 'เพื่อน AI', icon: FaComments },
+  { href: '/chat', label: 'เพื่อนคู่ใจ', icon: FaComments },
   { href: '/insight', label: 'ภาพรวม', icon: FaChartLine },
   { href: '/wellness', label: 'สุขภาวะ', icon: FaHeart },
   { href: '/emergency', label: 'ฉุกเฉิน', icon: FaHandHoldingHeart },

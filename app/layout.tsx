@@ -28,6 +28,7 @@ export const metadata: Metadata = {
   description: APP_CONFIG.description,
   keywords: [
     'MindCare',
+    'STRMindCare',
     'สุขภาวะทางอารมณ์',
     'สุขภาพจิตนักเรียน',
   ],

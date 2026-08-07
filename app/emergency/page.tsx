@@ -41,7 +41,7 @@ export default function EmergencyPage() {
         <h1 className="text-2xl font-bold font-sarabun">AI Emergency Support</h1>
         <p className="mt-2 text-rose-50 text-sm">
           หากคุณรู้สึกอันตรายหรือคิดทำร้ายตัวเอง กรุณาติดต่อความช่วยเหลือทันที
-          MindCare เป็นเพียงเครื่องมือสนับสนุนเบื้องต้น ไม่ใช่บริการฉุกเฉิน
+          STRMindCare เป็นเพียงเครื่องมือสนับสนุนเบื้องต้น ไม่ใช่บริการฉุกเฉิน
         </p>
       </div>
 

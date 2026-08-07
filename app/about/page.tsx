@@ -19,7 +19,7 @@ export default function AboutPage() {
       <section className="rounded-2xl border border-slate-200 bg-white p-5 space-y-2">
         <h2 className="font-semibold text-slate-900">ขอบเขตของระบบ</h2>
         <p className="text-sm text-slate-700">
-          MindCare เป็นแพลตฟอร์มส่งเสริมสุขภาวะทางอารมณ์และการดูแลตนเองเบื้องต้น
+          STRMindCare เป็นแพลตฟอร์มส่งเสริมสุขภาวะทางอารมณ์และการดูแลตนเองเบื้องต้น
           ไม่ใช่แพทย์ ไม่วินิจฉัยโรค และไม่ทดแทนบริการสุขภาพจิตมืออาชีพ
         </p>
       </section>
