@@ -12,9 +12,10 @@ let isApiAvailable = false
 let currentModelName = ''
 
 const availableModels = [
-  'gemini-1.5-flash',
-  'gemini-1.5-pro',
-  'gemini-1.0-pro',
+  'gemini-flash-latest',
+  'gemini-2.5-flash',
+  'gemini-2.0-flash',
+  'gemini-flash-lite-latest',
 ]
 
 function initializeAPI() {
@@ -101,7 +102,12 @@ async function retryApiCall<T>(
 
       if (
         errorMessage.includes('overloaded') ||
-        errorMessage.includes('503')
+        errorMessage.includes('503') ||
+        errorMessage.includes('404') ||
+        errorMessage.includes('not found') ||
+        errorMessage.includes('429') ||
+        errorMessage.includes('Too Many Requests') ||
+        errorMessage.includes('quota')
       ) {
         const switched = await switchToNextModel()
         if (switched) continue
