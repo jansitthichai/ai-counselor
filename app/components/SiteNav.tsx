@@ -14,18 +14,18 @@ import { APP_CONFIG } from '../../lib/constants'
 
 const DESKTOP_LINKS = [
   { href: '/', label: 'หน้าแรก', icon: FaHome },
-  { href: '/chat', label: 'AI Companion', icon: FaComments },
-  { href: '/insight', label: 'Insight', icon: FaChartLine },
-  { href: '/wellness', label: 'Wellness Hub', icon: FaHeart },
-  { href: '/emergency', label: 'Emergency', icon: FaHandHoldingHeart },
-  { href: '/about', label: 'About', icon: FaInfoCircle },
+  { href: '/chat', label: 'เพื่อน AI', icon: FaComments },
+  { href: '/insight', label: 'ภาพรวมอารมณ์', icon: FaChartLine },
+  { href: '/wellness', label: 'ศูนย์สุขภาวะ', icon: FaHeart },
+  { href: '/emergency', label: 'ฉุกเฉิน', icon: FaHandHoldingHeart },
+  { href: '/about', label: 'เกี่ยวกับ', icon: FaInfoCircle },
 ]
 
 const MOBILE_LINKS = [
   { href: '/', label: 'หน้าแรก', icon: FaHome },
-  { href: '/chat', label: 'Companion', icon: FaComments },
-  { href: '/insight', label: 'Insight', icon: FaChartLine },
-  { href: '/wellness', label: 'Wellness', icon: FaHeart },
+  { href: '/chat', label: 'เพื่อน AI', icon: FaComments },
+  { href: '/insight', label: 'ภาพรวม', icon: FaChartLine },
+  { href: '/wellness', label: 'สุขภาวะ', icon: FaHeart },
   { href: '/emergency', label: 'ฉุกเฉิน', icon: FaHandHoldingHeart },
 ]
 

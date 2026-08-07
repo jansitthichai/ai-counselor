@@ -18,7 +18,16 @@ const moduleTint: Record<string, string> = {
     'hover:border-brand-300 border-brand-100 bg-gradient-to-br from-white to-brand-50/30',
   '/emergency':
     'hover:border-coral-300 border-coral-100 bg-gradient-to-br from-white to-coral-50/50',
-  '/phq9': 'hover:border-sky-300 border-sky-100 bg-gradient-to-br from-white to-sky-50/40',
+  '/phq9': 'hover:border-amber-300 border-amber-100 bg-gradient-to-br from-white to-amber-50/50',
+}
+
+const moduleButton: Record<string, string> = {
+  '/chat': 'bg-brand-600 hover:bg-brand-700 text-white',
+  '/emotion': 'bg-sky-500 hover:bg-sky-600 text-white',
+  '/insight': 'bg-sky-600 hover:bg-sky-700 text-white',
+  '/recommendations': 'bg-emerald-500 hover:bg-emerald-600 text-white',
+  '/emergency': 'bg-coral-400 hover:bg-coral-500 text-white',
+  '/phq9': 'bg-amber-500 hover:bg-amber-600 text-white',
 }
 
 export default function Home() {
@@ -52,7 +61,7 @@ export default function Home() {
               href="/wellness"
               className="inline-flex items-center rounded-2xl border border-brand-200 bg-white/90 px-5 py-3 text-brand-800 font-medium hover:border-brand-400 hover:bg-brand-50 transition-colors"
             >
-              เปิด Wellness Hub
+              เปิดศูนย์สุขภาวะ
             </Link>
           </div>
         </motion.div>
@@ -78,9 +87,12 @@ export default function Home() {
               <p className="mt-2 text-sm text-slate-600 min-h-[40px]">{mod.desc}</p>
               <Link
                 href={mod.href}
-                className="mt-4 inline-flex text-sm font-medium text-brand-700 hover:text-brand-900"
+                className={`mt-4 inline-flex items-center justify-center rounded-xl px-4 py-2 text-sm font-semibold shadow-sm transition-colors ${
+                  moduleButton[mod.href] ||
+                  'bg-brand-600 hover:bg-brand-700 text-white'
+                }`}
               >
-                เปิดใช้งาน →
+                เปิดใช้งาน
               </Link>
             </motion.div>
           ))}

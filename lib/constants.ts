@@ -173,28 +173,28 @@ export const EXPERT_SOURCES = {
 
 export const NAVIGATION_ITEMS = [
   { href: '/', label: 'หน้าแรก', icon: 'FaHome' },
-  { href: '/chat', label: 'AI Companion', icon: 'FaComments' },
-  { href: '/insight', label: 'Insight', icon: 'FaChartLine' },
-  { href: '/wellness', label: 'Wellness', icon: 'FaHeart' },
+  { href: '/chat', label: 'เพื่อน AI', icon: 'FaComments' },
+  { href: '/insight', label: 'ภาพรวมอารมณ์', icon: 'FaChartLine' },
+  { href: '/wellness', label: 'ศูนย์สุขภาวะ', icon: 'FaHeart' },
   { href: '/emergency', label: 'ฉุกเฉิน', icon: 'FaHandHoldingHeart' },
 ] as const
 
 export const PLATFORM_MODULES = [
-  { href: '/chat', title: 'AI Companion', desc: 'เพื่อน AI แบบ Agentic วิเคราะห์และแนะนำอัตโนมัติ', group: 'core' },
-  { href: '/mood-tracker', title: 'Mood Tracker', desc: 'ติดตามอารมณ์รายวัน', group: 'core' },
-  { href: '/emotion', title: 'Emotion Analysis', desc: 'วิเคราะห์อารมณ์จากข้อความ', group: 'ai' },
-  { href: '/phq9', title: 'Mental Health Screening', desc: 'คัดกรองเบื้องต้นด้วย PHQ-9', group: 'core' },
-  { href: '/recommendations', title: 'AI Recommendation', desc: 'แนะนำเพลง สมาธิ หนังสือ วิดีโอ กิจกรรม', group: 'ai' },
-  { href: '/resources', title: 'Wellness Articles', desc: 'บทความส่งเสริมสุขภาวะ', group: 'core' },
-  { href: '/games', title: 'Stress Relief', desc: 'กิจกรรมและเกมคลายเครียด', group: 'core' },
-  { href: '/journal', title: 'AI Journal', desc: 'ไดอารี่อารมณ์และ Daily Reflection', group: 'ai' },
-  { href: '/insight', title: 'AI Insight', desc: 'กราฟความเครียด ความสุข การนอน + Weekly Report', group: 'ai' },
-  { href: '/goals', title: 'Goals & Habits', desc: 'ตั้งเป้าหมายและสร้างนิสัย', group: 'ai' },
-  { href: '/motivation', title: 'AI Motivation', desc: 'ข้อความสร้างกำลังใจ', group: 'ai' },
-  { href: '/emergency', title: 'Emergency Support', desc: 'ครู ผู้ปกครอง สายด่วน', group: 'core' },
-  { href: '/teacher', title: 'Teacher Dashboard', desc: 'สถิติแนวโน้มแบบไม่ระบุตัวตน', group: 'role' },
-  { href: '/parent', title: 'Parent Dashboard', desc: 'แนวทางสนับสนุนบุตรหลาน', group: 'role' },
-  { href: '/admin', title: 'Admin Dashboard', desc: 'จัดการบทความและระบบ', group: 'role' },
+  { href: '/chat', title: 'เพื่อน AI', desc: 'เพื่อน AI แบบ Agentic วิเคราะห์และแนะนำอัตโนมัติ', group: 'core' },
+  { href: '/mood-tracker', title: 'บันทึกอารมณ์', desc: 'ติดตามอารมณ์รายวัน', group: 'core' },
+  { href: '/emotion', title: 'วิเคราะห์อารมณ์', desc: 'วิเคราะห์อารมณ์จากข้อความ', group: 'ai' },
+  { href: '/phq9', title: 'คัดกรองสุขภาพจิต', desc: 'คัดกรองเบื้องต้นด้วย PHQ-9', group: 'core' },
+  { href: '/recommendations', title: 'คำแนะนำจาก AI', desc: 'แนะนำเพลง สมาธิ หนังสือ วิดีโอ กิจกรรม', group: 'ai' },
+  { href: '/resources', title: 'บทความสุขภาวะ', desc: 'บทความส่งเสริมสุขภาวะ', group: 'core' },
+  { href: '/games', title: 'คลายเครียด', desc: 'กิจกรรมและเกมคลายเครียด', group: 'core' },
+  { href: '/journal', title: 'ไดอารี่อารมณ์', desc: 'ไดอารี่อารมณ์และการสะท้อนความคิดรายวัน', group: 'ai' },
+  { href: '/insight', title: 'ภาพรวมอารมณ์', desc: 'กราฟความเครียด ความสุข การนอน และรายงานรายสัปดาห์', group: 'ai' },
+  { href: '/goals', title: 'เป้าหมายและนิสัย', desc: 'ตั้งเป้าหมายและสร้างนิสัย', group: 'ai' },
+  { href: '/motivation', title: 'กำลังใจจาก AI', desc: 'ข้อความสร้างกำลังใจ', group: 'ai' },
+  { href: '/emergency', title: 'ความช่วยเหลือฉุกเฉิน', desc: 'ครู ผู้ปกครอง สายด่วน', group: 'core' },
+  { href: '/teacher', title: 'แดชบอร์ดครู', desc: 'สถิติแนวโน้มแบบไม่ระบุตัวตน', group: 'role' },
+  { href: '/parent', title: 'แดชบอร์ดผู้ปกครอง', desc: 'แนวทางสนับสนุนบุตรหลาน', group: 'role' },
+  { href: '/admin', title: 'แดชบอร์ดผู้ดูแล', desc: 'จัดการบทความและระบบ', group: 'role' },
 ] as const
 
 export const GAME_TYPES = {
