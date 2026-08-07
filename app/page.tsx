@@ -5,7 +5,7 @@ import Link from 'next/link'
 import { APP_CONFIG, PLATFORM_MODULES } from '../lib/constants'
 
 const featured = PLATFORM_MODULES.filter((m) =>
-  ['/chat', '/emotion', '/insight', '/recommendations', '/emergency', '/phq9'].includes(
+  ['/chat', '/emotion', '/insight', '/recommendations', '/help', '/phq9'].includes(
     m.href
   )
 )
@@ -16,7 +16,7 @@ const moduleTint: Record<string, string> = {
   '/insight': 'hover:border-sky-300 border-sky-100 bg-gradient-to-br from-white to-sky-50/40',
   '/recommendations':
     'hover:border-brand-300 border-brand-100 bg-gradient-to-br from-white to-brand-50/30',
-  '/emergency':
+  '/help':
     'hover:border-coral-300 border-coral-100 bg-gradient-to-br from-white to-coral-50/50',
   '/phq9': 'hover:border-amber-300 border-amber-100 bg-gradient-to-br from-white to-amber-50/50',
 }
@@ -26,7 +26,7 @@ const moduleButton: Record<string, string> = {
   '/emotion': 'bg-sky-500 hover:bg-sky-600 text-white',
   '/insight': 'bg-sky-600 hover:bg-sky-700 text-white',
   '/recommendations': 'bg-emerald-500 hover:bg-emerald-600 text-white',
-  '/emergency': 'bg-coral-400 hover:bg-coral-500 text-white',
+  '/help': 'bg-coral-400 hover:bg-coral-500 text-white',
   '/phq9': 'bg-amber-500 hover:bg-amber-600 text-white',
 }
 

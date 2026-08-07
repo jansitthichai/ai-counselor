@@ -33,6 +33,16 @@ const nextConfig = {
     },
   }),
 
+  async redirects() {
+    return [
+      {
+        source: '/emergency',
+        destination: '/help',
+        permanent: true,
+      },
+    ]
+  },
+
   async headers() {
     return [
       {

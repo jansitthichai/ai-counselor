@@ -177,7 +177,7 @@ export const NAVIGATION_ITEMS = [
   { href: '/chat', label: 'เพื่อนคู่ใจ', icon: 'FaComments' },
   { href: '/insight', label: 'ภาพรวมอารมณ์', icon: 'FaChartLine' },
   { href: '/wellness', label: 'ศูนย์สุขภาวะ', icon: 'FaHeart' },
-  { href: '/emergency', label: 'ฉุกเฉิน', icon: 'FaHandHoldingHeart' },
+  { href: '/help', label: 'ฉุกเฉิน', icon: 'FaHandHoldingHeart' },
 ] as const
 
 export const PLATFORM_MODULES = [
@@ -192,7 +192,7 @@ export const PLATFORM_MODULES = [
   { href: '/insight', title: 'ภาพรวมอารมณ์', desc: 'กราฟความเครียด ความสุข การนอน และรายงานรายสัปดาห์', group: 'ai' },
   { href: '/goals', title: 'เป้าหมายและนิสัย', desc: 'ตั้งเป้าหมายและสร้างนิสัย', group: 'ai' },
   { href: '/motivation', title: 'กำลังใจจาก AI', desc: 'ข้อความสร้างกำลังใจ', group: 'ai' },
-  { href: '/emergency', title: 'ความช่วยเหลือฉุกเฉิน', desc: 'ครู ผู้ปกครอง สายด่วน', group: 'core' },
+  { href: '/help', title: 'ขอความช่วยเหลือ', desc: 'ครูแนะแนว สายด่วน โรงพยาบาล และช่องทางติดต่อ', group: 'core' },
   { href: '/teacher', title: 'แดชบอร์ดครู', desc: 'สถิติแนวโน้มแบบไม่ระบุตัวตน', group: 'role' },
   { href: '/parent', title: 'แดชบอร์ดผู้ปกครอง', desc: 'แนวทางสนับสนุนบุตรหลาน', group: 'role' },
   { href: '/admin', title: 'แดชบอร์ดผู้ดูแล', desc: 'จัดการบทความและระบบ', group: 'role' },

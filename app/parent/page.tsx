@@ -31,10 +31,10 @@ export default function ParentDashboardPage() {
           สายด่วนสุขภาพจิต {APP_CONFIG.contact.hotline} · ฉุกเฉิน {APP_CONFIG.contact.emergency}
         </p>
         <Link
-          href="/emergency"
+          href="/help"
           className="inline-flex mt-3 text-sm font-medium text-rose-700"
         >
-          เปิด Emergency Support →
+          เปิดหน้าขอความช่วยเหลือ →
         </Link>
       </div>
 

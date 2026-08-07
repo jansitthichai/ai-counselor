@@ -213,10 +213,10 @@ export default function ChatPage() {
                 โทร {APP_CONFIG.contact.hotline}
               </a>
               <Link
-                href="/emergency"
+                href="/help"
                 className="inline-flex items-center justify-center border border-white px-4 py-2 rounded-lg text-sm"
               >
-                Emergency
+                ขอความช่วยเหลือ
               </Link>
             </div>
           </div>

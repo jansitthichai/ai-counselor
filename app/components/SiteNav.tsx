@@ -17,7 +17,7 @@ const DESKTOP_LINKS = [
   { href: '/chat', label: 'เพื่อนคู่ใจ', icon: FaComments },
   { href: '/insight', label: 'ภาพรวมอารมณ์', icon: FaChartLine },
   { href: '/wellness', label: 'ศูนย์สุขภาวะ', icon: FaHeart },
-  { href: '/emergency', label: 'ฉุกเฉิน', icon: FaHandHoldingHeart },
+  { href: '/help', label: 'ฉุกเฉิน', icon: FaHandHoldingHeart },
   { href: '/about', label: 'เกี่ยวกับ', icon: FaInfoCircle },
 ]
 
@@ -26,7 +26,7 @@ const MOBILE_LINKS = [
   { href: '/chat', label: 'เพื่อนคู่ใจ', icon: FaComments },
   { href: '/insight', label: 'ภาพรวม', icon: FaChartLine },
   { href: '/wellness', label: 'สุขภาวะ', icon: FaHeart },
-  { href: '/emergency', label: 'ฉุกเฉิน', icon: FaHandHoldingHeart },
+  { href: '/help', label: 'ฉุกเฉิน', icon: FaHandHoldingHeart },
 ]
 
 function linkClass(active: boolean) {
