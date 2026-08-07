@@ -135,7 +135,7 @@ function looksIncomplete(text: string): boolean {
   if (trimmed.length < 40) return false
   // Ends on a bare numbered heading without body, or unfinished markdown bold
   if (/\*\*\d+\.\s*[^*]+\*\*\s*$/.test(trimmed)) return true
-  if (/\n\d+\.\s+[^\n]{0,40}$/.test(trimmed) && !/[.!?。ครับค่ะ]$/.test(trimmed))
+  if (/\n\d+\.\s+[^\n]{0,40}$/.test(trimmed) && !/(?:[.!?。]|ครับ|ค่ะ)$/.test(trimmed))
     return true
   if (/\*\*[^*]+$/.test(trimmed)) return true
   return false
