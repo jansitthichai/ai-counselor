@@ -1,4 +1,4 @@
-'use client'
+﻿'use client'
 
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
@@ -39,10 +39,10 @@ export default function AdminLogin() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-50 via-white to-blue-50 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-gradient-to-br from-brand-50 via-white to-sky-50 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-md w-full">
         <div className="bg-white rounded-2xl shadow-xl border border-gray-100 overflow-hidden">
-          <div className="bg-gradient-to-r from-purple-600 to-purple-700 px-8 py-8 text-center">
+          <div className="bg-gradient-to-r from-brand-600 to-brand-700 px-8 py-8 text-center">
             <div className="w-16 h-16 bg-white bg-opacity-20 rounded-full flex items-center justify-center mx-auto mb-4">
               <svg
                 className="w-8 h-8 text-white"
@@ -61,7 +61,7 @@ export default function AdminLogin() {
             <h2 className="text-2xl font-bold text-white mb-2">
               เข้าสู่ระบบผู้ดูแล
             </h2>
-            <p className="text-purple-100 text-sm">
+            <p className="text-brand-100 text-sm">
               กรุณาเข้าสู่ระบบเพื่อจัดการบทความ
             </p>
           </div>
@@ -82,7 +82,7 @@ export default function AdminLogin() {
                   required
                   disabled={isLoading}
                   autoComplete="username"
-                  className="block w-full px-3 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500 disabled:bg-gray-50"
+                  className="block w-full px-3 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-brand-500 disabled:bg-gray-50"
                   placeholder="กรอก Username"
                   value={username}
                   onChange={(e) => setUsername(e.target.value)}
@@ -104,7 +104,7 @@ export default function AdminLogin() {
                     required
                     disabled={isLoading}
                     autoComplete="current-password"
-                    className="block w-full px-3 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500 disabled:bg-gray-50 pr-12"
+                    className="block w-full px-3 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-brand-500 disabled:bg-gray-50 pr-12"
                     placeholder="กรอก Password"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
@@ -128,7 +128,7 @@ export default function AdminLogin() {
               <button
                 type="submit"
                 disabled={isLoading}
-                className="w-full bg-purple-600 text-white py-3 rounded-lg hover:bg-purple-700 disabled:opacity-50 font-medium"
+                className="w-full bg-brand-600 text-white py-3 rounded-lg hover:bg-brand-700 disabled:opacity-50 font-medium"
               >
                 {isLoading ? 'กำลังเข้าสู่ระบบ...' : 'เข้าสู่ระบบ'}
               </button>

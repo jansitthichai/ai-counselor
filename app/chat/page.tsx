@@ -181,18 +181,18 @@ export default function ChatPage() {
   }, [])
 
   return (
-    <div className="min-h-screen bg-white flex flex-col -mx-4 sm:-mx-6 lg:-mx-8 -my-4 md:-my-8">
-      <div className="bg-white border-b border-gray-200 p-4 sticky top-0 z-10">
+    <div className="min-h-screen bg-gradient-to-b from-brand-50/80 via-white to-sky-50/40 flex flex-col -mx-4 sm:-mx-6 lg:-mx-8 -my-4 md:-my-8">
+      <div className="bg-white/90 backdrop-blur border-b border-brand-100 p-4 sticky top-0 z-10">
         <div className="max-w-4xl mx-auto flex justify-between items-center">
           <div>
-            <h1 className="text-lg font-semibold text-gray-900">
+            <h1 className="text-lg font-semibold text-slate-800">
               MindCare Companion
             </h1>
-            <p className="text-xs text-teal-700">Agentic wellbeing chat</p>
+            <p className="text-xs text-brand-700">เพื่อนสุขภาวะทางอารมณ์ · Agentic chat</p>
           </div>
           <button
             onClick={clearChat}
-            className="text-red-600 hover:text-red-700 text-sm px-3 py-2 rounded-lg hover:bg-red-50 border border-red-200"
+            className="text-coral-700 hover:text-coral-800 text-sm px-3 py-2 rounded-xl hover:bg-coral-50 border border-coral-200"
           >
             ล้างการสนทนา
           </button>
@@ -200,7 +200,7 @@ export default function ChatPage() {
       </div>
 
       {showCrisisBanner && (
-        <div className="bg-red-600 text-white px-4 py-3 sticky top-[65px] z-10">
+        <div className="bg-coral-600 text-white px-4 py-3 sticky top-[65px] z-10">
           <div className="max-w-4xl mx-auto flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
             <p className="text-sm font-medium">
               หากคุณกำลังอยู่ในภาวะอันตราย กรุณาติดต่อความช่วยเหลือทันที
@@ -208,7 +208,7 @@ export default function ChatPage() {
             <div className="flex gap-2">
               <a
                 href={`tel:${APP_CONFIG.contact.hotline}`}
-                className="inline-flex items-center justify-center bg-white text-red-700 font-semibold px-4 py-2 rounded-lg text-sm"
+                className="inline-flex items-center justify-center bg-white text-coral-700 font-semibold px-4 py-2 rounded-lg text-sm"
               >
                 โทร {APP_CONFIG.contact.hotline}
               </a>
@@ -229,45 +229,45 @@ export default function ChatPage() {
             message.role === 'user' ? (
               <div key={index} className="flex justify-end">
                 <div className="max-w-[80%] flex items-end space-x-3">
-                  <div className="bg-teal-700 text-white px-4 py-2 rounded-2xl">
+                  <div className="bg-gradient-to-br from-coral-400 to-sky-400 text-white px-4 py-2.5 rounded-2xl shadow-sm">
                     <div className="whitespace-pre-wrap break-words">
                       {message.content}
                     </div>
                   </div>
-                  <div className="w-8 h-8 rounded-full bg-gray-300 flex items-center justify-center flex-shrink-0">
-                    <HiOutlineUser className="w-5 h-5 text-gray-600" />
+                  <div className="w-8 h-8 rounded-full bg-coral-100 flex items-center justify-center flex-shrink-0">
+                    <HiOutlineUser className="w-5 h-5 text-coral-600" />
                   </div>
                 </div>
               </div>
             ) : (
               <div key={index} className="flex justify-start">
                 <div className="w-full flex items-start space-x-4">
-                  <div className="w-8 h-8 rounded-full bg-teal-100 flex items-center justify-center flex-shrink-0">
-                    <HiOutlineSparkles className="w-5 h-5 text-teal-700" />
+                  <div className="w-8 h-8 rounded-full bg-brand-100 flex items-center justify-center flex-shrink-0">
+                    <HiOutlineSparkles className="w-5 h-5 text-brand-700" />
                   </div>
                   <div className="flex-1 max-w-[85%] space-y-3">
                     <div
                       className={`px-4 py-3 rounded-2xl ${
                         message.isCrisis
-                          ? 'bg-red-50 border border-red-200'
-                          : 'bg-gray-50'
+                          ? 'bg-coral-50 border border-coral-200'
+                          : 'bg-white/90 border border-brand-100 shadow-sm'
                       }`}
                     >
-                      <div className="whitespace-pre-wrap break-words text-gray-900">
+                      <div className="whitespace-pre-wrap break-words text-slate-800">
                         {message.content}
                       </div>
                     </div>
                     {message.agent && (
-                      <div className="rounded-2xl border border-teal-100 bg-teal-50/60 p-3 text-sm space-y-2">
-                        <p className="font-semibold text-teal-900">
+                      <div className="rounded-2xl border border-brand-100 bg-gradient-to-br from-brand-50/80 to-sky-50/60 p-3 text-sm space-y-2">
+                        <p className="font-semibold text-brand-900">
                           Agent actions
                         </p>
-                        <p className="text-teal-900">
+                        <p className="text-brand-900">
                           อารมณ์: {message.agent.emotionLabel} · Stress:{' '}
                           {message.agent.stressLevel} · Risk:{' '}
                           {message.agent.riskLevel}
                         </p>
-                        <p className="text-teal-800 italic">
+                        <p className="text-brand-800 italic">
                           “{message.agent.motivation}”
                         </p>
                         {message.agent.recommendations.length > 0 && (
@@ -277,7 +277,7 @@ export default function ChatPage() {
                                 {r.href ? (
                                   <Link
                                     href={r.href}
-                                    className="text-teal-700 underline"
+                                    className="text-brand-700 underline"
                                   >
                                     {r.title}
                                   </Link>
@@ -298,29 +298,29 @@ export default function ChatPage() {
         </AnimatePresence>
         {isLoading && (
           <div className="flex items-start space-x-4">
-            <div className="w-8 h-8 rounded-full bg-teal-100 flex items-center justify-center">
-              <HiOutlineSparkles className="w-5 h-5 text-teal-700" />
+            <div className="w-8 h-8 rounded-full bg-brand-100 flex items-center justify-center">
+              <HiOutlineSparkles className="w-5 h-5 text-brand-700" />
             </div>
             <div className="flex items-center space-x-1 pt-2">
-              <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" />
+              <div className="w-2 h-2 bg-brand-300 rounded-full animate-bounce" />
               <div
-                className="w-2 h-2 bg-gray-400 rounded-full animate-bounce"
+                className="w-2 h-2 bg-sky-300 rounded-full animate-bounce"
                 style={{ animationDelay: '0.1s' }}
               />
               <div
-                className="w-2 h-2 bg-gray-400 rounded-full animate-bounce"
+                className="w-2 h-2 bg-coral-300 rounded-full animate-bounce"
                 style={{ animationDelay: '0.2s' }}
               />
             </div>
           </div>
         )}
-        {error && <div className="text-red-500 text-center text-sm">{error}</div>}
+        {error && <div className="text-coral-600 text-center text-sm">{error}</div>}
         <div ref={messagesEndRef} />
       </div>
 
       <form
         onSubmit={handleSubmit}
-        className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 p-4 z-10"
+        className="fixed bottom-0 left-0 right-0 bg-white/95 backdrop-blur border-t border-brand-100 p-4 z-10"
       >
         <div className="max-w-4xl mx-auto flex items-center space-x-3">
           <textarea
@@ -329,7 +329,7 @@ export default function ChatPage() {
             onChange={handleInputChange}
             onKeyDown={handleKeyDown}
             placeholder="เล่าความรู้สึกได้เลย เช่น ผมสอบตกครับ..."
-            className="flex-1 border border-gray-300 rounded-2xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-teal-500"
+            className="flex-1 border border-brand-200 rounded-2xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-brand-400 bg-white"
             style={{ minHeight: '44px', maxHeight: '120px' }}
             disabled={isLoading}
             rows={1}
@@ -337,12 +337,12 @@ export default function ChatPage() {
           <button
             type="submit"
             disabled={isLoading || !input.trim()}
-            className="bg-teal-700 text-white px-4 py-3 rounded-2xl hover:bg-teal-800 disabled:opacity-50 h-[52px]"
+            className="bg-brand-600 text-white px-4 py-3 rounded-2xl hover:bg-brand-700 disabled:opacity-50 h-[52px] shadow-sm"
           >
             ส่ง
           </button>
         </div>
-        <p className="max-w-4xl mx-auto mt-2 text-xs text-gray-500 text-center">
+        <p className="max-w-4xl mx-auto mt-2 text-xs text-slate-500 text-center">
           MindCare อาจมีข้อผิดพลาด · ไม่ใช่การวินิจฉัยโรค · สายด่วน{' '}
           {APP_CONFIG.contact.hotline}
         </p>

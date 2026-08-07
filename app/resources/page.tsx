@@ -77,7 +77,7 @@ export default function ResourcesPage() {
           <p className="text-red-600 text-lg">{error}</p>
           <button
             onClick={loadArticles}
-            className="mt-4 bg-purple-600 text-white px-4 py-2 rounded-md hover:bg-purple-700 transition-colors"
+            className="mt-4 bg-brand-600 text-white px-4 py-2 rounded-md hover:bg-brand-700 transition-colors"
           >
             ลองใหม่
           </button>
@@ -101,7 +101,7 @@ export default function ResourcesPage() {
           <div className="mt-4">
             <a
               href="/admin/login"
-              className="inline-block bg-purple-600 text-white px-4 py-2 rounded-md hover:bg-purple-700 transition-colors text-sm"
+              className="inline-block bg-brand-600 text-white px-4 py-2 rounded-md hover:bg-brand-700 transition-colors text-sm"
             >
               เข้าสู่ระบบผู้ดูแล
             </a>

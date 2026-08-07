@@ -1,4 +1,4 @@
-'use client'
+﻿'use client'
 
 import { useEffect, useState } from 'react'
 import {
@@ -58,9 +58,9 @@ export default function JournalPage() {
         </p>
       </div>
 
-      <div className="rounded-2xl border border-teal-100 bg-teal-50/70 p-4">
-        <p className="text-sm font-medium text-teal-900">AI Daily Reflection</p>
-        <p className="text-lg text-teal-800 mt-1 font-sarabun">{prompt}</p>
+      <div className="rounded-2xl border border-brand-100 bg-brand-50/70 p-4">
+        <p className="text-sm font-medium text-brand-900">AI Daily Reflection</p>
+        <p className="text-lg text-brand-800 mt-1 font-sarabun">{prompt}</p>
       </div>
 
       <textarea
@@ -73,7 +73,7 @@ export default function JournalPage() {
       <button
         onClick={save}
         disabled={analyzing || !text.trim()}
-        className="rounded-xl bg-teal-700 text-white px-5 py-2.5 disabled:opacity-50"
+        className="rounded-xl bg-brand-700 text-white px-5 py-2.5 disabled:opacity-50"
       >
         {analyzing ? 'กำลังบันทึกและวิเคราะห์...' : 'บันทึกไดอารี่'}
       </button>
@@ -87,7 +87,7 @@ export default function JournalPage() {
             <div className="flex justify-between text-xs text-slate-500 mb-2">
               <span>{new Date(e.createdAt).toLocaleString('th-TH')}</span>
               {e.emotion && (
-                <span className="text-teal-700 font-medium">{e.emotion}</span>
+                <span className="text-brand-700 font-medium">{e.emotion}</span>
               )}
             </div>
             <p className="text-slate-800 whitespace-pre-wrap">{e.text}</p>

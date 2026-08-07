@@ -1,4 +1,4 @@
-'use client'
+﻿'use client'
 
 import { useEffect, useState } from 'react'
 import {
@@ -94,7 +94,7 @@ export default function GoalsHabitsPage() {
           />
           <button
             onClick={addGoal}
-            className="rounded-xl bg-teal-700 text-white px-4 py-2 text-sm"
+            className="rounded-xl bg-brand-700 text-white px-4 py-2 text-sm"
           >
             เพิ่ม
           </button>
@@ -105,14 +105,14 @@ export default function GoalsHabitsPage() {
               <span>{g.title}</span>
               <button
                 onClick={() => bumpGoal(g.id)}
-                className="text-teal-700 font-medium"
+                className="text-brand-700 font-medium"
               >
                 +10%
               </button>
             </div>
             <div className="h-2 rounded-full bg-slate-100">
               <div
-                className="h-full rounded-full bg-teal-500"
+                className="h-full rounded-full bg-brand-500"
                 style={{ width: `${g.progress}%` }}
               />
             </div>
@@ -131,7 +131,7 @@ export default function GoalsHabitsPage() {
           />
           <button
             onClick={addHabit}
-            className="rounded-xl bg-teal-700 text-white px-4 py-2 text-sm"
+            className="rounded-xl bg-brand-700 text-white px-4 py-2 text-sm"
           >
             เพิ่ม
           </button>
@@ -147,7 +147,7 @@ export default function GoalsHabitsPage() {
             </div>
             <button
               onClick={() => checkHabit(h.id)}
-              className="rounded-lg border border-teal-300 px-3 py-1.5 text-teal-800"
+              className="rounded-lg border border-brand-300 px-3 py-1.5 text-brand-800"
             >
               ทำวันนี้แล้ว
             </button>

@@ -1,4 +1,4 @@
-'use client'
+﻿'use client'
 
 import Link from 'next/link'
 import { PLATFORM_MODULES } from '../../lib/constants'
@@ -23,7 +23,7 @@ export default function WellnessHubPage() {
           <Link
             key={m.href}
             href={m.href}
-            className="rounded-2xl border border-slate-200 bg-white/80 p-5 hover:border-teal-400 transition-colors"
+            className="rounded-2xl border border-slate-200 bg-white/80 p-5 hover:border-brand-400 transition-colors"
           >
             <h2 className="font-semibold text-slate-800">{m.title}</h2>
             <p className="text-sm text-slate-600 mt-2">{m.desc}</p>
@@ -38,10 +38,10 @@ export default function WellnessHubPage() {
             <Link
               key={m.href}
               href={m.href}
-              className="rounded-2xl border border-slate-200 bg-teal-50/60 p-5 hover:border-teal-400"
+              className="rounded-2xl border border-slate-200 bg-brand-50/60 p-5 hover:border-brand-400"
             >
-              <h3 className="font-semibold text-teal-900">{m.title}</h3>
-              <p className="text-sm text-teal-800/80 mt-2">{m.desc}</p>
+              <h3 className="font-semibold text-brand-900">{m.title}</h3>
+              <p className="text-sm text-brand-800/80 mt-2">{m.desc}</p>
             </Link>
           ))}
         </div>

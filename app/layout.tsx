@@ -56,7 +56,7 @@ export default function RootLayout({
       <body
         className={`${sourceSans.variable} ${sarabun.variable} font-sans antialiased`}
       >
-        <div className="min-h-screen bg-[radial-gradient(ellipse_at_top,_#ecfdf5_0%,_#f8fafc_45%,_#eff6ff_100%)] pb-16 md:pb-0">
+        <div className="min-h-screen bg-mindcare pb-16 md:pb-0">
           <SiteNav />
           <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 md:py-8">
             {children}

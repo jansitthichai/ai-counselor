@@ -113,7 +113,7 @@ export default function EditArticle() {
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
         <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-purple-600 mx-auto"></div>
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-brand-600 mx-auto"></div>
           <p className="mt-4 text-gray-600">กำลังโหลดข้อมูล...</p>
         </div>
       </div>
@@ -127,7 +127,7 @@ export default function EditArticle() {
           <p className="text-red-600 text-lg">{error}</p>
           <Link
             href="/admin"
-            className="mt-4 inline-block bg-purple-600 text-white px-6 py-2 rounded-md hover:bg-purple-700 transition-colors"
+            className="mt-4 inline-block bg-brand-600 text-white px-6 py-2 rounded-md hover:bg-brand-700 transition-colors"
           >
             กลับไปหน้าจัดการ
           </Link>
@@ -142,7 +142,7 @@ export default function EditArticle() {
       {isSaving && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
           <div className="bg-white rounded-lg p-8 flex flex-col items-center">
-            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-purple-600 mb-4"></div>
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-brand-600 mb-4"></div>
             <p className="text-gray-700 font-medium">กำลังบันทึกการแก้ไข...</p>
             <p className="text-gray-500 text-sm mt-2">กรุณารอสักครู่</p>
           </div>
@@ -195,7 +195,7 @@ export default function EditArticle() {
                 onChange={(e) => setTitle(e.target.value)}
                 required
                 disabled={isSaving}
-                className="mt-1 block w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-purple-500 focus:border-purple-500 disabled:bg-gray-100 disabled:cursor-not-allowed"
+                className="mt-1 block w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-brand-500 focus:border-brand-500 disabled:bg-gray-100 disabled:cursor-not-allowed"
                 placeholder="ใส่ชื่อบทความ"
               />
             </div>
@@ -211,7 +211,7 @@ export default function EditArticle() {
                 required
                 rows={3}
                 disabled={isSaving}
-                className="mt-1 block w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-purple-500 focus:border-purple-500 resize-none disabled:bg-gray-100 disabled:cursor-not-allowed"
+                className="mt-1 block w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-brand-500 focus:border-brand-500 resize-none disabled:bg-gray-100 disabled:cursor-not-allowed"
                 placeholder="ใส่เนื้อหาย่อของบทความ"
               />
             </div>
@@ -227,7 +227,7 @@ export default function EditArticle() {
                 onChange={(e) => setSource(e.target.value)}
                 required
                 disabled={isSaving}
-                className="mt-1 block w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-purple-500 focus:border-purple-500 disabled:bg-gray-100 disabled:cursor-not-allowed"
+                className="mt-1 block w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-brand-500 focus:border-brand-500 disabled:bg-gray-100 disabled:cursor-not-allowed"
                 placeholder="เช่น: Sanook, Ooca, Health"
               />
             </div>
@@ -243,7 +243,7 @@ export default function EditArticle() {
                 onChange={(e) => setUrl(e.target.value)}
                 required
                 disabled={isSaving}
-                className="mt-1 block w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-purple-500 focus:border-purple-500 disabled:bg-gray-100 disabled:cursor-not-allowed"
+                className="mt-1 block w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-brand-500 focus:border-brand-500 disabled:bg-gray-100 disabled:cursor-not-allowed"
                 placeholder="https://example.com/article"
               />
             </div>
@@ -258,7 +258,7 @@ export default function EditArticle() {
                 value={imageUrl}
                 onChange={(e) => setImageUrl(e.target.value)}
                 disabled={isSaving}
-                className="mt-1 block w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-purple-500 focus:border-purple-500 disabled:bg-gray-100 disabled:cursor-not-allowed"
+                className="mt-1 block w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-brand-500 focus:border-brand-500 disabled:bg-gray-100 disabled:cursor-not-allowed"
                 placeholder="https://example.com/image.jpg (ไม่บังคับ)"
               />
             </div>
@@ -272,7 +272,7 @@ export default function EditArticle() {
                 value={category}
                 onChange={(e) => setCategory(e.target.value)}
                 disabled={isSaving}
-                className="mt-1 block w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-purple-500 focus:border-purple-500 disabled:bg-gray-100 disabled:cursor-not-allowed"
+                className="mt-1 block w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-brand-500 focus:border-brand-500 disabled:bg-gray-100 disabled:cursor-not-allowed"
               >
                 <option value="อาหารเพื่อสุขภาพจิต">อาหารเพื่อสุขภาพจิต</option>
                 <option value="รู้ทันอาการซึมเศร้า">รู้ทันอาการซึมเศร้า</option>
@@ -294,7 +294,7 @@ export default function EditArticle() {
                 onChange={(e) => setDate(e.target.value)}
                 required
                 disabled={isSaving}
-                className="mt-1 block w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-purple-500 focus:border-purple-500 disabled:bg-gray-100 disabled:cursor-not-allowed"
+                className="mt-1 block w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-brand-500 focus:border-brand-500 disabled:bg-gray-100 disabled:cursor-not-allowed"
               />
             </div>
 
@@ -310,7 +310,7 @@ export default function EditArticle() {
               <button
                 type="submit"
                 disabled={isSaving}
-                className="px-4 py-2 bg-purple-600 text-white rounded-md hover:bg-purple-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                className="px-4 py-2 bg-brand-600 text-white rounded-md hover:bg-brand-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
               >
                 {isSaving ? 'กำลังบันทึก...' : 'บันทึกการแก้ไข'}
               </button>

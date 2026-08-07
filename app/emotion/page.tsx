@@ -1,4 +1,4 @@
-'use client'
+﻿'use client'
 
 import { useState } from 'react'
 import Link from 'next/link'
@@ -55,12 +55,12 @@ export default function EmotionPage() {
         onChange={(e) => setText(e.target.value)}
         rows={5}
         placeholder="พิมพ์ความรู้สึก เช่น วันนี้สอบตก รู้สึกเครียดมาก..."
-        className="w-full rounded-2xl border border-slate-300 p-4 focus:outline-none focus:ring-2 focus:ring-teal-500"
+        className="w-full rounded-2xl border border-slate-300 p-4 focus:outline-none focus:ring-2 focus:ring-brand-500"
       />
       <button
         onClick={analyze}
         disabled={loading || !text.trim()}
-        className="rounded-xl bg-teal-700 text-white px-5 py-2.5 font-medium disabled:opacity-50"
+        className="rounded-xl bg-brand-700 text-white px-5 py-2.5 font-medium disabled:opacity-50"
       >
         {loading ? 'กำลังวิเคราะห์...' : 'วิเคราะห์อารมณ์'}
       </button>
@@ -70,7 +70,7 @@ export default function EmotionPage() {
         <div className="space-y-4 rounded-2xl border border-slate-200 bg-white p-5">
           <div>
             <p className="text-sm text-slate-500">อารมณ์หลัก</p>
-            <p className="text-2xl font-semibold text-teal-800">
+            <p className="text-2xl font-semibold text-brand-800">
               {result.emotion.thaiLabel}{' '}
               <span className="text-sm font-normal text-slate-500">
                 ({Math.round(result.emotion.confidence * 100)}% confidence)
@@ -100,7 +100,7 @@ export default function EmotionPage() {
               ))}
             </ul>
           </div>
-          <Link href="/recommendations" className="text-teal-700 text-sm font-medium">
+          <Link href="/recommendations" className="text-brand-700 text-sm font-medium">
             ดู AI Recommendation →
           </Link>
         </div>

@@ -1,4 +1,4 @@
-'use client'
+﻿'use client'
 
 import Link from 'next/link'
 import { APP_CONFIG } from '../../lib/constants'
@@ -65,7 +65,7 @@ export default function EmergencyPage() {
             ) : (
               <Link
                 href={c.action}
-                className="inline-flex justify-center rounded-xl border border-teal-300 text-teal-800 px-4 py-2 text-sm font-medium"
+                className="inline-flex justify-center rounded-xl border border-brand-300 text-brand-800 px-4 py-2 text-sm font-medium"
               >
                 {c.actionLabel}
               </Link>
@@ -74,7 +74,7 @@ export default function EmergencyPage() {
         ))}
       </div>
 
-      <Link href="/help" className="text-sm text-teal-700 font-medium">
+      <Link href="/help" className="text-sm text-brand-700 font-medium">
         ดูรายชื่อหน่วยงานช่วยเหลือเพิ่มเติม →
       </Link>
     </div>

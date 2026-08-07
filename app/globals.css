@@ -3,41 +3,58 @@
 @tailwind utilities;
 
 :root {
-  --foreground-rgb: 40, 40, 60;
-  --background-start-rgb: 230, 225, 255;
-  --background-end-rgb: 245, 240, 255;
-  --lavender: #e6e6fa;
-  --lavender-light: #f6f4fa;
-  --accent: #a78bfa;
-  --calm-blue: #b3c7f7;
-  --calm-pink: #f7c7e3;
+  /* Soft teal + coral + sky — friendly companion, not flashy */
+  --brand: #0d9488;
+  --brand-dark: #0f766e;
+  --brand-soft: #ccfbf1;
+  --accent: #fb7185;
+  --accent-soft: #ffe4e6;
+  --sky: #38bdf8;
+  --sky-soft: #e0f2fe;
+  --mint: #6ee7b7;
+  --bg-start: #f0fdfa;
+  --bg-mid: #f8fafc;
+  --bg-end: #fff7ed;
+  --text: #334155;
+  --text-muted: #64748b;
+  --surface: rgba(255, 255, 255, 0.82);
+  --foreground-rgb: 51, 65, 85;
+  --lavender: #ccfbf1;
+  --lavender-light: #f0fdfa;
+  --calm-blue: #bae6fd;
+  --calm-pink: #fecdd3;
 }
 
 body {
   color: rgb(var(--foreground-rgb));
-  background: linear-gradient(135deg, var(--lavender), var(--lavender-light), #fff 80%);
-  /* ใช้ฟอนต์แบบเดิมของระบบ */
+  background: linear-gradient(
+    165deg,
+    var(--bg-start) 0%,
+    var(--bg-mid) 48%,
+    var(--bg-end) 100%
+  );
+  min-height: 100vh;
 }
 
 /* Custom scrollbar */
 ::-webkit-scrollbar {
   width: 10px;
-  background: var(--lavender-light);
+  background: var(--brand-soft);
 }
 
 ::-webkit-scrollbar-track {
-  background: #f1f1f1;
+  background: #f1f5f9;
   border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: var(--accent);
+  background: #5eead4;
   border-radius: 6px;
-  border: 2px solid var(--lavender-light);
+  border: 2px solid var(--brand-soft);
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #b39ddb;
+  background: var(--brand);
 }
 
 /* Smooth transitions */
@@ -49,7 +66,8 @@ body {
 
 /* Custom animations */
 @keyframes bounce {
-  0%, 100% {
+  0%,
+  100% {
     transform: translateY(0);
   }
   50% {
@@ -58,10 +76,12 @@ body {
 }
 
 @keyframes blink {
-  0%, 50% {
+  0%,
+  50% {
     opacity: 1;
   }
-  51%, 100% {
+  51%,
+  100% {
     opacity: 0;
   }
 }
@@ -95,41 +115,35 @@ body {
   animation-delay: 200ms;
 }
 
-/* Custom focus styles */
+/* Focus / buttons / cards */
 .focus-ring {
-  @apply focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50;
+  @apply focus:outline-none focus:ring-2 focus:ring-brand-500 focus:ring-opacity-50;
 }
 
-/* Custom button styles */
 .btn-primary {
-  @apply bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition-colors;
+  @apply bg-brand-600 text-white px-6 py-2 rounded-xl hover:bg-brand-700 transition-colors;
 }
 
 .btn-secondary {
-  @apply bg-gray-100 text-gray-700 px-6 py-2 rounded-lg hover:bg-gray-200 transition-colors;
+  @apply bg-slate-100 text-slate-700 px-6 py-2 rounded-xl hover:bg-slate-200 transition-colors;
 }
 
-/* Custom card styles */
 .card {
-  @apply bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow;
+  @apply bg-white/80 rounded-2xl shadow-md p-6 hover:shadow-lg transition-shadow border border-brand-100/60;
 }
 
-/* Custom input styles */
 .input-primary {
-  @apply w-full p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500;
+  @apply w-full p-2 border border-brand-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-brand-500;
 }
 
-/* Custom link styles */
 .link-primary {
-  @apply text-blue-600 hover:text-blue-700 transition-colors;
+  @apply text-brand-700 hover:text-brand-800 transition-colors;
 }
 
-/* Custom container styles */
 .container-custom {
   @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
 }
 
-/* Custom spacing utilities */
 .space-y-custom {
   @apply space-y-4;
 }
@@ -138,41 +152,34 @@ body {
   @apply space-x-4;
 }
 
-/* Custom text styles */
 .text-gradient {
-  @apply bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-blue-400;
+  @apply bg-clip-text text-transparent bg-gradient-to-r from-brand-600 to-sky-400;
 }
 
-/* Custom background styles */
 .bg-gradient-custom {
-  @apply bg-gradient-to-b from-blue-50 to-white;
+  @apply bg-gradient-to-b from-brand-50 to-white;
 }
 
-/* Custom shadow styles */
 .shadow-custom {
   @apply shadow-md hover:shadow-lg transition-shadow;
 }
 
-/* Custom border styles */
 .border-custom {
-  @apply border border-gray-200 rounded-lg;
+  @apply border border-brand-100 rounded-2xl;
 }
 
-/* Custom hover effects */
 .hover-scale {
   @apply transition-transform hover:scale-105;
 }
 
-/* Custom loading animation */
 .loading-dots {
   @apply flex space-x-2;
 }
 
 .loading-dot {
-  @apply w-2 h-2 bg-gray-400 rounded-full animate-bounce;
+  @apply w-2 h-2 bg-brand-300 rounded-full animate-bounce;
 }
 
-/* Custom responsive utilities */
 @media (max-width: 640px) {
   .container-custom {
     @apply px-4;
@@ -191,71 +198,54 @@ body {
   }
 }
 
-/* Sarabun font class */
 .font-sarabun {
   font-family: var(--font-sarabun), sans-serif;
 }
 
-/* Calm theme card */
+/* Calm theme surfaces */
 .calm-card {
-  @apply bg-white/80 rounded-2xl shadow-lg p-6 border border-violet-100;
+  @apply bg-white/80 rounded-2xl shadow-lg p-6 border border-brand-100;
   backdrop-filter: blur(2px);
 }
 
-/* Modern scrollbar */
-::-webkit-scrollbar {
-  width: 10px;
-  background: var(--lavender-light);
-}
-::-webkit-scrollbar-thumb {
-  background: var(--accent);
-  border-radius: 6px;
-  border: 2px solid var(--lavender-light);
-}
-::-webkit-scrollbar-thumb:hover {
-  background: #b39ddb;
-}
-
 .text-calm {
-  color: #7c3aed;
-}
-.bg-calm {
-  background: linear-gradient(135deg, #e6e6fa 0%, #f6f4fa 100%);
+  color: var(--brand-dark);
 }
 
-/* ปรับปุ่มให้ดูนุ่มนวล */
+.bg-calm {
+  background: linear-gradient(135deg, var(--bg-start) 0%, var(--bg-mid) 100%);
+}
+
 .btn-calm {
-  @apply bg-violet-200 text-violet-900 px-6 py-2 rounded-full shadow hover:bg-violet-300 hover:shadow-lg transition-all font-semibold;
+  @apply bg-brand-100 text-brand-900 px-6 py-2 rounded-full shadow-sm hover:bg-brand-200 hover:shadow-md transition-all font-semibold;
 }
 
 .btn-calm-danger {
-  @apply bg-red-100 text-red-700 px-4 py-2 rounded-full shadow hover:bg-red-200 hover:text-red-900 transition-all font-semibold;
+  @apply bg-coral-100 text-coral-700 px-4 py-2 rounded-full shadow-sm hover:bg-coral-200 hover:text-coral-800 transition-all font-semibold;
 }
 
 .input-calm {
-  @apply w-full p-3 border border-violet-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-violet-400 bg-white/80 shadow-sm;
+  @apply w-full p-3 border border-brand-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-brand-400 bg-white/80 shadow-sm;
 }
 
-/* ปรับ card bubble ให้ดูนุ่มนวล */
+/* Chat bubbles — soft coral user, mint-border AI */
 .bubble-user {
-  @apply bg-gradient-to-br from-blue-200 to-violet-100 text-gray-900 rounded-2xl px-5 py-3 shadow-md;
-}
-.bubble-ai {
-  @apply bg-white/90 border border-violet-100 text-gray-800 rounded-2xl px-5 py-3 shadow-md;
+  @apply bg-gradient-to-br from-coral-200 to-sky-100 text-slate-900 rounded-2xl px-5 py-3 shadow-md;
 }
 
-/* AI message แบบเต็มหน้าจอ */
+.bubble-ai {
+  @apply bg-white/90 border border-brand-100 text-slate-800 rounded-2xl px-5 py-3 shadow-md;
+}
+
 .bubble-ai-full {
-  @apply bg-white/95 border border-violet-100 text-gray-800 rounded-2xl px-6 py-4 shadow-lg;
+  @apply bg-white/95 border border-brand-100 text-slate-800 rounded-2xl px-6 py-4 shadow-lg;
   backdrop-filter: blur(4px);
 }
 
-/* User message แบบเล็ก */
 .bubble-user-small {
-  @apply bg-gradient-to-br from-blue-200 to-violet-100 text-gray-900 rounded-xl px-4 py-2 shadow-md text-sm;
-} 
+  @apply bg-gradient-to-br from-coral-200 to-sky-100 text-slate-900 rounded-xl px-4 py-2 shadow-md text-sm;
+}
 
-/* Auto-resize textarea */
 .auto-resize-textarea {
   @apply transition-all duration-200 ease-in-out;
   resize: none;
@@ -263,236 +253,35 @@ body {
 }
 
 .auto-resize-textarea:focus {
-  @apply outline-none ring-2 ring-violet-400 border-violet-400;
+  @apply outline-none ring-2 ring-brand-400 border-brand-400;
 }
 
-/* Message content with line breaks */
 .message-content {
   @apply whitespace-pre-wrap break-words;
 }
 
-/* ลบ resize handle ออกจาก textarea */
 textarea {
   resize: none !important;
+  scrollbar-width: none !important;
+  -ms-overflow-style: none !important;
 }
 
-/* ลบ resize handle ใน WebKit browsers */
 textarea::-webkit-resizer {
   display: none !important;
 }
 
-/* ลบ resize handle ใน Firefox */
-textarea {
-  -moz-resize: none;
-}
-
-/* ลบ resize handle ใน IE/Edge */
-textarea {
-  -ms-resize: none;
-}
-
-/* ลบ resize handle สำหรับ textarea ใน chat page โดยเฉพาะ */
-.chat-textarea {
-  resize: none !important;
-  -moz-resize: none !important;
-  -ms-resize: none !important;
-}
-
-.chat-textarea::-webkit-resizer {
-  display: none !important;
-  width: 0 !important;
-  height: 0 !important;
-}
-
-.chat-textarea::-moz-resizer {
-  display: none !important;
-  width: 0 !important;
-  height: 0 !important;
-}
-
-/* ลบ resize handle ทุกที่ */
-textarea::-webkit-resizer {
-  display: none !important;
-  width: 0 !important;
-  height: 0 !important;
-  background: transparent !important;
-  border: none !important;
-}
-
-/* ลบ accent ออกจากทุกที่ */
-* {
-  accent-color: transparent !important;
-}
-
-textarea {
-  accent-color: transparent !important;
-}
-
-.chat-textarea {
-  accent-color: transparent !important;
-}
-
-input {
-  accent-color: transparent !important;
-}
-
-button {
-  accent-color: transparent !important;
-}
-
-select {
-  accent-color: transparent !important;
-}
-
-/* ลบ accent จากทุก element */
-*::-webkit-accent-color {
-  accent-color: transparent !important;
-}
-
-/* ลบ accent ด้วยวิธีอื่น */
-* {
-  accent-color: transparent !important;
-  -webkit-accent-color: transparent !important;
-  -moz-accent-color: transparent !important;
-  -ms-accent-color: transparent !important;
-}
-
-/* ลบ accent ด้วย CSS custom property */
-:root {
-  --accent-color: transparent !important;
-}
-
-* {
-  accent-color: var(--accent-color) !important;
-}
-
-/* ลบ scrollbar ของ textarea */
 textarea::-webkit-scrollbar {
   display: none !important;
   width: 0 !important;
   height: 0 !important;
 }
 
-textarea::-webkit-scrollbar-track {
-  display: none !important;
-}
-
-textarea::-webkit-scrollbar-thumb {
-  display: none !important;
-}
-
-textarea::-webkit-scrollbar-corner {
-  display: none !important;
-}
-
-/* ลบ scrollbar ของ textarea ใน Firefox */
-textarea {
-  scrollbar-width: none !important;
-  -ms-overflow-style: none !important;
-}
-
-/* ลบ scrollbar ของ chat textarea โดยเฉพาะ */
-.chat-textarea::-webkit-scrollbar {
-  display: none !important;
-  width: 0 !important;
-  height: 0 !important;
-}
-
 .chat-textarea {
+  resize: none !important;
   scrollbar-width: none !important;
   -ms-overflow-style: none !important;
 }
 
-/* ลบ accent เฉพาะเจาะจงมากขึ้น */
-textarea:focus {
-  accent-color: transparent !important;
-  outline: none !important;
+.chat-textarea::-webkit-resizer {
+  display: none !important;
 }
-
-textarea:active {
-  accent-color: transparent !important;
-}
-
-textarea:hover {
-  accent-color: transparent !important;
-}
-
-/* ลบ accent จาก textarea ในทุกสถานะ */
-textarea,
-textarea:focus,
-textarea:active,
-textarea:hover,
-textarea:visited {
-  accent-color: transparent !important;
-  -webkit-accent-color: transparent !important;
-  -moz-accent-color: transparent !important;
-  -ms-accent-color: transparent !important;
-}
-
-/* ลบ accent จาก chat textarea โดยเฉพาะ */
-.chat-textarea,
-.chat-textarea:focus,
-.chat-textarea:active,
-.chat-textarea:hover {
-  accent-color: transparent !important;
-  -webkit-accent-color: transparent !important;
-  -moz-accent-color: transparent !important;
-  -ms-accent-color: transparent !important;
-}
-
-/* ลบ accent ในขณะพิมพ์ */
-textarea:focus-within {
-  accent-color: transparent !important;
-}
-
-textarea:focus-visible {
-  accent-color: transparent !important;
-}
-
-/* ลบ accent จากทุก pseudo-class */
-textarea:any-link,
-textarea:autofill,
-textarea:checked,
-textarea:default,
-textarea:defined,
-textarea:disabled,
-textarea:empty,
-textarea:enabled,
-textarea:first,
-textarea:first-child,
-textarea:first-of-type,
-textarea:focus,
-textarea:focus-visible,
-textarea:focus-within,
-textarea:fullscreen,
-textarea:future,
-textarea:hover,
-textarea:indeterminate,
-textarea:in-range,
-textarea:invalid,
-textarea:last-child,
-textarea:last-of-type,
-textarea:left,
-textarea:link,
-textarea:local-link,
-textarea:only-child,
-textarea:only-of-type,
-textarea:optional,
-textarea:out-of-range,
-textarea:past,
-textarea:placeholder-shown,
-textarea:read-only,
-textarea:read-write,
-textarea:required,
-textarea:right,
-textarea:root,
-textarea:scope,
-textarea:target,
-textarea:target-within,
-textarea:user-invalid,
-textarea:valid,
-textarea:visited {
-  accent-color: transparent !important;
-}
-
- 

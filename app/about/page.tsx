@@ -1,4 +1,4 @@
-import { APP_CONFIG, TECH_STACK } from '../../lib/constants'
+﻿import { APP_CONFIG, TECH_STACK } from '../../lib/constants'
 
 export default function AboutPage() {
   return (
@@ -7,7 +7,7 @@ export default function AboutPage() {
         <h1 className="text-2xl md:text-3xl font-bold text-slate-900 font-sarabun">
           {APP_CONFIG.name}
         </h1>
-        <p className="text-teal-800 font-medium mt-2 text-sm md:text-base">
+        <p className="text-brand-800 font-medium mt-2 text-sm md:text-base">
           {APP_CONFIG.description}
         </p>
         <p className="text-slate-600 mt-2 text-sm leading-relaxed">
@@ -54,7 +54,7 @@ export default function AboutPage() {
           {TECH_STACK.researchThemes.map((t) => (
             <span
               key={t}
-              className="rounded-full bg-teal-50 text-teal-900 text-xs font-medium px-3 py-1 border border-teal-100"
+              className="rounded-full bg-brand-50 text-brand-900 text-xs font-medium px-3 py-1 border border-brand-100"
             >
               {t}
             </span>

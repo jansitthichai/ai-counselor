@@ -1,4 +1,4 @@
-'use client'
+﻿'use client'
 
 import { useMemo, useState } from 'react'
 import { MOTIVATION_QUOTES, getMotivation } from '../../lib/recommendations'
@@ -16,13 +16,13 @@ export default function MotivationPage() {
         <p className="text-slate-600 text-sm mt-1">ข้อความสร้างกำลังใจสำหรับนักเรียน</p>
       </div>
 
-      <div className="rounded-3xl border border-teal-100 bg-gradient-to-br from-teal-50 to-sky-50 p-8 text-center">
+      <div className="rounded-3xl border border-brand-100 bg-gradient-to-br from-brand-50 to-sky-50 p-8 text-center">
         <p className="text-xl md:text-2xl text-slate-800 font-sarabun leading-relaxed">
           “{quote}”
         </p>
         <button
           onClick={() => setSeed(String(Date.now()))}
-          className="mt-6 rounded-xl bg-teal-700 text-white px-5 py-2.5 text-sm font-medium"
+          className="mt-6 rounded-xl bg-brand-700 text-white px-5 py-2.5 text-sm font-medium"
         >
           สุ่มข้อความใหม่
         </button>

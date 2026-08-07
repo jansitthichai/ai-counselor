@@ -90,7 +90,7 @@ export default function BreathingGame() {
       case 'inhale':
         return 'bg-blue-500'
       case 'hold':
-        return 'bg-purple-500'
+        return 'bg-brand-500'
       case 'exhale':
         return 'bg-green-500'
       case 'rest':
@@ -184,7 +184,7 @@ export default function BreathingGame() {
                 <span>หายใจเข้า 4 วินาที</span>
               </div>
               <div className="flex items-center">
-                <div className="w-8 h-8 bg-purple-500 text-white rounded-full flex items-center justify-center text-sm font-bold mr-3">2</div>
+                <div className="w-8 h-8 bg-brand-500 text-white rounded-full flex items-center justify-center text-sm font-bold mr-3">2</div>
                 <span>กลั้นหายใจ 4 วินาที</span>
               </div>
               <div className="flex items-center">
@@ -199,7 +199,7 @@ export default function BreathingGame() {
           </div>
 
           {/* Benefits */}
-          <div className="mt-6 bg-gradient-to-r from-blue-50 to-purple-50 p-6 rounded-lg">
+          <div className="mt-6 bg-gradient-to-r from-blue-50 to-brand-50 p-6 rounded-lg">
             <h3 className="text-lg font-semibold text-gray-800 mb-3">ประโยชน์ของการฝึกหายใจ</h3>
             <ul className="text-gray-600 space-y-2">
               <li>• ลดความเครียดและความวิตกกังวล</li>

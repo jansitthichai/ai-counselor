@@ -31,8 +31,8 @@ const MOBILE_LINKS = [
 
 function linkClass(active: boolean) {
   return active
-    ? 'text-teal-700 font-semibold'
-    : 'text-slate-600 hover:text-teal-700'
+    ? 'text-brand-700 font-semibold'
+    : 'text-slate-600 hover:text-brand-700'
 }
 
 export default function SiteNav() {
@@ -41,11 +41,11 @@ export default function SiteNav() {
 
   return (
     <>
-      <nav className="hidden md:block bg-white/90 backdrop-blur border-b border-slate-200 sticky top-0 z-50">
+      <nav className="hidden md:block bg-white/85 backdrop-blur border-b border-brand-100 sticky top-0 z-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between h-16 items-center">
             <Link href="/" className="flex flex-col leading-tight max-w-md">
-              <span className="text-xl font-bold text-teal-700 tracking-tight">
+              <span className="text-xl font-bold text-brand-700 tracking-tight">
                 {APP_CONFIG.shortName}
               </span>
               <span className="text-[11px] text-slate-500 line-clamp-2">
@@ -74,10 +74,10 @@ export default function SiteNav() {
         </div>
       </nav>
 
-      <div className="md:hidden bg-white border-b border-slate-200 sticky top-0 z-50">
+      <div className="md:hidden bg-white/95 border-b border-brand-100 sticky top-0 z-50">
         <div className="px-4 py-3 text-center">
           <Link href="/">
-            <div className="text-lg font-bold text-teal-700">{APP_CONFIG.shortName}</div>
+            <div className="text-lg font-bold text-brand-700">{APP_CONFIG.shortName}</div>
             <div className="text-[10px] text-slate-500 line-clamp-2 px-2">
               {APP_CONFIG.tagline}
             </div>
@@ -86,7 +86,7 @@ export default function SiteNav() {
       </div>
 
       {!hideMobile && (
-        <nav className="md:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-slate-200 z-50">
+        <nav className="md:hidden fixed bottom-0 left-0 right-0 bg-white/95 border-t border-brand-100 z-50 backdrop-blur">
           <div className="grid grid-cols-5 h-16">
             {MOBILE_LINKS.map(({ href, label, icon: Icon }) => {
               const active =

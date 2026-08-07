@@ -1,4 +1,4 @@
-'use client'
+﻿'use client'
 
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
@@ -76,7 +76,7 @@ export default function AdminDashboard() {
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
         <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-purple-600 mx-auto"></div>
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-brand-600 mx-auto"></div>
           <p className="mt-4 text-gray-600">กำลังโหลดข้อมูล...</p>
         </div>
       </div>
@@ -89,7 +89,7 @@ export default function AdminDashboard() {
       {isDeleting && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
           <div className="bg-white rounded-lg p-8 flex flex-col items-center">
-            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-purple-600 mb-4"></div>
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-brand-600 mb-4"></div>
             <p className="text-gray-700 font-medium">กำลังลบบทความ...</p>
             <p className="text-gray-500 text-sm mt-2">กรุณารอสักครู่</p>
           </div>
@@ -106,7 +106,7 @@ export default function AdminDashboard() {
             <div className="flex items-center space-x-4">
               <Link
                 href="/admin/create"
-                className={`bg-purple-600 text-white px-4 py-2 rounded-md hover:bg-purple-700 transition-colors ${
+                className={`bg-brand-600 text-white px-4 py-2 rounded-md hover:bg-brand-700 transition-colors ${
                   isDeleting ? 'pointer-events-none opacity-50' : ''
                 }`}
               >
@@ -138,7 +138,7 @@ export default function AdminDashboard() {
             <p className="text-gray-500 text-lg">ยังไม่มีบทความ</p>
             <Link
               href="/admin/create"
-              className="mt-4 inline-block bg-purple-600 text-white px-6 py-2 rounded-md hover:bg-purple-700 transition-colors"
+              className="mt-4 inline-block bg-brand-600 text-white px-6 py-2 rounded-md hover:bg-brand-700 transition-colors"
             >
               เพิ่มบทความแรก
             </Link>

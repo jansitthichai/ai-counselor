@@ -1,4 +1,4 @@
-'use client'
+﻿'use client'
 
 import { useState, useCallback, useMemo } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
@@ -251,7 +251,7 @@ export default function PHQ9Page() {
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
             onClick={resetAssessment}
-            className="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition-colors font-medium"
+            className="bg-brand-600 text-white px-6 py-3 rounded-lg hover:bg-brand-700 transition-colors font-medium"
           >
             ประเมินใหม่
           </motion.button>
@@ -271,15 +271,15 @@ export default function PHQ9Page() {
               initial={{ opacity: 0, height: 0 }}
               animate={{ opacity: 1, height: 'auto' }}
               exit={{ opacity: 0, height: 0 }}
-              className="mt-8 bg-blue-50 rounded-2xl p-6 border border-blue-200"
+              className="mt-8 bg-brand-50 rounded-2xl p-6 border border-brand-200"
             >
-              <h3 className="text-lg font-semibold text-blue-800 mb-4">เกี่ยวกับ PHQ-9</h3>
-              <div className="text-blue-700 space-y-2">
+              <h3 className="text-lg font-semibold text-brand-800 mb-4">เกี่ยวกับ PHQ-9</h3>
+              <div className="text-brand-700 space-y-2">
                 <p>• PHQ-9 เป็นเครื่องมือคัดกรองภาวะซึมเศร้าเบื้องต้น</p>
                 <p>• ประเมินอาการในช่วง 2 สัปดาห์ที่ผ่านมา</p>
                 <p>• ผลการประเมินนี้ไม่ใช่การวินิจฉัยทางการแพทย์</p>
                 <p>• หากมีข้อสงสัย ควรปรึกษาผู้เชี่ยวชาญ</p>
-                <p>• สายด่วนสุขภาพจิต: <a href="tel:1323" className="underline hover:text-blue-800 font-medium">1323</a> (24 ชั่วโมง)</p>
+                <p>• สายด่วนสุขภาพจิต: <a href="tel:1323" className="underline hover:text-brand-800 font-medium">1323</a> (24 ชั่วโมง)</p>
               </div>
             </motion.div>
           )}
@@ -296,8 +296,8 @@ export default function PHQ9Page() {
         className="text-center mb-8"
       >
         <div className="flex items-center justify-center mb-4">
-          <div className="p-3 bg-blue-100 rounded-full">
-            <FaClipboardList className="text-2xl text-blue-600" />
+          <div className="p-3 bg-brand-100 rounded-full">
+            <FaClipboardList className="text-2xl text-brand-600" />
           </div>
         </div>
         <h1 className="text-3xl font-bold text-gray-800 mb-4">แบบประเมินภาวะซึมเศร้าเบื้องต้น</h1>
@@ -315,7 +315,7 @@ export default function PHQ9Page() {
           <motion.div
             initial={{ width: 0 }}
             animate={{ width: `${progress}%` }}
-            className="bg-blue-600 h-2 rounded-full transition-all duration-300"
+            className="bg-brand-600 h-2 rounded-full transition-all duration-300"
           />
         </div>
       </div>
@@ -340,14 +340,14 @@ export default function PHQ9Page() {
               onClick={() => handleAnswer(currentQuestionData.id, option.value)}
               className={`w-full text-left p-4 rounded-lg border-2 transition-all ${
                 answers[currentQuestionData.id] === option.value
-                  ? 'border-blue-500 bg-blue-50 text-blue-700'
-                  : 'border-gray-200 hover:border-blue-300 hover:bg-blue-50'
+                  ? 'border-brand-500 bg-brand-50 text-brand-700'
+                  : 'border-gray-200 hover:border-brand-300 hover:bg-brand-50'
               }`}
             >
               <div className="flex items-center">
                 <div className={`w-4 h-4 rounded-full border-2 mr-3 ${
                   answers[currentQuestionData.id] === option.value
-                    ? 'border-blue-500 bg-blue-500'
+                    ? 'border-brand-500 bg-brand-500'
                     : 'border-gray-300'
                 }`}>
                   {answers[currentQuestionData.id] === option.value && (
@@ -385,7 +385,7 @@ export default function PHQ9Page() {
             className={`px-6 py-3 rounded-lg font-medium transition-colors ${
               answers[currentQuestionData.id] === undefined
                 ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
-                : 'bg-blue-600 text-white hover:bg-blue-700'
+                : 'bg-brand-600 text-white hover:bg-brand-700'
             }`}
           >
             ถัดไป
