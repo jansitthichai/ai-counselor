@@ -3,6 +3,7 @@
 import { motion } from 'framer-motion'
 import Link from 'next/link'
 import { APP_CONFIG, PLATFORM_MODULES } from '../lib/constants'
+import BrandLogo from './components/BrandLogo'
 
 const featured = PLATFORM_MODULES.filter((m) =>
   ['/chat', '/emotion', '/insight', '/recommendations', '/help', '/phq9'].includes(
@@ -40,9 +41,12 @@ export default function Home() {
           animate={{ opacity: 1, y: 0 }}
           className="relative max-w-3xl"
         >
-          <p className="text-sm font-semibold tracking-wide text-brand-700 mb-3">
-            Version {APP_CONFIG.version} · เพื่อนสุขภาวะทางอารมณ์
-          </p>
+          <div className="flex items-center gap-3 mb-4">
+            <BrandLogo size={64} className="!rounded-3xl shadow-md" />
+            <p className="text-sm font-semibold tracking-wide text-brand-700">
+              Version {APP_CONFIG.version} · เพื่อนสุขภาวะทางอารมณ์
+            </p>
+          </div>
           <h1 className="text-3xl md:text-4xl font-bold text-slate-800 font-sarabun leading-tight">
             {APP_CONFIG.name}
           </h1>

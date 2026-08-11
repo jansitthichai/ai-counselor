@@ -2,6 +2,7 @@
 
 import { usePathname } from 'next/navigation'
 import { APP_CONFIG } from '../../lib/constants'
+import BrandLogo from './BrandLogo'
 
 export default function Footer() {
   const pathname = usePathname()
@@ -9,10 +10,14 @@ export default function Footer() {
 
   return (
     <footer className="bg-white/70 border-t border-brand-100 py-4 md:py-6">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-1">
-        <p className="text-sm font-semibold text-brand-800">
-          {APP_CONFIG.shortName} · {APP_CONFIG.tagline}
-        </p>
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-2">
+        <div className="flex items-center justify-center gap-2">
+          <BrandLogo size={32} className="!rounded-xl" />
+          <p className="text-sm font-semibold text-brand-800">
+            {APP_CONFIG.shortName}
+          </p>
+        </div>
+        <p className="text-xs text-slate-500">{APP_CONFIG.tagline}</p>
         <p className="text-xs md:text-sm text-slate-600 font-sarabun">
           โครงงานคอมพิวเตอร์ · {APP_CONFIG.author} · Version {APP_CONFIG.version}
         </p>

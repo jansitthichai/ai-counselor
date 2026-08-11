@@ -1,4 +1,5 @@
 ﻿import { APP_CONFIG, TECH_STACK } from '../../lib/constants'
+import BrandLogo from '../components/BrandLogo'
 
 const TECH_OVERVIEW = [
   'Next.js, React, TypeScript',
@@ -20,6 +21,7 @@ export default function AboutPage() {
   return (
     <div className="max-w-3xl mx-auto space-y-8">
       <div>
+        <BrandLogo size={72} className="mb-4 !rounded-3xl shadow-md" />
         <h1 className="text-2xl md:text-3xl font-bold text-slate-900 font-sarabun">
           {APP_CONFIG.name}
         </h1>

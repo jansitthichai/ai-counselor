@@ -11,6 +11,7 @@ import {
   FaInfoCircle,
 } from 'react-icons/fa'
 import { APP_CONFIG } from '../../lib/constants'
+import BrandLogo from './BrandLogo'
 
 const DESKTOP_LINKS = [
   { href: '/', label: 'หน้าแรก', icon: FaHome },
@@ -44,12 +45,15 @@ export default function SiteNav() {
       <nav className="hidden md:block bg-white/85 backdrop-blur border-b border-brand-100 sticky top-0 z-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between h-16 items-center">
-            <Link href="/" className="flex flex-col leading-tight max-w-md">
-              <span className="text-xl font-bold text-brand-700 tracking-tight">
-                {APP_CONFIG.shortName}
-              </span>
-              <span className="text-[11px] text-slate-500 line-clamp-2">
-                {APP_CONFIG.tagline}
+            <Link href="/" className="flex items-center gap-3 max-w-lg">
+              <BrandLogo size={44} priority />
+              <span className="flex flex-col leading-tight">
+                <span className="text-xl font-bold text-brand-700 tracking-tight">
+                  {APP_CONFIG.shortName}
+                </span>
+                <span className="text-[11px] text-slate-500 line-clamp-2">
+                  {APP_CONFIG.tagline}
+                </span>
               </span>
             </Link>
             <div className="flex items-center gap-5 text-sm">
@@ -75,12 +79,17 @@ export default function SiteNav() {
       </nav>
 
       <div className="md:hidden bg-white/95 border-b border-brand-100 sticky top-0 z-50">
-        <div className="px-4 py-3 text-center">
-          <Link href="/">
-            <div className="text-lg font-bold text-brand-700">{APP_CONFIG.shortName}</div>
-            <div className="text-[10px] text-slate-500 line-clamp-2 px-2">
-              {APP_CONFIG.tagline}
-            </div>
+        <div className="px-4 py-3">
+          <Link href="/" className="flex items-center justify-center gap-2.5">
+            <BrandLogo size={36} />
+            <span className="text-left leading-tight">
+              <span className="block text-lg font-bold text-brand-700">
+                {APP_CONFIG.shortName}
+              </span>
+              <span className="block text-[10px] text-slate-500 line-clamp-2">
+                {APP_CONFIG.tagline}
+              </span>
+            </span>
           </Link>
         </div>
       </div>

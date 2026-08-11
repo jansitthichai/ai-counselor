@@ -5,6 +5,7 @@ import { AnimatePresence } from 'framer-motion'
 import Link from 'next/link'
 import { HiOutlineUser, HiOutlineSparkles } from 'react-icons/hi2'
 import { APP_CONFIG } from '../../lib/constants'
+import BrandLogo from '../components/BrandLogo'
 import { appendEmotionLog } from '../../lib/wellbeing-storage'
 import type { RecommendationItem } from '../../lib/wellbeing-types'
 
@@ -184,11 +185,14 @@ export default function ChatPage() {
     <div className="min-h-screen bg-gradient-to-b from-brand-50/80 via-white to-sky-50/40 flex flex-col -mx-4 sm:-mx-6 lg:-mx-8 -my-4 md:-my-8">
       <div className="bg-white/90 backdrop-blur border-b border-brand-100 p-4 sticky top-0 z-10">
         <div className="max-w-4xl mx-auto flex justify-between items-center">
-          <div>
-            <h1 className="text-lg font-semibold text-slate-800">
-              เพื่อนคู่ใจมายด์แคร์
-            </h1>
-            <p className="text-xs text-brand-700">เพื่อนสุขภาวะทางอารมณ์ · Agentic chat</p>
+          <div className="flex items-center gap-3">
+            <BrandLogo size={40} />
+            <div>
+              <h1 className="text-lg font-semibold text-slate-800">
+                เพื่อนคู่ใจมายด์แคร์
+              </h1>
+              <p className="text-xs text-brand-700">เพื่อนสุขภาวะทางอารมณ์ · Agentic chat</p>
+            </div>
           </div>
           <button
             onClick={clearChat}
