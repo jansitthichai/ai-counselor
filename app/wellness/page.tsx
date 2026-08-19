@@ -3,6 +3,24 @@
 import Link from 'next/link'
 import { PLATFORM_MODULES } from '../../lib/constants'
 
+const moduleIcons: Record<string, string> = {
+  '/chat': '💬',
+  '/mood-tracker': '📝',
+  '/emotion': '🧠',
+  '/phq9': '📋',
+  '/recommendations': '💡',
+  '/resources': '📖',
+  '/games': '🎮',
+  '/journal': '📓',
+  '/insight': '📊',
+  '/goals': '🎯',
+  '/motivation': '💪',
+  '/help': '🤝',
+  '/teacher': '👩‍🏫',
+  '/parent': '👨‍👩‍👧',
+  '/admin': '⚙️',
+}
+
 const buttonColors = [
   'bg-brand-600 hover:bg-brand-700 text-white',
   'bg-sky-500 hover:bg-sky-600 text-white',
@@ -43,9 +61,12 @@ export default function WellnessHubPage() {
         {student.map((m, i) => (
           <div
             key={m.href}
-            className="rounded-2xl border border-slate-200 bg-white/80 p-5 flex flex-col"
+            className="relative overflow-hidden rounded-2xl border border-slate-200 bg-white/80 p-5 flex flex-col"
           >
-            <h2 className="font-semibold text-slate-800">{m.title}</h2>
+            <span className="pointer-events-none absolute -top-1 -right-1 text-[3.5rem] leading-none opacity-[0.15] select-none" aria-hidden="true">
+              {moduleIcons[m.href] || '✨'}
+            </span>
+            <h2 className="relative font-semibold text-slate-800">{m.title}</h2>
             <p className="text-sm text-slate-600 mt-2 flex-1">{m.desc}</p>
             <Link
               href={m.href}
@@ -67,9 +88,12 @@ export default function WellnessHubPage() {
           {roles.map((m, i) => (
             <div
               key={m.href}
-              className="rounded-2xl border border-brand-100 bg-brand-50/60 p-5 flex flex-col"
+              className="relative overflow-hidden rounded-2xl border border-brand-100 bg-brand-50/60 p-5 flex flex-col"
             >
-              <h3 className="font-semibold text-brand-900">{m.title}</h3>
+              <span className="pointer-events-none absolute -top-1 -right-1 text-[3.5rem] leading-none opacity-[0.15] select-none" aria-hidden="true">
+                {moduleIcons[m.href] || '✨'}
+              </span>
+              <h3 className="relative font-semibold text-brand-900">{m.title}</h3>
               <p className="text-sm text-brand-800/80 mt-2 flex-1">{m.desc}</p>
               <Link
                 href={m.href}
