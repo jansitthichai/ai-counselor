@@ -103,7 +103,7 @@ export default function Home() {
                   alt=""
                   width={96}
                   height={96}
-                  className="pointer-events-none absolute -right-2 -bottom-2 opacity-[0.12] select-none"
+                  className="pointer-events-none absolute -right-2 -bottom-2 opacity-[0.28] select-none"
                   aria-hidden="true"
                 />
               )}
