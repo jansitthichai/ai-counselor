@@ -36,9 +36,10 @@ function Bar({
   )
 }
 
-function riskBadge(level: number) {
-  if (level <= 1) return { text: 'ปกติ', cls: 'bg-green-100 text-green-700' }
-  if (level <= 2) return { text: 'เฝ้าระวัง', cls: 'bg-amber-100 text-amber-700' }
+function riskBadge(level: string | number) {
+  const n = Number(level)
+  if (n <= 1) return { text: 'ปกติ', cls: 'bg-green-100 text-green-700' }
+  if (n <= 2) return { text: 'เฝ้าระวัง', cls: 'bg-amber-100 text-amber-700' }
   return { text: 'ต้องดูแล', cls: 'bg-red-100 text-red-700' }
 }
 
