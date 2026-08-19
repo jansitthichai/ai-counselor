@@ -1,6 +1,7 @@
 'use client'
 
 import { motion } from 'framer-motion'
+import Image from 'next/image'
 import Link from 'next/link'
 import { APP_CONFIG, PLATFORM_MODULES } from '../lib/constants'
 import BrandLogo from './components/BrandLogo'
@@ -22,13 +23,13 @@ const moduleTint: Record<string, string> = {
   '/phq9': 'hover:border-amber-300 border-amber-100 bg-gradient-to-br from-white to-amber-50/50',
 }
 
-const moduleIcon: Record<string, string> = {
-  '/chat': '💬',
-  '/emotion': '🧠',
-  '/insight': '📊',
-  '/recommendations': '💡',
-  '/help': '🤝',
-  '/phq9': '📋',
+const moduleImage: Record<string, string> = {
+  '/chat': '/modules/chat.png',
+  '/emotion': '/modules/emotion.png',
+  '/insight': '/modules/insight.png',
+  '/recommendations': '/modules/recommendations.png',
+  '/help': '/modules/help.png',
+  '/phq9': '/modules/phq9.png',
 }
 
 const moduleButton: Record<string, string> = {
@@ -96,12 +97,16 @@ export default function Home() {
                 'border-slate-200 bg-white/80 hover:border-brand-300'
               }`}
             >
-              <span
-                className="pointer-events-none absolute -right-3 -bottom-3 text-[5.5rem] leading-none opacity-[0.07] select-none"
-                aria-hidden="true"
-              >
-                {moduleIcon[mod.href] || '✨'}
-              </span>
+              {moduleImage[mod.href] && (
+                <Image
+                  src={moduleImage[mod.href]}
+                  alt=""
+                  width={96}
+                  height={96}
+                  className="pointer-events-none absolute -right-2 -bottom-2 opacity-[0.12] select-none"
+                  aria-hidden="true"
+                />
+              )}
               <h3 className="relative text-lg font-semibold text-slate-800">{mod.title}</h3>
               <p className="relative mt-2 text-sm text-slate-600 min-h-[40px]">{mod.desc}</p>
               <Link
