@@ -22,6 +22,15 @@ const moduleTint: Record<string, string> = {
   '/phq9': 'hover:border-amber-300 border-amber-100 bg-gradient-to-br from-white to-amber-50/50',
 }
 
+const moduleIcon: Record<string, string> = {
+  '/chat': '💬',
+  '/emotion': '🧠',
+  '/insight': '📊',
+  '/recommendations': '💡',
+  '/help': '🤝',
+  '/phq9': '📋',
+}
+
 const moduleButton: Record<string, string> = {
   '/chat': 'bg-brand-600 hover:bg-brand-700 text-white',
   '/emotion': 'bg-sky-500 hover:bg-sky-600 text-white',
@@ -82,13 +91,19 @@ export default function Home() {
               initial={{ opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: i * 0.05 }}
-              className={`rounded-2xl border p-5 transition-colors ${
+              className={`relative overflow-hidden rounded-2xl border p-5 transition-colors ${
                 moduleTint[mod.href] ||
                 'border-slate-200 bg-white/80 hover:border-brand-300'
               }`}
             >
-              <h3 className="text-lg font-semibold text-slate-800">{mod.title}</h3>
-              <p className="mt-2 text-sm text-slate-600 min-h-[40px]">{mod.desc}</p>
+              <span
+                className="pointer-events-none absolute -right-3 -bottom-3 text-[5.5rem] leading-none opacity-[0.07] select-none"
+                aria-hidden="true"
+              >
+                {moduleIcon[mod.href] || '✨'}
+              </span>
+              <h3 className="relative text-lg font-semibold text-slate-800">{mod.title}</h3>
+              <p className="relative mt-2 text-sm text-slate-600 min-h-[40px]">{mod.desc}</p>
               <Link
                 href={mod.href}
                 className={`mt-4 inline-flex items-center justify-center rounded-xl px-4 py-2 text-sm font-semibold shadow-sm transition-colors ${
