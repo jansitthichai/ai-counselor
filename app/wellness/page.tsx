@@ -63,10 +63,10 @@ export default function WellnessHubPage() {
             key={m.href}
             className="relative overflow-hidden rounded-2xl border border-slate-200 bg-white/80 p-5 flex flex-col"
           >
-            <span className="pointer-events-none absolute -top-1 -right-1 text-[3.5rem] leading-none opacity-[0.15] select-none" aria-hidden="true">
+            <span className="pointer-events-none absolute top-3 right-3 text-[1.75rem] leading-none opacity-25 select-none" aria-hidden="true">
               {moduleIcons[m.href] || '✨'}
             </span>
-            <h2 className="relative font-semibold text-slate-800">{m.title}</h2>
+            <h2 className="relative pr-10 font-semibold text-slate-800">{m.title}</h2>
             <p className="text-sm text-slate-600 mt-2 flex-1">{m.desc}</p>
             <Link
               href={m.href}
@@ -90,10 +90,10 @@ export default function WellnessHubPage() {
               key={m.href}
               className="relative overflow-hidden rounded-2xl border border-brand-100 bg-brand-50/60 p-5 flex flex-col"
             >
-              <span className="pointer-events-none absolute -top-1 -right-1 text-[3.5rem] leading-none opacity-[0.15] select-none" aria-hidden="true">
+              <span className="pointer-events-none absolute top-3 right-3 text-[1.75rem] leading-none opacity-25 select-none" aria-hidden="true">
                 {moduleIcons[m.href] || '✨'}
               </span>
-              <h3 className="relative font-semibold text-brand-900">{m.title}</h3>
+              <h3 className="relative pr-10 font-semibold text-brand-900">{m.title}</h3>
               <p className="text-sm text-brand-800/80 mt-2 flex-1">{m.desc}</p>
               <Link
                 href={m.href}
