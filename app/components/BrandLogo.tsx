@@ -17,7 +17,7 @@ export default function BrandLogo({
       alt="STRMindCare"
       width={size}
       height={size}
-      className={`rounded-2xl shadow-sm ring-1 ring-sky-200/70 ${className}`}
+      className={`rounded-2xl shadow-sm ring-1 ring-brand-200/80 ${className}`}
       priority={priority}
     />
   )

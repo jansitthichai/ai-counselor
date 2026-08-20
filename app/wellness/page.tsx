@@ -25,15 +25,15 @@ const buttonColors = [
   'bg-brand-600 hover:bg-brand-700 text-white',
   'bg-sky-500 hover:bg-sky-600 text-white',
   'bg-coral-400 hover:bg-coral-500 text-white',
-  'bg-emerald-500 hover:bg-emerald-600 text-white',
+  'bg-lavender-500 hover:bg-lavender-600 text-white',
   'bg-amber-500 hover:bg-amber-600 text-white',
-  'bg-sky-600 hover:bg-sky-700 text-white',
   'bg-brand-500 hover:bg-brand-600 text-white',
-  'bg-rose-400 hover:bg-rose-500 text-white',
-  'bg-cyan-500 hover:bg-cyan-600 text-white',
-  'bg-lime-500 hover:bg-lime-600 text-white',
-  'bg-orange-400 hover:bg-orange-500 text-white',
-  'bg-teal-500 hover:bg-teal-600 text-white',
+  'bg-coral-500 hover:bg-coral-600 text-white',
+  'bg-lavender-600 hover:bg-lavender-700 text-white',
+  'bg-sky-600 hover:bg-sky-700 text-white',
+  'bg-brand-700 hover:bg-brand-800 text-white',
+  'bg-coral-300 hover:bg-coral-400 text-white',
+  'bg-lavender-400 hover:bg-lavender-500 text-white',
 ]
 
 const roleButtons = [

@@ -13,11 +13,11 @@ const featured = PLATFORM_MODULES.filter((m) =>
 )
 
 const moduleTint: Record<string, string> = {
-  '/chat': 'hover:border-brand-300 border-brand-100 bg-gradient-to-br from-white to-brand-50/40',
-  '/emotion': 'hover:border-sky-300 border-sky-100 bg-gradient-to-br from-white to-sky-50/50',
-  '/insight': 'hover:border-sky-300 border-sky-100 bg-gradient-to-br from-white to-sky-50/40',
+  '/chat': 'hover:border-brand-300 border-brand-100 bg-gradient-to-br from-white to-brand-50/60',
+  '/emotion': 'hover:border-lavender-300 border-lavender-100 bg-gradient-to-br from-white to-lavender-50/50',
+  '/insight': 'hover:border-sky-300 border-sky-100 bg-gradient-to-br from-white to-sky-50/50',
   '/recommendations':
-    'hover:border-brand-300 border-brand-100 bg-gradient-to-br from-white to-brand-50/30',
+    'hover:border-lavender-300 border-lavender-100 bg-gradient-to-br from-white to-lavender-50/40',
   '/help':
     'hover:border-coral-300 border-coral-100 bg-gradient-to-br from-white to-coral-50/50',
   '/phq9': 'hover:border-amber-300 border-amber-100 bg-gradient-to-br from-white to-amber-50/50',
@@ -34,9 +34,9 @@ const moduleImage: Record<string, string> = {
 
 const moduleButton: Record<string, string> = {
   '/chat': 'bg-brand-600 hover:bg-brand-700 text-white',
-  '/emotion': 'bg-sky-500 hover:bg-sky-600 text-white',
+  '/emotion': 'bg-lavender-500 hover:bg-lavender-600 text-white',
   '/insight': 'bg-sky-600 hover:bg-sky-700 text-white',
-  '/recommendations': 'bg-emerald-500 hover:bg-emerald-600 text-white',
+  '/recommendations': 'bg-lavender-600 hover:bg-lavender-700 text-white',
   '/help': 'bg-coral-400 hover:bg-coral-500 text-white',
   '/phq9': 'bg-amber-500 hover:bg-amber-600 text-white',
 }
@@ -45,7 +45,7 @@ export default function Home() {
   return (
     <div className="space-y-10 md:space-y-14">
       <section className="relative overflow-hidden rounded-3xl border border-brand-100 bg-white/70 px-6 py-12 md:px-12 md:py-16 shadow-sm">
-        <div className="absolute inset-0 opacity-50 bg-[radial-gradient(circle_at_15%_20%,#99f6e4,transparent_42%),radial-gradient(circle_at_85%_10%,#bae6fd,transparent_38%),radial-gradient(circle_at_70%_90%,#fecdd3,transparent_40%)]" />
+        <div className="absolute inset-0 opacity-55 bg-[radial-gradient(circle_at_15%_20%,#bbdefb,transparent_42%),radial-gradient(circle_at_85%_10%,#e1bee7,transparent_38%),radial-gradient(circle_at_70%_90%,#f8bbd0,transparent_40%)]" />
         <motion.div
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
@@ -57,7 +57,7 @@ export default function Home() {
               Version {APP_CONFIG.version} · เพื่อนสุขภาวะทางอารมณ์
             </p>
           </div>
-          <h1 className="text-3xl md:text-4xl font-bold text-slate-800 font-sarabun leading-tight">
+          <h1 className="text-3xl md:text-4xl font-bold text-[#1a237e] font-sarabun leading-tight">
             {APP_CONFIG.name}
           </h1>
           <p className="mt-4 text-slate-600 md:text-lg leading-relaxed">
@@ -123,8 +123,8 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="rounded-2xl border border-sky-100 bg-gradient-to-br from-brand-50 via-white to-sky-50 p-6 md:p-8">
-        <h2 className="text-xl font-semibold text-slate-800 mb-2">
+      <section className="rounded-2xl border border-brand-100 bg-gradient-to-br from-brand-50 via-white to-coral-50 p-6 md:p-8">
+        <h2 className="text-xl font-semibold text-[#1a237e] mb-2">
           Agentic AI ในหนึ่งข้อความ
         </h2>
         <p className="text-slate-600 text-sm md:text-base mb-4">

@@ -3,26 +3,26 @@
 @tailwind utilities;
 
 :root {
-  /* Soft teal + coral + sky — friendly companion, not flashy */
-  --brand: #0d9488;
-  --brand-dark: #0f766e;
-  --brand-soft: #ccfbf1;
-  --accent: #fb7185;
-  --accent-soft: #ffe4e6;
-  --sky: #38bdf8;
-  --sky-soft: #e0f2fe;
-  --mint: #6ee7b7;
-  --bg-start: #f0fdfa;
-  --bg-mid: #f8fafc;
-  --bg-end: #fff7ed;
-  --text: #334155;
+  /* Slide palette: soft sky blue + navy + pink + lavender */
+  --brand: #1e88e5;
+  --brand-dark: #1565c0;
+  --brand-soft: #e3f2fd;
+  --accent: #ec407a;
+  --accent-soft: #fce4ec;
+  --sky: #64b5f6;
+  --sky-soft: #e3f2fd;
+  --mint: #81c784;
+  --bg-start: #eef6ff;
+  --bg-mid: #f7f9ff;
+  --bg-end: #fce8f3;
+  --text: #1a237e;
   --text-muted: #64748b;
-  --surface: rgba(255, 255, 255, 0.82);
-  --foreground-rgb: 51, 65, 85;
-  --lavender: #ccfbf1;
-  --lavender-light: #f0fdfa;
-  --calm-blue: #bae6fd;
-  --calm-pink: #fecdd3;
+  --surface: rgba(255, 255, 255, 0.88);
+  --foreground-rgb: 26, 35, 126;
+  --lavender: #b39ddb;
+  --lavender-light: #f3e5f5;
+  --calm-blue: #bbdefb;
+  --calm-pink: #f8bbd0;
 }
 
 body {
@@ -48,7 +48,7 @@ body {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #5eead4;
+  background: #90caf9;
   border-radius: 6px;
   border: 2px solid var(--brand-soft);
 }
@@ -153,7 +153,7 @@ body {
 }
 
 .text-gradient {
-  @apply bg-clip-text text-transparent bg-gradient-to-r from-brand-600 to-sky-400;
+  @apply bg-clip-text text-transparent bg-gradient-to-r from-brand-600 to-coral-400;
 }
 
 .bg-gradient-custom {
@@ -228,9 +228,9 @@ body {
   @apply w-full p-3 border border-brand-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-brand-400 bg-white/80 shadow-sm;
 }
 
-/* Chat bubbles — soft coral user, mint-border AI */
+/* Chat bubbles — soft pink-blue user, white AI */
 .bubble-user {
-  @apply bg-gradient-to-br from-coral-200 to-sky-100 text-slate-900 rounded-2xl px-5 py-3 shadow-md;
+  @apply bg-gradient-to-br from-coral-100 to-brand-100 text-slate-900 rounded-2xl px-5 py-3 shadow-md;
 }
 
 .bubble-ai {
@@ -243,7 +243,7 @@ body {
 }
 
 .bubble-user-small {
-  @apply bg-gradient-to-br from-coral-200 to-sky-100 text-slate-900 rounded-xl px-4 py-2 shadow-md text-sm;
+  @apply bg-gradient-to-br from-coral-100 to-brand-100 text-slate-900 rounded-xl px-4 py-2 shadow-md text-sm;
 }
 
 .auto-resize-textarea {
