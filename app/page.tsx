@@ -3,43 +3,59 @@
 import { motion } from 'framer-motion'
 import Image from 'next/image'
 import Link from 'next/link'
-import { APP_CONFIG, PLATFORM_MODULES } from '../lib/constants'
+import { APP_CONFIG } from '../lib/constants'
 import BrandLogo from './components/BrandLogo'
 
-const featured = PLATFORM_MODULES.filter((m) =>
-  ['/chat', '/emotion', '/insight', '/recommendations', '/help', '/phq9'].includes(
-    m.href
-  )
-)
-
-const moduleTint: Record<string, string> = {
-  '/chat': 'hover:border-brand-300 border-brand-100 bg-gradient-to-br from-white to-brand-50/60',
-  '/emotion': 'hover:border-lavender-300 border-lavender-100 bg-gradient-to-br from-white to-lavender-50/50',
-  '/insight': 'hover:border-sky-300 border-sky-100 bg-gradient-to-br from-white to-sky-50/50',
-  '/recommendations':
-    'hover:border-lavender-300 border-lavender-100 bg-gradient-to-br from-white to-lavender-50/40',
-  '/help':
-    'hover:border-coral-300 border-coral-100 bg-gradient-to-br from-white to-coral-50/50',
-  '/phq9': 'hover:border-amber-300 border-amber-100 bg-gradient-to-br from-white to-amber-50/50',
-}
-
-const moduleImage: Record<string, string> = {
-  '/chat': '/modules/chat.png',
-  '/emotion': '/modules/emotion.png',
-  '/insight': '/modules/insight.png',
-  '/recommendations': '/modules/recommendations.png',
-  '/help': '/modules/help.png',
-  '/phq9': '/modules/phq9.png',
-}
-
-const moduleButton: Record<string, string> = {
-  '/chat': 'bg-brand-600 hover:bg-brand-700 text-white',
-  '/emotion': 'bg-lavender-500 hover:bg-lavender-600 text-white',
-  '/insight': 'bg-sky-600 hover:bg-sky-700 text-white',
-  '/recommendations': 'bg-lavender-600 hover:bg-lavender-700 text-white',
-  '/help': 'bg-coral-400 hover:bg-coral-500 text-white',
-  '/phq9': 'bg-amber-500 hover:bg-amber-600 text-white',
-}
+const featuredModules = [
+  {
+    href: '/chat',
+    title: 'เพื่อนคู่ใจมายด์แคร์',
+    desc: 'เพื่อน AI แสนอบอุ่น ให้การรับฟังและแนะนำอัตโนมัติ',
+    image: '/modules/chat.png',
+    card: 'border-[#b2ebf2] bg-[#e0f7fa]/border-2 hover:border-[#4dd0e1]',
+    button: 'bg-[#26a69a] hover:bg-[#00897b] text-white',
+  },
+  {
+    href: '/emotion',
+    title: 'วิเคราะห์อารมณ์',
+    desc: 'วิเคราะห์อารมณ์จากข้อความ',
+    image: '/modules/emotion.png',
+    card: 'border-[#bbdefb] bg-[#e3f2fd]/border-2 hover:border-[#64b5f6]',
+    button: 'bg-[#42a5f5] hover:bg-[#1e88e5] text-white',
+  },
+  {
+    href: '/phq9',
+    title: 'คัดกรองสุขภาพจิต',
+    desc: 'คัดกรองเบื้องต้นด้วย PHQ-9',
+    image: '/modules/phq9.png',
+    card: 'border-[#ffe0b2] bg-[#fff8e1]/border-2 hover:border-[#ffb74d]',
+    button: 'bg-[#fb8c00] hover:bg-[#ef6c00] text-white',
+  },
+  {
+    href: '/recommendations',
+    title: 'คำแนะนำจาก AI',
+    desc: 'แนะนำเทคนิคดี ๆ รับมืออารมณ์',
+    image: '/modules/recommendations.png',
+    card: 'border-[#b2dfdb] bg-[#e0f2f1]/border-2 hover:border-[#4db6ac]',
+    button: 'bg-[#00897b] hover:bg-[#00695c] text-white',
+  },
+  {
+    href: '/insight',
+    title: 'ภาพรวมอารมณ์',
+    desc: 'กราฟแสดงแนวโน้มอารมณ์ตลอดช่วงเวลา',
+    image: '/modules/insight.png',
+    card: 'border-[#bbdefb] bg-[#e3f2fd]/border-2 hover:border-[#64b5f6]',
+    button: 'bg-[#42a5f5] hover:bg-[#1e88e5] text-white',
+  },
+  {
+    href: '/help',
+    title: 'ขอความช่วยเหลือ',
+    desc: 'คุยและขอความช่วยเหลือจากผู้เชี่ยวชาญ',
+    image: '/modules/help.png',
+    card: 'border-[#f8bbd0] bg-[#fce4ec]/border-2 hover:border-[#f06292]',
+    button: 'bg-[#ec407a] hover:bg-[#d81b60] text-white',
+  },
+]
 
 export default function Home() {
   return (
@@ -86,37 +102,28 @@ export default function Home() {
           โมดูลหลัก
         </h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          {featured.map((mod, i) => (
+          {featuredModules.map((mod, i) => (
             <motion.div
               key={mod.href}
               initial={{ opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: i * 0.05 }}
-              className={`relative overflow-hidden rounded-2xl border p-5 transition-colors ${
-                moduleTint[mod.href] ||
-                'border-slate-200 bg-white/80 hover:border-brand-300'
-              }`}
+              className={`flex flex-col rounded-2xl p-5 shadow-sm transition-colors ${mod.card}`}
             >
-              {moduleImage[mod.href] && (
-                <Image
-                  src={moduleImage[mod.href]}
-                  alt=""
-                  width={96}
-                  height={96}
-                  className="pointer-events-none absolute -right-2 -bottom-2 opacity-[0.28] select-none"
-                  aria-hidden="true"
-                />
-              )}
-              <h3 className="relative text-lg font-semibold text-slate-800">{mod.title}</h3>
-              <p className="relative mt-2 text-sm text-slate-600 min-h-[40px]">{mod.desc}</p>
+              <Image
+                src={mod.image}
+                alt=""
+                width={72}
+                height={72}
+                className="mb-3 drop-shadow-sm"
+              />
+              <h3 className="text-lg font-semibold text-slate-800">{mod.title}</h3>
+              <p className="mt-1.5 text-sm text-slate-600 flex-1 min-h-[40px]">{mod.desc}</p>
               <Link
                 href={mod.href}
-                className={`mt-4 inline-flex items-center justify-center rounded-xl px-4 py-2 text-sm font-semibold shadow-sm transition-colors ${
-                  moduleButton[mod.href] ||
-                  'bg-brand-600 hover:bg-brand-700 text-white'
-                }`}
+                className={`mt-4 inline-flex w-full items-center justify-center rounded-xl px-4 py-2.5 text-sm font-semibold shadow-sm transition-colors ${mod.button}`}
               >
-                เปิดใช้งาน
+                เริ่มใช้งาน
               </Link>
             </motion.div>
           ))}
