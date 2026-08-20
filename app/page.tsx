@@ -57,7 +57,7 @@ export default function Home() {
               Version {APP_CONFIG.version} · เพื่อนสุขภาวะทางอารมณ์
             </p>
           </div>
-          <h1 className="text-3xl md:text-4xl font-bold text-[#1a237e] font-sarabun leading-tight">
+          <h1 className="text-3xl md:text-4xl font-bold text-[#1a237e] font-sarabun leading-[1.55] md:leading-[1.5]">
             {APP_CONFIG.name}
           </h1>
           <p className="mt-4 text-slate-600 md:text-lg leading-relaxed">
