@@ -22,7 +22,7 @@ export default function AboutPage() {
     <div className="max-w-3xl mx-auto space-y-8">
       <div>
         <BrandLogo size={72} className="mb-4 !rounded-3xl shadow-md" />
-        <h1 className="text-2xl md:text-3xl font-bold text-slate-900 font-sarabun">
+        <h1 className="text-2xl md:text-3xl font-bold text-slate-900 font-sarabun leading-[1.55]">
           {APP_CONFIG.name}
         </h1>
         <p className="text-brand-800 font-medium mt-2 text-sm md:text-base">
